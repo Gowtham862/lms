@@ -31,6 +31,9 @@ jobs:
       - name: Setup GCP SDK
         uses: google-github-actions/setup-gcloud@v1
 
+      - name: Install GKE Auth Plugin
+        run: gcloud components install gke-gcloud-auth-plugin
+
       - name: Configure Docker
         run: gcloud auth configure-docker asia-south1-docker.pkg.dev
 
