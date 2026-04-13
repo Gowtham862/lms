@@ -1,0 +1,265 @@
+<div class="course-page">
+
+  <!-- LEFT CONTENT -->
+  <div class="course-left">
+
+   <!-- <nav class="breadcrumb"> -->
+
+  <!-- <ng-container *ngFor="let crumb of course.breadcrumb; let i = index">
+
+    <a *ngIf="i < course.breadcrumb.length - 1"
+       [routerLink]="getBreadcrumbLink(crumb)"
+       class="crumb-link">
+       {{ crumb }}
+    </a>
+
+    <span *ngIf="i === course.breadcrumb.length - 1"
+          class="active">
+      {{ crumb }}
+    </span>
+
+     Divider 
+     <span *ngIf="i < course.breadcrumb.length - 1" class="divider">›</span>
+
+  </ng-container> 
+
+</nav> -->
+
+
+
+    <!-- Title -->
+    <h1 class="course-title">{{ course.title }}</h1>
+
+    <!-- Subtitle -->
+    <p class="course-subtitle">{{ course.subtitle }}</p>
+
+    <!-- Rating Row -->
+    <div class="rating">
+      <span class="rate-num">{{ course.rating }}</span>
+      <span class="stars">★★★★★</span>
+      <span class="count">({{ course.totalRatings }} ratings)</span>
+      <span class="details">
+        | {{ course.hours }} Total Hours. {{ course.lectures }} Lectures. {{ course.level }}
+      </span>
+    </div>
+
+    <!-- Instructor -->
+    <div class="instructor-row">
+      <img [src]="course.instructor.image" class="inst-img" />
+      <span class="inst-text">Created by <b>{{ course.instructor.name }}</b></span>
+      <span class="dot">|</span>
+
+      <span class="languages">
+        {{ course.languages.join(', ') }}
+      </span>
+    </div>
+
+    <!-- Delivery Methods and Dates -->
+    <div class="options-row">
+
+      <!-- Delivery Methods -->
+      <div class="option-card">
+        <h3>Choose Delivery Methods</h3>
+
+        <div class="option-buttons">
+          <button class="opt-btn" *ngFor="let d of course.deliveryMethods">
+            <span>{{ d.icon }}</span> {{ d.title }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Dates -->
+      <div class="option-card">
+  <h3>Available Dates</h3>
+
+  <div class="option-buttons">
+    <button class="opt-btn" (click)="toggleDatePicker()">
+      <span>📅</span> Select Date
+    </button>
+  </div>
+
+  <!-- DATE PICKER POPUP -->
+  <div class="date-picker-popup" *ngIf="showDatePicker">
+    <div class="calendar-header">
+      <button (click)="prevMonth()">‹</button>
+      <span>{{ months[currentMonth] }} {{ currentYear }}</span>
+      <button (click)="nextMonth()">›</button>
+    </div>
+
+    <div class="calendar-grid">
+      <div class="day-name" *ngFor="let d of dayNames">{{ d }}</div>
+
+      <div
+        class="day"
+        *ngFor="let day of calendarDays"
+        [class.empty]="day === null"
+        [class.selected]="selectedDate === day"
+        (click)="selectDate(day)"
+      >
+        {{ day }}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+
+  <!-- RIGHT SIDEBAR BOX -->
+  <div class="course-right">
+    <div class="course-box">
+
+      <!-- Course Image -->
+      <img [src]="course.courseImage" class="side-img" />
+
+      <!-- Pricing Row -->
+      <div class="price-row">
+        <span class="price-now">${{ course.price.current }}</span>
+        <span class="price-old">${{ course.price.old }}</span>
+        <span class="discount">{{ course.price.discount }}</span>
+      </div>
+
+      <button class="enroll-btn" routerLink="/signup">Enroll Now</button>
+
+      <button class="org-btn">For Organization</button>
+
+      <div class="share-title">Share</div>
+
+      <div class="share-icons">
+        <img *ngFor="let icon of course.shareIcons" [src]="icon" />
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- 2nd section -->
+
+<div class="tabs-container">
+
+  <div class="tabs">
+    <button 
+      *ngFor="let t of tabs" 
+      (click)="setActiveTab(t.key)"
+      [class.active]="activeTab === t.key">
+      {{ t.label }}
+    </button>
+  </div>
+
+  <!-- Dynamic Content -->
+  <div class="tab-content">
+
+    <!-- DESCRIPTION -->
+    <ng-container *ngIf="activeTab === 'description'">
+
+  <div class="description-section">
+
+    <!-- Course Description -->
+    <h2>Course Description</h2>
+    <p>{{ courseDescription }}</p>
+
+    <hr class="section-divider">
+
+    <!-- Instructor Section -->
+    <h3 class="instructor-title">Instructor</h3>
+
+    <div class="instructor-box">
+      <img [src]="instructor.image">
+
+      <div>
+        <h4>{{ instructor.name }}</h4>
+        <p>{{ instructor.role }}</p>
+
+        <div class="inst-stats">
+          <span>⭐ {{ instructor.reviews }} Reviews</span>
+          <span>🎓 {{ instructor.students }} Students</span>
+          <span>▶ {{ instructor.courses }} Courses</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bio Paragraph -->
+    <p class="instructor-bio">{{ instructor.bio }}</p>
+
+  </div>
+
+</ng-container>
+
+
+    <!-- SYLLABUS -->
+    <ng-container *ngIf="activeTab === 'syllabus'">
+  <div class="syllabus-wrapper">
+
+    <div class="syllabus-item" *ngFor="let item of syllabus">
+      <div class="syllabus-header" (click)="toggleSyllabus(item)">
+        
+        <div class="left">
+          <span class="arrow" [class.open]="item.open">⌄</span>
+          <span class="title">{{ item.title }}</span>
+        </div>
+
+        <div class="right">
+          <span>{{ item.lessons }} Lessons</span>
+          <span>•</span>
+          <span>{{ item.time }}</span>
+        </div>
+
+      </div>
+
+      <div class="syllabus-body-wrapper" [class.open]="item.open">
+        <div class="syllabus-body">
+          <p *ngFor="let p of item.points">• {{ p }}</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</ng-container>
+
+
+
+    <!-- EXAM DETAILS -->
+    <ng-container *ngIf="activeTab === 'exam'">
+
+  <!-- Section 1 -->
+  <h2 class="exam-title">COBIT®5 Foundation Exam Prerequisite</h2>
+  <p class="exam-text">{{ examDetails.prerequisite }}</p>
+
+  <!-- Section 2 -->
+  <h2 class="exam-title">COBIT®5 Certification Exam Format</h2>
+  <ul class="exam-list">
+    <li *ngFor="let f of examDetails.format" [innerHTML]="f"></li>
+  </ul>
+
+  <!-- Section 3 -->
+  <h2 class="exam-title">3. Self Study COBIT®5 Foundation Course</h2>
+  <p class="exam-text">After enrolling in this course, you'll get:</p>
+
+  <ul class="exam-list">
+    <li *ngFor="let s of examDetails.study" [innerHTML]="s"></li>
+  </ul>
+
+</ng-container>
+
+
+    <!-- FAQ -->
+    <ng-container *ngIf="activeTab === 'faq'">
+  <div class="faq-box" *ngFor="let q of faq; let i = index">
+
+    <p class="faq-title1">{{ i + 1 }}. {{ q.question }}</p>
+
+    <p class="faq-desc">{{ q.description }}</p>
+
+    <ul class="faq-list">
+      <li *ngFor="let a of q.answer" [innerHTML]="a"></li>
+    </ul>
+
+  </div>
+</ng-container>
+
+
+  </div>
+</div>

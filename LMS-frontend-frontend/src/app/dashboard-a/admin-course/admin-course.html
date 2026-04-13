@@ -1,0 +1,155 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Dashboard</h2>
+</div>
+
+<hr />
+
+<!-- TABS + MONTH -->
+<div class="dashboard-topbar">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <span class="tab" routerLink="/dashboard-a">Trainee</span>
+    <span class="tab" routerLink="/trainer-page">Trainer</span>
+    <span class="tab active">Courses</span>
+  </div>
+
+  <!-- MONTH DROPDOWN -->
+  <!-- <button class="month-btn">
+    January 2026
+    <i class="fa-solid fa-chevron-down"></i>
+  </button> -->
+
+</div>
+
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+
+      <!-- <span
+        *ngIf="card.badgeText"
+        class="badge"
+        [ngClass]="card.badgeType"
+      >
+        {{ card.badgeText }}
+      </span> -->
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+<div class="analytics-grid">
+
+  <!-- bars -->
+        <!-- COURSES & QUIZ SECTION -->
+<!-- COURSES & QUIZ SECTION -->
+<!-- <div class="status-quiz-grid"> -->
+
+  <!-- Courses By Status -->
+  <!-- <div class="status-card">
+    <h3 class="card-title">Courses By Status</h3>
+
+    <div class="donut-container">
+      <canvas #courseStatusChart></canvas>
+    </div>
+
+    <div class="donut-legend">
+      <span><i class="dot published"></i> Published</span>
+      <span><i class="dot unpublished"></i> Unpublished</span>
+      <span><i class="dot archived"></i> Archived</span>
+    </div>
+  </div> -->
+
+  <!-- Quiz Performance -->
+  <!-- <div class="quiz-card">
+    <h3 class="card-title">Quiz & Assessment Performance</h3>
+
+    <div class="quiz-container">
+      <canvas #quizPerformanceChart></canvas>
+    </div>
+  </div>
+
+</div> -->
+
+
+  <!-- table -->
+   <div class="table-card">
+
+  <h3 class="table-title">Courses Overview</h3>
+
+  <table class="attendance-table">
+    <thead>
+      <tr>
+        <th>Course Name</th>
+        <th>Course ID</th>
+        <th>Total Trainers</th>
+        <th>Total Batches</th>
+        <th>Total Sessions</th>
+        <th>Total Trainees</th>
+        <!-- <th>Completion Rate %</th> -->
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of paginatedData">
+        <td class="link">{{ row.courseName }}</td>
+        <td class="link">{{ row.courseId }}</td>
+        <td>{{ row.totalTrainers }}</td>
+        <td>{{ row.totalBatches }}</td>
+        <td>{{ row.totalSessions }}</td>
+        <td>{{ row.totalTrainees}}</td>
+
+        <!-- <td
+          [ngClass]="{
+            low: row.completionRate < 50,
+            average: row.completionRate >= 50 && row.completionRate < 75,
+            good: row.completionRate >= 75
+          }">
+          {{ row.completionRate }}
+        </td> -->
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FOOTER -->
+  <div class="table-footer">
+    <div>
+      Show
+      <select (change)="changePageSize($event)">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">
+    &lsaquo;
+  </button>
+
+  <button
+    *ngFor="let p of [].constructor(totalPages); let i = index"
+    (click)="goToPage(i + 1)"
+    [class.active]="currentPage === i + 1">
+    {{ i + 1 }}
+  </button>
+
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+    &rsaquo;
+  </button>
+</div>
+  </div>
+
+</div>

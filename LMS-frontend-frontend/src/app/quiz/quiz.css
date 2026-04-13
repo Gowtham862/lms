@@ -1,0 +1,285 @@
+.quiz-header1{
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #0b3a82;
+}
+
+.tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.tabs button {
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 1%;
+  color: #666;
+  padding: 8px;
+  background-color:white;
+  border: 0.3px solid #02122b;
+  border-radius: 6px;
+}
+
+.tabs .active {
+  color: white;
+  background-color: #0b3a82;
+  border-bottom: 1px solid #0b3a82;
+}
+/* ================= QUIZ LAYOUT ================= */
+.quiz-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* LEFT TABLE */
+.quiz-report-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #e5ecf6;
+}
+
+.quiz-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #353845;
+  margin-bottom: 20px;
+}
+
+.quiz-header,
+.quiz-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1.4fr 1fr 1fr 1.2fr 0.8fr;
+  align-items: center;
+}
+
+.quiz-header {
+  padding-bottom: 10px;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.quiz-row {
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+/* SCORE COLORS */
+.score.good {
+  color: #2fb344;
+  font-weight: 600;
+}
+
+.score.avg {
+  color: #f4a000;
+  font-weight: 600;
+}
+
+.score.bad {
+  color: #ff3b30;
+  font-weight: 600;
+}
+
+/* RIGHT UPCOMING QUIZ */
+.upcoming-quiz-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 15px;
+  border: 1px solid #e5ecf6;
+}
+
+.quiz-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.quiz-date {
+  width: 60px;
+  height: 60px;
+  background: #062f6f;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-date.inactive {
+  background: #bdbdbd;
+}
+
+.quiz-date .day {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.quiz-date .month {
+  font-size: 12px;
+}
+
+.quiz-info {
+  flex: 1;
+}
+
+.quiz-name {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.quiz-meta {
+  font-size: 13px;
+  color: #9aa1ac;
+}
+
+.quiz-meta .live {
+  color: #ff3b30;
+  font-weight: 600;
+}
+
+.quiz-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  background: #062f6f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.quiz-btn:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}
+/* ===============================
+   TABLET (≤1024px)
+================================ */
+@media (max-width: 1024px) {
+
+  .quiz-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .quiz-header,
+  .quiz-row {
+    grid-template-columns: 1.5fr 1.2fr 1fr 1fr;
+    row-gap: 8px;
+  }
+
+  .quiz-header span:nth-child(5),
+  .quiz-header span:nth-child(6),
+  .quiz-row span:nth-child(5),
+  .quiz-row span:nth-child(6) {
+    display: none;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+}
+
+/* ===============================
+   MOBILE (≤768px)
+================================ */
+@media (max-width: 768px) {
+
+  /* HEADER */
+  .quiz-header1 {
+    font-size: 18px;
+  }
+
+  /* COURSE TABS */
+  .tabs {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tabs button {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+
+  /* LAYOUT */
+  .quiz-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* TABLE → CARD STYLE */
+  .quiz-header {
+    display: none;
+  }
+
+  .quiz-row {
+    grid-template-columns: 1fr;
+    padding: 14px;
+    border-radius: 12px;
+    background: #f8fafc;
+    margin-bottom: 12px;
+  }
+
+  .quiz-row span {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .quiz-row span::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: #6b7280;
+  }
+
+  /* UPCOMING QUIZ */
+  .quiz-item {
+    align-items: flex-start;
+  }
+
+  .quiz-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+}
+
+/* ===============================
+   SMALL MOBILE (≤480px)
+================================ */
+@media (max-width: 480px) {
+
+  .quiz-title {
+    font-size: 16px;
+  }
+
+  .quiz-date {
+    width: 52px;
+    height: 52px;
+  }
+
+  .quiz-date .day {
+    font-size: 16px;
+  }
+
+  .quiz-name {
+    font-size: 12px;
+  }
+
+  .quiz-meta {
+    font-size: 12px;
+  }
+
+  .quiz-btn {
+    width: 100%;
+    padding: 8px 0;
+  }
+}
+

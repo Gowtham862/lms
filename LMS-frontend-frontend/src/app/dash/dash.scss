@@ -1,0 +1,190 @@
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+.main {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  color: #0b3a82;
+}
+
+.icon-box img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* CARD */
+.stat-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 15px;
+  border: 1px solid #e5ecf6;
+}
+
+/* HEADER */
+.stat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box i {
+  font-size: 16px;
+  color: #0b3a82;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* BODY */
+.stat-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-body h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* BADGES */
+.badge {
+  background: #e8eef9;
+  color: #0b3a82;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.timer {
+  background: #fff6db;
+  color: #f4a000;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.status {
+  background: #e8eef9;
+  color: #0b3a82;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+/* PROGRESS */
+.progress-bar {
+  height: 6px;
+  background: #e6e6e6;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background: #0b3a82;
+}
+
+/* MULTI BAR */
+.progress-multi {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.progress-multi span {
+  flex: 1;
+  height: 6px;
+  background: #e6e6e6;
+  border-radius: 6px;
+}
+
+.progress-multi .fill {
+  background: #0b3a82;
+}
+
+/* FOOTER */
+.update,
+.link {
+  font-size: 12px;
+  color: #9aa1ac;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* ===============================
+   STATS COMPONENT RESPONSIVE
+   =============================== */
+@media (max-width: 768px) {
+
+  /* Scope ONLY stats */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-header {
+    gap: 8px;
+  }
+
+  .stat-body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .stat-body h2 {
+    font-size: 26px;
+    line-height: 1.2;
+    white-space: normal; /* override nowrap */
+  }
+
+  .title,
+  .badge,
+  .timer,
+  .status {
+    white-space: normal;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-body h2 {
+    font-size: 24px;
+  }
+}

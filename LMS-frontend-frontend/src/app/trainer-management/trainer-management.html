@@ -1,0 +1,113 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-topbar">
+  <h2 class="dashboard-title">Trainer Management</h2>
+
+  <button class="month-btn" routerLink="/add-trainer">
+    Add Trainer
+  </button>
+</div>
+
+<hr />
+
+<!-- STATS CARDS -->
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+      <span *ngIf="card.badgeText" class="badge" [ngClass]="card.badgeType">
+        {{ card.badgeText }}
+      </span>
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+
+<!-- TABLE CARD -->
+<div class="table-card">
+
+  <!-- TABLE HEADER -->
+  <div class="table-header">
+    <h3>Trainer Overview</h3>
+
+    <input type="text" placeholder="Search using Name, ID" [(ngModel)]="searchText" class="search-input" />
+  </div>
+
+  <!-- TABLE -->
+  <table class="attendance-table">
+    <thead>
+
+
+      <tr>
+        <th>Profile</th>
+        <th>Trainer Name</th>
+        <th>Trainer ID</th>
+        <!-- <th>Assigned Course</th> -->
+        <th>Login ID</th>
+        <th>Onboard Date</th>
+        <!-- <th>Level</th> -->
+        <th>Trainer Status</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of paginatedTrainers">
+        <td>
+          <img [src]="row.file" class="profile-img" />
+        </td>
+        <td class="link">{{ row.trainername }}</td>
+        <td class="link">{{ row.trainerid }}</td>
+        <!-- <td>{{ row.assignedcourse }}</td> -->
+        <td>{{ row.loginemail }}</td>
+        <td>{{ row.onboarddate }}</td>
+        <!-- <td>{{ row.courselevel }}</td> -->
+
+        <td [ngClass]="{
+            active: row.trainerstatus === 'Active',
+            inactive: row.trainerstatus === 'Deactivate'
+          }">
+          {{ row.trainerstatus }}
+        </td>
+
+        <td>
+          <i class="fa-solid fa-pen edit-icon" routerLink="/edit-trainerid" (click)="editTrainer(row)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TABLE FOOTER -->
+  <div class="table-footer">
+    <div>
+      Show
+      <select (change)="changePageSize($event)">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+
+      <button *ngFor="let p of [].constructor(totalPages); let i = index" (click)="goToPage(i + 1)"
+        [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">›</button>
+    </div>
+  </div>
+
+</div>

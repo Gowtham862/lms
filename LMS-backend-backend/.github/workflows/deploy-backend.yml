@@ -1,0 +1,52 @@
+name: Deploy Backend to GKE
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'LMS-backend-backend/**'  # only runs when backend code changes
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: LMS-backend-backend  # run commands in backend folder
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup GCP SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker asia-south1-docker.pkg.dev
+
+      - name: Build Docker image
+        run: |
+          docker build --no-cache \
+            -t asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-backend:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: |
+          docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-backend:${{ github.sha }}
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials lms-cluster \
+            --region asia-south1 \
+            --project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy to GKE
+        run: |
+          kubectl set image deployment/lms-backend \
+            lms-backend=asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-backend:${{ github.sha }}
+          kubectl rollout status deployment/lms-backend

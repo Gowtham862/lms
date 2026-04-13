@@ -1,0 +1,400 @@
+<div class="courses-header">
+  <h2>Student Management</h2>
+
+  <div class="tabs">
+    <!-- <span (click)="activeTab='overview'" [class.active]="activeTab==='overview'">
+        Students Overview 
+      </span> -->
+    <span (click)="activeTab='attendance'" [class.active]="activeTab==='attendance'">
+      Students Attendance
+    </span>
+    <!-- <span (click)="activeTab='quiz'" [class.active]="activeTab==='quiz'">
+        Quiz & Attendance Performance 
+      </span> -->
+    <!-- <span (click)="activeTab='completion'" [class.active]="activeTab==='completion'">
+        Certificate Completion 
+      </span> -->
+  </div>
+</div>
+
+<div class="btn-tabs">
+  <button *ngFor="let c of coursesMap" (click)="selectCourse(c)" [class.active]="selectedCourseId === c.courseId">
+    {{ c.coursename }}
+  </button>
+</div>
+
+<div class="btn-tabs">
+  <button *ngFor="let b of selectedBatches" (click)="selectBatch(b.batchId)"
+    [class.active]="selectedBatchId === b.batchId">
+    Batch {{ b.batchNo }}
+  </button>
+</div>
+
+<!-- <div *ngIf="activeTab === 'overview'"> -->
+<!-- <div class="table-card">
+
+  <div class="table-header">
+    <h3>Students Overview</h3>
+
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search Document"
+        [(ngModel)]="searchText"
+      />
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Student ID</th>
+        <th>Email / Contact</th>
+        <th>Batch Name</th>
+        <th>Enrollment Date</th>
+        <th>Attendance %</th>
+        <th>Course Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let s of filteredStudents">
+        <td class="name">{{ s.name }}</td>
+        <td class="id">{{ s.studentId }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.batch }}</td>
+        <td>{{ s.enrollmentDate }}</td>
+        <td class="attendance">{{ s.attendance }}%</td>
+        <td class="status">{{ s.status }}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+  <div class="table-footer">
+      <div>
+        Show
+        <select>
+          <option>10</option>
+          <option>20</option>
+        </select>
+        Row
+      </div>
+
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <span>...</span>
+        <button>10</button>
+        <button>›</button>
+      </div>
+    </div>
+</div>
+</div> -->
+
+<!-- student attendance -->
+<div *ngIf="activeTab === 'attendance'">
+  <div class="table-card">
+
+    <!-- Header -->
+    <div class="table-header">
+      <h3>Student Attendance Monitoring</h3>
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Search Document" [(ngModel)]="searchText" />
+      </div>
+    </div>
+
+    <!-- Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Student ID</th>
+          <th>Batch Name</th>
+          <th>Session Attended</th>
+          <th>Total Sessions</th>
+          <th>Attendance %</th>
+          <th>Attendance status</th>
+          <!-- <th>Last Attended Session</th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+       <tr *ngFor="let s of paginatedStudents">
+          <td class="name">{{ s.name }}</td>
+          <td class="id">{{ s.studentId }}</td>
+          <td>{{ s.batch }}</td>
+          <td>{{ s.sessionAttended }}</td>
+          <td>{{ s.totalSessions }}</td>
+          <td class="attendance-percentage" [ngClass]="getAttendanceClass(s.attendancePercent)">
+            {{ s.attendancePercent }}%
+          </td>
+
+          <td class="attendance-status" [ngClass]="getAttendanceClass(s.attendancePercent)">
+            {{ s.attendanceStatus }}
+          </td>
+
+          <!-- <td>{{ s.lastAttendedSession }}</td> -->
+        </tr>
+      </tbody>
+
+    </table>
+    <div class="table-footer">
+  <div>
+    Show
+    <select [(ngModel)]="rowsPerPage" (change)="onRowsChange()">
+      <option [value]="10">10</option>
+      <option [value]="20">20</option>
+    </select>
+    Row
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+
+    <button
+      *ngFor="let page of pages"
+      (click)="goToPage(page)"
+      [class.active]="currentPage === page">
+      {{ page }}
+    </button>
+
+    <button
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages">
+      ›
+    </button>
+  </div>
+</div>
+  </div>
+</div>
+<!-- Quiz & attendence performance -->
+<!-- <div *ngIf="activeTab === 'quiz'">
+     <div class="table-card">
+
+  <div class="table-header">
+    <h3>Quiz & Assesment Performance</h3>
+
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search Document"
+        [(ngModel)]="searchText"
+      />
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Student ID</th>
+        <th>Quiz Name</th>
+        <th>Number Of Attempts</th>
+        <th>Quiz Completion Date</th>
+        <th>Score</th>
+        <th>Pass / Fail</th>
+        <th>Evalution Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let q of quizStudents">
+   <td class="name">{{ q.name }}</td>
+        <td class="id">{{ q.studentId }}</td>
+      <td>{{ q.quizName }}</td>
+      <td>{{ q.attempts }}</td>
+      <td>{{ q.completionDate }}</td>
+     <td
+  [ngClass]="{
+    'score-red': q.score !== null && q.score < 50,
+    'score-green': q.score !== null && q.score >= 50
+  }"
+>
+  {{ q.score === null ? 'NA' : q.score + '%' }}
+</td>
+
+<td
+  [ngClass]="{
+    'text-red': q.result === 'Fail',
+    'text-green': q.result === 'Pass'
+  }"
+>
+  {{ q.result }}
+</td>
+
+<td>
+  <span *ngIf="q.evaluationStatus === 'NA'">NA</span>
+
+  <button
+    *ngIf="q.evaluationStatus === 'Pending'"
+    class="review-btn"
+  >
+    Review Now
+  </button>
+
+  <span
+    *ngIf="q.evaluationStatus === 'Evaluated'"
+    class="text-green"
+  >
+    Approved
+  </span>
+</td>
+
+    </tr>
+    </tbody>
+    
+  </table>
+  <div class="table-footer">
+      <div>
+        Show
+        <select>
+          <option>10</option>
+          <option>20</option>
+        </select>
+        Row
+      </div>
+
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <span>...</span>
+        <button>10</button>
+        <button>›</button>
+      </div>
+    </div>
+</div>
+ </div> -->
+<!-- certificate completion -->
+<!-- <div *ngIf="activeTab === 'completion'">
+     <div class="table-card"> -->
+
+<!-- Header -->
+<!-- <div class="table-header">
+    <h3>Certificate Completion</h3>
+
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        placeholder="Search Document"
+        [(ngModel)]="searchText"
+      />
+    </div>
+  </div> -->
+
+<!-- Table -->
+<!-- <table>
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Student ID</th>
+        <th>Course Completion Status</th>
+        <th>Eligibility Status</th>
+        <th>Reason</th>
+        <th>Certificate Status</th>
+        <th>Certificate Issue Date</th>
+        <th>Trainer Approval</th>
+      </tr>
+    </thead>
+
+    <tbody>
+  <tr class="completion-alignment" *ngFor="let c of completionStudents1">
+     <td class="name">{{ c.name }}</td>
+        <td class="id">{{ c.studentId }}</td>
+      <td
+    [ngClass]="{
+      'text-orange': c.courseCompletionStatus === 'In Progress',
+      'text-green': c.courseCompletionStatus === 'Completed'
+    }"
+  >
+    {{ c.courseCompletionStatus }}
+  </td> -->
+
+<!-- Eligibility -->
+<!-- <td
+    [ngClass]="{
+      'text-green': c.eligibilityStatus === 'Eligible',
+      'text-red': c.eligibilityStatus === 'Not Eligible'
+    }"
+  >
+    {{ c.eligibilityStatus }}
+  </td> -->
+
+<!-- Reason -->
+<!-- <td class="text-red" *ngIf="c.reason !== 'NA'">
+    {{ c.reason }}
+  </td>
+  <td *ngIf="c.reason === 'NA'">NA</td>
+ -->
+<!-- Certificate Status -->
+<!-- <td
+    [ngClass]="{
+      'text-orange': c.certificateStatus === 'Pending',
+      'text-green': c.certificateStatus === 'Approved'
+    }"
+  >
+    {{ c.certificateStatus }}
+  </td> -->
+
+<!-- Issue Date -->
+<!-- <td>
+    {{ c.certificateIssueDate }}
+  </td> -->
+
+<!-- Trainer Approval -->
+<!-- <td> -->
+<!-- NA -->
+<!-- <span *ngIf="c.trainerApproval === 'NA'">NA</span> -->
+
+<!-- Approve button -->
+<!-- <button
+      *ngIf="c.trainerApproval === 'Pending'"
+      class="approve-btn"
+    >
+      Approve Now
+    </button> -->
+
+<!-- Approved -->
+<!-- <span
+      *ngIf="c.trainerApproval === 'Approved'"
+      class="text-green"
+    >
+      Approved
+    </span>
+  </td>
+
+    </tr>
+    </tbody>
+    
+  </table>
+  <div class="table-footer">
+      <div>
+        Show
+        <select>
+          <option>10</option>
+          <option>20</option>
+        </select>
+        Row
+      </div>
+
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <span>...</span>
+        <button>10</button>
+        <button>›</button>
+      </div>
+    </div>
+</div> -->
+<!-- </div> -->

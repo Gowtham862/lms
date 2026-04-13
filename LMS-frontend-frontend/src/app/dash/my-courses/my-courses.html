@@ -1,0 +1,160 @@
+<div class="dashboard-grid">
+
+  <!-- ================= LEFT SIDE ================= -->
+  <div class="left-section">
+
+    <!-- <div class="study-card">
+
+      <div class="study-header">
+        <h3>Study Hours</h3>
+
+        <div class="tabs">
+          <button [class.active]="activeTab1==='daily'" (click)="setTab('daily')">Daily</button>
+          <button [class.active]="activeTab1==='weekly'" (click)="setTab('weekly')">Weekly</button>
+          <button [class.active]="activeTab1==='monthly'" (click)="setTab('monthly')">Monthly</button>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><i class="dot light"></i> Study Time</span>
+        <span><i class="dot dark"></i> Study Time Spent</span>
+      </div>
+
+      <div class="graph">
+        <div class="y-axis">
+          <span>60 Mins</span>
+          <span>45 Mins</span>
+          <span>30 Mins</span>
+          <span>15 Mins</span>
+          <span>0 Mins</span>
+        </div>
+
+        <div class="bars">
+          <div class="bar" *ngFor="let h of hours">
+            <div class="bar-bg"></div>
+            <div class="bar-fill" [style.height]="barHeight(h.spent, h.total)"></div>
+
+            <span class="label">{{ h.label }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div> -->
+
+    <!-- ================= MY COURSES ================= -->
+    <div class="courses-card">
+
+      <div class="courses-header">
+        <h3>My Courses</h3>
+
+        <div class="tabs">
+          <span [class.active]="activeTab==='all'" (click)="activeTab='all'">All</span>
+          <span [class.active]="activeTab==='ongoing'" (click)="activeTab='ongoing'">Ongoing</span>
+          <span [class.active]="activeTab==='completed'" (click)="activeTab='completed'">Completed</span>
+        </div>
+      </div>
+
+      <div class="course-item" *ngFor="let course of filteredCourses()">
+
+        <img [src]="course.image" class="course-img" />
+
+        <div class="course-info">
+          <h4>{{ course.title }}</h4>
+
+          <div class="progress-wrapper">
+            <span>{{ course.progress }}% Completed</span>
+            <div class="progress-bar">
+              <div class="fill" [style.width.%]="course.progress"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="action-btn" routerLink="/courses">
+          {{ actionLabel(course.progress) }}
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= RIGHT SIDE ================= -->
+  <div class="right-section">
+
+    <!-- <div class="calendar-card">
+
+  <div class="calendar-header">
+    <h3>My Schedule Calendar</h3>
+  </div>
+
+  <div class="calendar-legend">
+    <span><i class="dot live"></i> Live class</span>
+    <span><i class="dot quiz"></i> Quiz Day</span>
+    <span><i class="dot assessment"></i> Assessment Review</span>
+  </div>
+
+  <div class="calendar-nav">
+    <span class="month-text">{{ currentMonthName }}, {{ currentYear }}</span>
+
+    <button class="nav-btn" (click)="prevMonth()">←</button>
+<button class="nav-btn" (click)="nextMonth()">→</button>
+
+  </div>
+
+  <div class="calendar-grid">
+    <span class="day-name" *ngFor="let d of weekDays">{{ d }}</span>
+
+    <ng-container *ngFor="let d of calendarDates">
+  <span
+    *ngIf="d.date !== 0"
+    class="date"
+    [ngClass]="d.type">
+    {{ d.date }}
+  </span>
+</ng-container>
+
+
+  </div>
+
+</div> -->
+
+
+    <div class="attendance-card">
+
+      <div class="attendance-header">
+        <h3>Attendance %</h3>
+        <button class="month-btn">Overall</button>
+      </div>
+
+      <div class="gauge-wrapper">
+
+        <svg viewBox="0 0 200 120" class="gauge">
+
+          <!-- background arc -->
+          <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#e5ecf6" stroke-width="14" />
+
+          <!-- active arc -->
+          <path d="M20 100 A80 80 0 0 1 180 100" fill="none" stroke="#0b3a82" stroke-width="14"
+            [attr.stroke-dasharray]="dashArray" [attr.stroke-dashoffset]="dashOffset" />
+
+          <!-- needle -->
+          <line x1="100" y1="100" x2="100" y2="30" stroke="#0b3a82" stroke-width="4"
+            [attr.transform]="'rotate(' + needleAngle + ' 100 100)'" />
+
+          <circle cx="100" cy="100" r="6" fill="#0b3a82" />
+        </svg>
+
+        <div class="attendance-value">
+          {{ attendancePercent }}%
+          <p>Minimum 60% must be required to get the certificate.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

@@ -1,0 +1,158 @@
+<div class="checkout-page">
+
+  <div class="checkout-card">
+
+    <div class="checkout-header">
+      <img src="/lmslogo.png" class="logo" />
+      <h1>AI Bayan Learning</h1>
+    </div>
+
+
+    <div class="checkout-content">
+
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <hr />
+
+        <div class="course-item">
+          <!-- <img [src]="order.course.image" /> -->
+
+          <div class="course-info">
+            <h3>{{ coursep.coursename }}</h3>
+            <p>{{ coursep.coursedesc }}</p>
+          </div>
+
+          <div class="price">
+            {{ order.price | number:'1.2-2' }} {{ order.currency }}
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="price-row">
+          <span>Subtotal</span>
+          <span>{{ subtotal | number:'1.2-2' }} {{ order.currency }}</span>
+        </div>
+
+        <div class="price-row">
+          <span>Tax</span>
+          <span>{{ order.tax | number:'1.2-2' }} {{ order.currency }}</span>
+        </div>
+
+        <hr />
+
+        <div class="price-row total">
+          <span>Total</span>
+          <span>{{ total | number:'1.2-2' }} {{ order.currency }}</span>
+        </div>
+
+        <p class="tax-note">
+          Including {{ order.tax }} {{ order.currency }} in taxes
+        </p>
+      </div>
+
+      <div class="payment-section">
+        <h2>Payment</h2>
+        <hr />
+
+        <div class="payment-method">
+          <span>Pay With:</span>
+
+          <label>
+            <input type="radio" value="card" name="method" [(ngModel)]="paymentMethod" />
+            Card
+          </label>
+
+          <label>
+            <input type="radio" value="bank" name="method" [(ngModel)]="paymentMethod" />
+            Bank
+          </label>
+
+          <label>
+            <input type="radio" value="upi" name="method" [(ngModel)]="paymentMethod" />
+            UPI
+          </label>
+        </div>
+
+        <div *ngIf="paymentMethod === 'card'">
+       
+          <div class="form-row">
+            <div class="field">
+              <label>Card Holder Name </label>
+              <input type="text" placeholder="Enter Name" [(ngModel)]="cardDetails.name" />
+            </div>
+
+            <div class="field">
+              <label>Card Number</label>
+              <input type="text" placeholder="1234567890" [(ngModel)]="cardDetails.number" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label>Expiration Date</label>
+              <input type="text" placeholder="MM/YY" [(ngModel)]="cardDetails.expiry" />
+            </div>
+
+            <div class="field">
+              <label>CVV</label>
+              <input type="text" placeholder="123" [(ngModel)]="cardDetails.cvv" />
+            </div>
+          </div>
+
+          <label class="save-card">
+            <input type="checkbox" [(ngModel)]="cardDetails.save" />
+            Save card details
+          </label>
+        </div>
+
+        <div *ngIf="paymentMethod === 'bank'" class="bank-section">
+
+          <label class="bank-label">Select Your Bank</label>
+
+          <select class="bank-select" [(ngModel)]="selectedBank">
+            <option value="" disabled>Select Bank</option>
+
+            <option *ngFor="let bank of banks" [value]="bank.id">
+              {{ bank.name }}
+            </option>
+          </select>
+
+        </div>
+
+        <div *ngIf="paymentMethod === 'upi'" class="upi-section">
+
+          <div class="upi-grid">
+
+            <div class="upi-qr">
+              <label>Generate QR for {{ total | number:'1.2-2' }} {{ order.currency }}</label>
+
+              <button class="upi-btn">
+                Generate QR
+              </button>
+            </div>
+
+            <div class="upi-divider">or</div>
+
+            <div class="upi-input">
+              <label>Enter UPI ID</label>
+              <input type="text" placeholder="9878999876@upi" [(ngModel)]="upiId" />
+            </div>
+
+          </div>
+
+        </div>
+        
+        <button class="pay-btn" (click)="payNow()">
+          Pay {{ total | number:'1.2-2' }} {{ order.currency }}
+        </button>
+
+        <p class="privacy">
+          Your personal data will be used to process your order and support your experience throughout this website,and for other purposes described in our privacy policy
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</div>

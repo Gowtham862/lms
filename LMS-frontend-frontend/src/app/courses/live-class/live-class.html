@@ -1,0 +1,96 @@
+<div class="live-layout">
+
+  <!-- LEFT: LIVE CLASSES -->
+  <div class="live-classes-card">
+
+    <h3>Upcoming Live Classes</h3>
+
+<div
+  class="live-class"
+  *ngFor="let cls of liveClasses"
+  [class.live-now]="cls.live">
+
+  <img [src]="cls.image" />
+
+  <div class="live-info">
+    <h4>{{ cls.title }}</h4>
+
+    <div class="meta">
+      <span>
+        <i class="fa-regular fa-clock"></i>
+        {{ cls.date }},<i class="fa-regular fa-clock"></i> {{ cls.time }}
+      </span>
+    </div>
+  </div>
+
+  <!-- <div class="action">
+    <button
+      [class.disabled]="!cls.live"
+      [disabled]="!cls.live"
+      (click)="cls.live && joinSession(cls)">
+      Join
+    </button>
+
+    <span class="live-text" *ngIf="cls.live">Live Now</span>
+  </div> -->
+<div class="action">
+  <button
+    [disabled]="!cls.live"
+    [ngClass]="{ 'disabled': !cls.live }"
+    (click)="joinSession(cls)">
+    Join
+  </button>
+
+  <span *ngIf="cls.live" class="live-text">Live Now</span>
+  <span *ngIf="!cls.live" class="countdown">
+    {{ cls.remainingTime }}
+  </span>
+</div>
+
+
+</div>
+
+  </div>
+
+  <!-- RIGHT: SCHEDULE -->
+  <!-- <div class="schedule-card">
+
+    <h3>My Schedule</h3>
+
+    
+    <div class="calendar-head">
+  <button (click)="prevMonth()">&larr;</button>
+  <span>{{ currentMonthName }}, {{ currentYear }}</span>
+  <button (click)="nextMonth()">&rarr;</button>
+</div>
+
+
+    <div class="days">
+  <span *ngFor="let d of weekDays">{{ d }}</span>
+</div>
+
+
+    <div class="dates">
+  <ng-container *ngFor="let d of calendarDates">
+    <span
+      [class.active]="d === selectedDate"
+      (click)="selectDate(d)">
+      {{ d || '' }}
+    </span>
+  </ng-container>
+</div>
+
+    <h4>Tuesday, 26 December 2025</h4>
+
+    <div class="timeline">
+      <div class="timeline-item" *ngFor="let item of schedule">
+        <span class="time">{{ item.time }}</span>
+        <span class="line"></span>
+        <span class="text">{{ item.text }}</span>
+      </div>
+    </div>
+
+  </div> -->
+
+</div>
+ 

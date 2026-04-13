@@ -1,0 +1,80 @@
+<div class="attendance-page">
+
+  <div class="attendance-header">
+    <h2>My Attendance</h2>
+    <button class="checkin-btn">Check In: 11:25:11</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card" *ngFor="let s of stats">
+      <div class="stat-icon">
+        <i class="{{ s.icon }}"></i>
+      </div>
+
+      <div class="stat-content">
+        <p class="stat-title">{{ s.title }}</p>
+        <h3>{{ s.value }}</h3>
+        <span
+          class="change"
+          [class.positive]="s.positive"
+          [class.negative]="!s.positive">
+          {{ s.change }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="attendance-layout">
+
+    <!-- LEFT -->
+    <div class="calendar-card">
+      <h3>My Attendance Calendar</h3>
+
+      <div class="calendar-header">
+  <button (click)="prevMonth()">‹</button>
+  <span>{{ currentMonthName }}, {{ currentYear }}</span>
+  <button (click)="nextMonth()">›</button>
+</div>
+
+
+      <div class="weekdays">
+  <span *ngFor="let d of weekDays">{{ d }}</span>
+</div>
+
+
+    <div class="calendar-grid">
+  <ng-container *ngFor="let day of calendarDays">
+    <span
+      class="day"
+      [class.absent]="absentDays.includes(day)"
+      [class.empty]="day === 0">
+      {{ day || '' }}
+    </span>
+  </ng-container>
+</div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="log-card">
+      <h3>Check In / Check Out Timing</h3>
+
+      <div class="log-header">
+        <span>Date</span>
+        <span>Check In</span>
+        <span>Check Out</span>
+        <span>Total Hours Spent</span>
+      </div>
+
+      <div class="log-row" *ngFor="let l of attendanceLogs">
+        <span>{{ l.date }}</span>
+        <span>{{ l.in }}</span>
+        <span>{{ l.out }}</span>
+        <span>{{ l.total }}</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

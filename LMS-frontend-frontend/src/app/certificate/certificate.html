@@ -1,0 +1,77 @@
+<h2 class="page-title">My Certificate</h2>
+
+<div class="certificate-section-card">
+    <div class="complted-wrapper">
+<div class="completed-grid">
+
+  <div
+    class="completed-card"
+    *ngFor="let c of completed; let i =index"
+    [class.active]="i === 0">
+    <img [src]="getCourseImage(c)" />
+
+    <div class="card-body">
+      <h3>{{ c.coursename }}</h3>
+
+     <p class="meta">
+              {{ getModuleCount(c) }} Modules · {{ c.courselevel }}
+            </p>
+
+     <p class="timeline">
+              <span class="section-title">Course Timeline</span><br>
+               Start Date : {{ c.batchStartDate }}<br>
+      End Date : {{ c.batchEndDate }}
+ 
+            </p>
+
+      <button class="download-btn" (click)="downloadFile(c.courseId)">
+        Download Certificate 
+      </button>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+<!-- OVERALL MODULE REPORT -->
+<!-- <div class="module-report-card">
+
+  <h3 class="module-report-title">
+    Overall Module Report - CAPM® Certification Training
+  </h3>
+
+  <div class="module-report-header">
+    <span>Module Name</span>
+    <span>Trainer</span>
+    <span>Start Date</span>
+    <span>Time Spent</span>
+    <span>Quiz Evaluation</span>
+    <span>Status</span>
+  </div>
+
+  <div class="module-report-row" *ngFor="let m of moduleReports">
+
+    <span class="module-name">{{ m.moduleName }}</span>
+
+    <div class="trainer-cell">
+      <img [src]="m.trainerAvatar" />
+      <span>{{ m.trainer }}</span>
+    </div>
+
+    <span>{{ m.startDate }}</span>
+    <span>{{ m.timeSpent }}</span>
+
+    <span
+      class="quiz-score"
+      [class.good]="m.quizScore >= 60"
+      [class.bad]="m.quizScore < 60">
+      {{ m.quizScore }}%
+    </span>
+
+    <span class="status completed">
+      {{ m.status }}
+    </span>
+
+  </div>
+
+</div> -->

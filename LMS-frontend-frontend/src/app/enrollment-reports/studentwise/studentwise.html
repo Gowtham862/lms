@@ -1,0 +1,150 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Enrollment Reports</h2>
+</div>
+
+<hr />
+
+<!-- TABS + MONTH -->
+<div class="dashboard-topbar">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <span class="tab" routerLink="/enrollment-reports">Course Wise Enrollment</span>
+    <span class="tab" routerLink="/batchwise">Batch Wise Enrollment</span>
+    <span class="tab active">Student Wise Enrollment</span>
+  </div>
+
+</div>
+
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+<div class="table-card">
+
+  <!-- HEADER -->
+  <div class="table-top">
+    <h3>Students Wise Enrollment Overview</h3>
+
+    <button class="export-btn">
+      Export Report
+    </button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrapper">
+    <table class="quiz-table">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Course Name</th>
+          <th>Enrollment Date</th>
+          <th>Registration</th>
+          <th>Payment</th>
+          <th>Batch Status</th>
+          <th>Pending Duration</th>
+          <th>Final Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let s of paginatedStudents">
+          <td class="link">{{ s.studentName }}</td>
+          <td class="link">{{ s.courseName }}</td>
+          <td>{{ s.enrollmentDate }}</td>
+
+          <td>
+            <span
+              [ngClass]="{
+                statusPending: s.registration === 'Pending',
+                statusCompleted: s.registration === 'Completed'
+              }">
+              {{ s.registration }}
+            </span>
+          </td>
+
+          <td>
+            <span
+              [ngClass]="{
+                statusPending: s.payment === 'Pending',
+                statusCompleted: s.payment === 'Completed'
+              }">
+              {{ s.payment }}
+            </span>
+          </td>
+
+          <td>
+            <span
+              [ngClass]="{
+                statusPending: s.batchStatus === 'Pending',
+                statusAssigned: s.batchStatus === 'Assigned'
+              }">
+              {{ s.batchStatus }}
+            </span>
+          </td>
+
+          <td
+            [ngClass]="{
+              danger: s.pendingDuration !== 'NA',
+              neutral: s.pendingDuration === 'NA'
+            }">
+            {{ s.pendingDuration }}
+          </td>
+
+          <td>
+            <span
+              [ngClass]="{
+                statusPending: s.finalStatus === 'Pending',
+                statusActive: s.finalStatus === 'Active'
+              }">
+              {{ s.finalStatus }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="table-footer">
+    <div>
+      Show
+      <select>
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+      <button disabled>‹</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <span>…</span>
+      <button>10</button>
+      <button>›</button>
+    </div>
+  </div>
+
+</div>
+

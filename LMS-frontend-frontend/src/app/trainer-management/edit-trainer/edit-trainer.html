@@ -1,0 +1,269 @@
+<div class="form-page">
+
+  <!-- HEADER -->
+  <h2 class="breadcrumb">
+    <button class="bread" routerLink="/trainer-management">Trainer Overview &gt;</button>
+    <span>Edit Trainer</span>
+  </h2>
+
+  <!-- PERSONAL DETAILS -->
+  <h3 class="section-title">Personal Details</h3>
+
+  <!-- <div class="photo-upload">
+    <label>Trainer Photo *</label>
+    <div class="photo-box">
+      <i class="fa-solid fa-camera"></i>
+    </div>
+  </div> -->
+  <div class="photo-upload">
+    <label>Trainer Photo <span class="required">*</span></label>
+
+    <div class="photo-box" (click)="photoInput.click()">
+      <ng-container *ngIf="!photoPreview">
+        <i class="fa-solid fa-camera"></i>
+      </ng-container>
+
+      <img *ngIf="photoPreview" [src]="photoPreview" />
+    </div>
+
+    <input type="file" accept="image/*" hidden #photoInput (change)="onPhotoSelected($event)" />
+  </div>
+  <div class="form-grid">
+
+    <div>
+      <label>Trainer ID *</label>
+      <input type="text" [value]="trainer.trainerid" disabled />
+    </div>
+
+    <div>
+      <label>Trainer Name <span class="required">*</span></label>
+      <input type="text" placeholder="Enter Trainer Name" [(ngModel)]="trainer.trainername" />
+    </div>
+
+    <div>
+      <label>Personal Email ID <span class="required">*</span></label>
+      <input type="email" placeholder="Enter Email ID" [(ngModel)]="trainer.personalemailid" />
+    </div>
+
+    <div>
+      <label>Contact No <span class="required">*</span></label>
+      <input type="text" placeholder="Enter Contact No" [(ngModel)]="trainer.contactnumber" />
+    </div>
+
+    <div>
+      <label>Date Of Birth <span class="required">*</span></label>
+      <input type="date" [(ngModel)]="trainer.dateofbirth" />
+    </div>
+
+    <div>
+      <label>Full Address <span class="required">*</span></label>
+      <input type="text" placeholder="Enter Full Address" [(ngModel)]="trainer.address" />
+    </div>
+
+    <div>
+      <label>State <span class="required">*</span></label>
+      <select [(ngModel)]="trainer.state">
+        <option value="">Select State</option>
+        <option>Abu Dhabi</option>
+        <option>Dubai</option>
+        <option>Sharjah</option>
+        <option>Ajman</option>
+        <option>Umm Al Quwain</option>
+        <option>Ras Al Khaimah</option>
+        <option>Fujairah</option>
+      </select>
+    </div>
+
+    <div>
+      <label>City <span class="required">*</span></label>
+      <select [(ngModel)]="trainer.city">
+        <option value="">Select City</option>
+        <option>Deira</option>
+        <option>Bur Dubai</option>
+        <option>Karama</option>
+        <option>Al Qusais</option>
+        <option>Al Nahda</option>
+        <option>Al Barsha</option>
+        <option>Jumeirah</option>
+        <option>Dubai Marina</option>
+        <option>Downtown Dubai</option>
+        <option>Business Bay</option>
+        <option>Silicon Oasis</option>
+        <option>International City</option>
+        <option>Discovery Gardens</option>
+        <option>Palm Jumeirah</option>
+        <option>Jebel Ali</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Login Email <span class="required">*</span></label>
+      <input type="email" placeholder="Enter Login Email" [(ngModel)]="trainer.loginemail" />
+    </div>
+
+    <!-- <div>
+      <label>Temporary Password *</label>
+      <input type="password" placeholder="Enter Temporary Password" [(ngModel)]="trainer.temporaraypassword" />
+    </div> -->
+
+  </div>
+
+  <!-- PROFESSIONAL DETAILS -->
+  <h3 class="section-title">Professional Details</h3>
+
+  <div class="form-grid">
+    <div>
+      <label>Qualifications <span class="required">*</span></label>
+      <input type="text" placeholder="Enter Qualification" [(ngModel)]="trainer.qualification" />
+    </div>
+    <div>
+      <label>Area of Expertise <span class="required">*</span></label>
+      <select [(ngModel)]="trainer.areoferperience">
+        <option value="">Select Expertise</option>
+        <!-- Project & Management -->
+        <option>Project Management</option>
+        <option>Agile & Scrum</option>
+        <option>PMI / PMP</option>
+        <option>Business Analysis</option>
+        <option>Leadership & Strategy</option>
+
+        <!-- Development -->
+        <option>Full Stack Development</option>
+        <option>Frontend Development</option>
+        <option>Backend Development</option>
+        <option>Java Development</option>
+        <option>Python Development</option>
+        <option>Mobile App Development</option>
+
+        <!-- Data & AI -->
+        <option>Data Science</option>
+        <option>Machine Learning</option>
+        <option>Artificial Intelligence</option>
+        <option>Data Analytics</option>
+
+        <!-- Cloud & DevOps -->
+        <option>AWS Cloud</option>
+        <option>Azure Cloud</option>
+        <option>DevOps</option>
+        <option>Docker & Kubernetes</option>
+
+        <!-- Security -->
+        <option>Cyber Security</option>
+        <option>Ethical Hacking</option>
+        <option>Network Security</option>
+
+        <!-- Design -->
+        <option>UI/UX Design</option>
+        <option>Graphic Design</option>
+
+        <!-- Testing -->
+        <option>Manual Testing</option>
+        <option>Automation Testing</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Years of Experience <span class="required">*</span></label>
+      <select [(ngModel)]="trainer.yearofexperience">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5+</option>
+      </select>
+    </div>
+
+
+
+    <div class="multi-select">
+
+      <label>Language Known <span class="required">*</span></label>
+
+      <!-- Input box -->
+      <div class="select-box" (click)="toggleLanguageDropdown()">
+
+        <span>
+          {{ trainer.languageknown.length
+          ? trainer.languageknown.join(', ')
+          : 'Select Language' }}
+        </span>
+
+        <span class="arrow">▼</span>
+      </div>
+
+      <!-- Dropdown -->
+      <div class="dropdown-panel" *ngIf="showLanguageDropdown">
+
+        <label class="dropdown-item" *ngFor="let lang of languages">
+
+          <input type="checkbox" [value]="lang" [checked]="trainer.languageknown.includes(lang)"
+            (change)="onLanguageChange($event)">
+
+          {{ lang }}
+
+        </label>
+
+      </div>
+
+      <!-- Validation -->
+      <!-- <small class="error"
+         *ngIf="trainerForm.submitted && trainer.languageknown.length === 0">
+    Language is required
+  </small> -->
+
+    </div>
+    <!-- 
+    <div>
+      <label>Assigned Course *</label>
+      <select [(ngModel)]="trainer.assignedcourse">
+        <option>CAPM® - Arabic Course</option>
+      </select>
+    </div> -->
+
+    <!-- <div>
+      <label>Course Level *</label>
+      <select [(ngModel)]="trainer.courselevel">
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Advanced</option>
+        <option>Expert</option>
+      </select>
+    </div> -->
+
+    <div>
+      <label>Trainer Status <span class="required">*</span></label>
+      <select [(ngModel)]="trainer.trainerstatus">
+        <option [value]="'Active'">Active</option>
+        <option [value]="'On Hold'">Inactive</option>
+        <!-- <option [value]="'Deactivated'">Deactivated</option> -->
+      </select>
+    </div>
+
+  </div>
+
+  <div class="full-width">
+    <label>About Trainer <span class="required">*</span></label>
+    <textarea rows="4" placeholder="Enter About Trainer" [(ngModel)]="trainer.abouttrainer"></textarea>
+  </div>
+  <div class="modal-backdrop" *ngIf="showSuccessModal">
+    <div class="success-modal">
+      <div class="success-icon">
+        <img src="success.gif" alt="tick" class="icon-gif" />
+      </div>
+
+      <p class="success-text">Trainer Updated Successfully!</p>
+
+      <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+    </div>
+  </div>
+
+
+  <!-- ACTIONS -->
+  <div class="form-actions">
+    <!-- <button type="button" class="btn-danger" (click)="deactivateTrainer()">
+      Deactivate Trainer
+    </button> -->
+    <button routerLink="/trainer-management" class="btn-outline">Back</button>
+    <button class="btn-primary" (click)="submitTrainer()">Save Changes</button>
+  </div>
+</div>

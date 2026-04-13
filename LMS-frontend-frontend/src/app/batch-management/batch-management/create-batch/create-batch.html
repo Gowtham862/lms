@@ -1,0 +1,306 @@
+<form #batchForm="ngForm" (ngSubmit)="createBatch()">
+  <div class="page-wrapper">
+
+    <div class="card">
+
+      <div class="breadcrumb">
+        <span>All Batch</span>
+        <span class="arrow">></span>
+        <span class="active">Create New Batch</span>
+      </div>
+
+      <h4 class="card-title">Batch Details</h4>
+
+      <!-- ================= FORM GRID ================= -->
+      <div class="form-grid">
+
+        <!-- Course -->
+        <div class="form-group">
+          <label>Course Name <span>*</span></label>
+          <select name="courseName" [(ngModel)]="batch.course" (ngModelChange)="onCourseChange($event)" required
+            #courseRef="ngModel">
+            <option [ngValue]="null" disabled selected>
+              Select course
+            </option>
+            <option *ngFor="let c of course" [ngValue]="c">
+              {{ c.coursename }}
+            </option>
+          </select>
+          <small class="error-text" *ngIf="courseRef.invalid && (courseRef.touched || submitted)">
+            Course is required
+          </small>
+        </div>
+
+        <!-- Batch -->
+        <div class="form-group">
+          <label>Batch No <span>*</span></label>
+
+          <input type="number" name="batchNo" [(ngModel)]="batch.batchNo" placeholder="Enter Batch No" min="1" required
+            #batchNoRef="ngModel" />
+          <small class="error-text" *ngIf="batchNoRef.invalid && (batchNoRef.touched || submitted)">
+            Batch No is required
+          </small>
+        </div>
+        <!-- Mode -->
+        <div class="form-group">
+          <label>Training Mode <span>*</span></label>
+          <select name="trainingMode" [(ngModel)]="batch.trainingMode" required #trainingModeRef="ngModel">
+            <option disabled selected>Online / Recorded</option>
+            <option *ngFor="let m of trainingModes">{{ m }}</option>
+          </select>
+          <small class="error-text" *ngIf="trainingModeRef.invalid && (trainingModeRef.touched || submitted)">
+            Training Mode is required
+          </small>
+        </div>
+
+        <!-- Capacity -->
+        <div class="form-group">
+          <label>Max Student Capacity <span>*</span></label>
+          <input type="number" name="capacity" [(ngModel)]="batch.capacity" required #capacityRef="ngModel" />
+          <small class="error-text" *ngIf="capacityRef.invalid && (capacityRef.touched || submitted)">
+            Student Capacity is required
+          </small>
+        </div>
+
+        <!-- Start -->
+        <div class="form-group">
+          <label>Batch Start Date <span>*</span></label>
+          <input type="date" name="startDate" [(ngModel)]="batch.startDate" [min]="minDate" required
+            #startDateRef="ngModel" />
+          <small class="error-text" *ngIf="startDateRef.invalid && (startDateRef.touched || submitted)">
+            Start Date is required
+          </small>
+        </div>
+
+        <!-- End -->
+        <div class="form-group">
+          <label>Batch End Date <span>*</span></label>
+          <input type="date" name="endDate" [(ngModel)]="batch.endDate" [min]="batch.startDate || minDate" required
+            #endDateRef="ngModel" />
+          <small class="error-text" *ngIf="endDateRef.invalid && (endDateRef.touched || submitted)">
+            End Date is required
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Primary Trainer <span>*</span></label>
+          <select name="primarytrainerid" [(ngModel)]="batch.primarytrainerid" (ngModelChange)="onTrainerChange($event)"
+            required #pTrainer="ngModel">
+
+            <option [ngValue]="">Select Trainer</option>
+            <option *ngFor="let t of trainers" [value]="t.trainerid">
+              {{ t.trainername }}
+            </option>
+          </select>
+          <small class="error-text" *ngIf="pTrainer.invalid && (pTrainer.touched || submitted)">
+            Trainer is required
+          </small>
+          <div *ngIf="pTrainer.invalid && pTrainer.touched" class="error-text">
+            Select a trainer
+          </div>
+        </div>
+      </div>
+      <!-- ================= GRID END ================= -->
+
+
+      <!-- ================= ADD MODULES ================= -->
+      <!-- <div *ngIf="courseSelected" class="add-modules-wrapper">
+
+      <h3 class="section-title">Add Modules</h3>
+
+      <div class="module-row">
+
+        <div class="field small">
+          <label>Module NO</label>
+          <input type="text" value="1" disabled />
+        </div>
+
+        <div class="field large">
+          <label>Module Name *</label>
+          <input type="text" placeholder="Enter Module Name" />
+        </div>
+
+        <div class="field medium">
+          <label>Session Duration *</label>
+          <select>
+            <option>Select Duration</option>
+            <option>1 Hour</option>
+            <option>2 Hours</option>
+          </select>
+        </div>
+
+        <div class="field medium">
+          <label>Total Sessions *</label>
+          <input
+  type="number"
+  [(ngModel)]="modules[0].totalsession"
+  name="totalsession"
+  min="1"
+/>
+        </div>
+
+        <div class="field action">
+<button
+  type="button"
+  class="session-btn"
+  (click)="openSessionModal(modules[0])"
+>
+  Add Sessions Details
+</button>
+
+
+        </div>
+
+        <div class="field icon">
+          <img src="delete.jpg" />
+        </div>
+
+      </div>
+
+    </div> -->
+
+      <div *ngIf="courseSelected" class="add-modules-wrapper">
+
+        <h3 class="section-title">Add Modules</h3>
+
+
+
+        <div class="module-row" *ngFor="let module of modules; let i = index">
+
+          <!-- Module No -->
+          <div class="field small">
+            <label>Module NO</label>
+            <input type="text" [value]="i + 1" disabled />
+          </div>
+
+          <!-- Module Name -->
+          <div class="field large">
+            <label>Module Name *</label>
+            <input type="text" [value]="module.moduleName" disabled />
+          </div>
+
+          <!-- Duration -->
+          <div class="field medium">
+            <label>Session Duration *</label>
+            <input [value]="module.sessionDuration" disabled />
+          </div>
+
+
+          <!-- Total Sessions -->
+          <div class="field medium">
+            <label>Total Sessions *</label>
+            <input type="number" [(ngModel)]="module.totalsession" name="totalsession{{i}}" min="1" disabled />
+          </div>
+
+          <!-- Button -->
+          <div class="field action">
+            <button type="button" class="session-btn" (click)="openSessionModal(module)">
+              Add Sessions Details
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn-outline" (click)="goBack()">Back</button>
+        <button class="btn-primary">Create Batch</button>
+      </div>
+
+    </div>
+  </div>
+</form>
+
+<!-- add session -->
+<!-- ================= SESSION MODAL ================= -->
+<div class="modal-backdrop" *ngIf="SessionModal">
+
+  <div class="session-modal">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h3>Update Session Details</h3>
+      <button class="close-btn" (click)="closeSessionModal()">✕</button>
+    </div>
+
+    <!-- COURSE + MODULE INFO -->
+    <div class="modal-grid">
+
+      <div class="form-group">
+        <label>Course Name</label>
+        <input [value]="courseName" disabled />
+      </div>
+
+      <div class="form-group">
+        <label>Module Name</label>
+        <input [value]="currentModule?.moduleName" disabled />
+      </div>
+
+      <div class="form-group">
+        <label>Module Duration</label>
+        <input [value]="currentModule?.sessionDuration" disabled />
+      </div>
+
+      <div class="form-group">
+        <label>Total Sessions</label>
+        <input [value]="currentModule?.totalsession" disabled />
+      </div>
+
+    </div>
+
+    <hr />
+
+    <!-- SESSION DETAILS -->
+    <h4>Session Details</h4>
+
+    <div *ngFor="let s of sessionList; let i = index">
+
+      <h4>Session {{ i + 1 }}</h4>
+
+      <div class="session-grid">
+
+        <div class="form-group">
+          <label>Start Date *</label>
+          <input type="date" [(ngModel)]="s.startDate" name="startDate{{i}}" [min]="minDate" required />
+        </div>
+
+        <div class="form-group">
+          <label>Start Time *</label>
+          <input type="time" [(ngModel)]="s.startTime" name="startTime{{i}}" required />
+        </div>
+
+        <div class="form-group">
+          <label>End Date *</label>
+          <input type="date" [(ngModel)]="s.endDate" name="endDate{{i}}" [min]="s.startDate || minDate" required />
+        </div>
+
+        <div class="form-group">
+          <label>End Time *</label>
+          <input type="time" [(ngModel)]="s.endTime" name="endTime{{i}}" required />
+        </div>
+
+      </div>
+
+      <hr />
+    </div>
+
+
+
+    <!-- FOOTER -->
+    <div class="modal-footer">
+      <button class="update-session-btn" (click)="saveSessionDetails()">
+        Update Session Details
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-backdrop success-backdrop" *ngIf="showSuccessModal">
+  <div class="success-modal">
+    <img src="success.gif" class="icon-gif" />
+    <p>Batch Created Successfully!</p>
+    <button (click)="closeSuccessModal()">OK</button>
+  </div>
+</div>

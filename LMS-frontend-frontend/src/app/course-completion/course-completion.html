@@ -1,0 +1,492 @@
+  <div class="completion-top-container">
+  <div class="courses-header">
+    <h2>Course Completion</h2>
+
+    <div class="tabs">
+      <span (click)="activeTab='active'" [class.active]="activeTab==='active'">
+        Active Courses 
+      </span>
+      <span (click)="activeTab='completed'" [class.active]="activeTab==='completed'">
+        Completed Courses 
+      </span>
+
+    </div>
+  </div>
+
+<!-- Active course card -->
+<div class="active-course-container"  *ngIf="activeTab==='active'">
+    <div class="completed-wrapper">
+
+      <div class="completed-grid">
+
+        <div
+          class="completed-card"
+          *ngFor="let c of completedCourses; let i = index"
+          [class.active]="i === 0">
+
+          <img [src]="c.image" />
+
+          <div class="card-body">
+            <h3>{{ c.title }}</h3>
+
+            <p class="meta">
+              {{ c.timeline }}
+            </p>
+
+            <p class="timeline">
+              Batche No: {{c.batchNo}} 
+
+              Start Date : {{ c.startDate }}
+
+              End Date : {{ c.endDate }}
+            </p>
+           <!-- <p class="meta">
+            Course Completion %  
+           </p>
+              -->
+    <!-- <div class="progress-bar">
+  <span [style.width.%]="c.progress"></span>
+</div> -->
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+    <!-- Active course table -->
+<div class="session-container">
+
+  <div
+    class="session-card"
+    *ngFor="let s of activeSessions">
+
+    <div class="left">
+      <img src="/course.jpg" class="thumb" alt="course">
+
+      <div class="info">
+        <h3>
+          {{ s.courseName }}   {{ s.batchName }}  Module {{s.moduleId}} {{ s.moduleName }}  Session {{ s.sessionNo }}
+        </h3>
+
+        <div class="meta">
+          <span class="m">
+            <i class="fa-regular fa-clock"></i>
+             {{ s.startDateTime | date:'dd-MM-yyyy h:mm a' }}
+          </span>
+
+          <span class="m">
+            <i class="fa-regular fa-clock"></i>
+           {{ s.endDateTime | date:'dd-MM-yyyy h:mm a' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+
+      <!-- LIVE -->
+      <button
+        *ngIf="s.status === 'LIVE'"
+        class="btn-action">
+        Start Now
+      </button>
+
+      <span
+        *ngIf="s.status === 'LIVE'"
+        class="tag-live">
+        Live
+      </span>
+
+      <!-- UPCOMING -->
+      <button
+        *ngIf="s.status === 'UPCOMING'"
+        class="btn-soon">
+        Starts in
+         </button>
+  <span class="time">{{ s.countdown }}</span>
+
+
+
+      <!-- COMPLETED -->
+<button
+  *ngIf=" s.status === 'COMPLETED'"
+  class="btn-complete"
+  [disabled]="s.reportSubmitted"
+  (click)="openCompletionModal(s)">
+  {{ s.reportSubmitted ? 'Completed' : 'Mark As Complete' }}
+</button>
+
+
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- bottom-table -->
+    <!-- <div class="batch-table-container">
+
+  <h2 class="header-title">Batch Details</h2>
+
+  <table class="batch-table">
+
+    <thead>
+      <tr>
+        <th>Batch Number</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Total Students</th>
+        <th>Completion %</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr>
+        <td class="course-name">
+          <i class="fa-solid fa-graduation-cap"></i>
+          CAPM® Certification Training Batch 1
+        </td>
+
+        <td>26-12-2025</td>
+        <td>26-01-2026</td>
+        <td>12</td>
+
+        <td class="green">65%</td>
+
+        <td>
+          <span class="status inprogress">In Progress</span>
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td class="course-name">
+          <i class="fa-solid fa-graduation-cap"></i>
+          CAPM® Certification Training Batch 2
+        </td>
+
+        <td>26-12-2025</td>
+        <td>26-01-2026</td>
+        <td>12</td>
+
+        <td class="green-light">55%</td>
+
+        <td>
+          <span class="status inprogress">In Progress</span>
+        </td>
+      </tr>
+
+
+
+      <tr>
+        <td class="course-name">
+          <i class="fa-solid fa-graduation-cap"></i>
+          CAPM® Certification Training Batch 3
+        </td>
+
+        <td>26-12-2025</td>
+        <td>26-01-2026</td>
+        <td>12</td>
+
+        <td class="green-dim">45%</td>
+
+        <td>
+          <span class="status inprogress">In Progress</span>
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+</div> -->
+   </div>
+
+
+
+<!-- completed course section -->
+      <div class="completed-course-wrapper" *ngIf="activeTab==='completed'">
+      <div class="completed-wrapper" >
+
+      <div class="completed-grid">
+
+       <div
+  class="completed-card"
+  *ngFor="let c of completedCourses1; let i = index"
+  [class.active]="i === 0"
+  (click)="selectCompletedCourse(c)">
+
+          <img [src]="c.image" />
+
+          <div class="card-body">
+            <h3>{{ c.title }}</h3>
+
+            <p class="meta">
+              {{ c.timeline }}
+            </p>
+
+            <p class="timeline">
+               Batche No: {{c.batchNo}} 
+
+              Start Date : {{ c.startDate }}
+
+              End Date : {{ c.endDate }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+<!-- TRAINING CONTENT (Same as Trainee) -->
+<div class="training-card"
+     *ngIf="showTrainingContent">
+
+  <div class="header">
+    <h2>{{ selectedCompletedCourse?.title }}</h2>
+
+    <div class="filters">
+
+      <!-- MODULE -->
+      <div class="field">
+        <label>Select Module *</label>
+
+        <select [(ngModel)]="selectedModule"
+                (change)="onModuleChange()">
+
+          <option value="">Select Module</option>
+
+          <option *ngFor="let m of modules"
+                  [value]="m.moduleNo">
+            {{ m.moduleName }}
+          </option>
+
+        </select>
+      </div>
+
+      <!-- SESSION -->
+      <div class="field">
+        <label>Select Session *</label>
+
+        <select [(ngModel)]="selectedSession"
+                (change)="onSessionChange()">
+
+          <option value="">Select Session</option>
+
+          <option *ngFor="let s of sessions"
+                  [value]="s.sessionReportId">
+
+            Session {{ s.sessionNo }}
+
+          </option>
+
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RECORDING -->
+  <div class="content">
+
+    <div class="recording">
+
+      <h3>Recording Session</h3>
+
+      <div class="video-card">
+
+        <div class="thumbnail">
+          <img src="/course.jpg">
+          <span class="duration">
+            {{ recording?.duration || '0 min' }}
+          </span>
+        </div>
+
+        <div class="video-info">
+          <h4>
+            {{ recording?.title || 'No Recording Available' }}
+          </h4>
+
+      <button class="watch-btn"
+        *ngIf="recording"
+        (click)="playVideo()">
+  WATCH NOW
+</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="documents">
+
+      <h3>Document Library</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Uploaded By</th>
+            <th>Upload Date</th>
+            <th>File Size</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let doc of documents">
+
+            <td>{{ doc.name }}</td>
+            <td>{{ doc.uploadedBy }}</td>
+            <td>{{ doc.date }}</td>
+            <td>{{ doc.size }}</td>
+            <td><button class="download-btn"
+        (click)="downloadDocument(doc)">
+  Download
+</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🎥 VIDEO PLAYER -->
+<div class="video-player"
+     *ngIf="showVideoPlayer && recording">
+
+  <div class="player-header">
+    <h3>{{ recording.title }}</h3>
+    <button (click)="closeVideo()">✖</button>
+  </div>
+
+  <video width="100%"
+         height="420"
+         controls
+         autoplay>
+
+    <source
+      [src]="recording.videoUrl"
+      type="video/mp4">
+
+    Your browser does not support video playback.
+
+  </video>
+
+</div>
+</div>
+</div>
+
+  <!-- BACKDROP -->
+<div class="modal-backdrop" *ngIf="showCompletionModal" (click)="closeCompletionModal()"></div>
+
+<!-- MODAL -->
+<div class="completion-modal" *ngIf="showCompletionModal">
+
+  <!-- HEADER -->
+  <div class="modal-header">
+    <h3>Session Completion</h3>
+    <span class="close" (click)="closeCompletionModal()">×</span>
+  </div>
+
+  <!-- SESSION DETAILS -->
+  <div class="completion-grid">
+
+    <div class="field">
+      <label>Course Name</label>
+      <input [value]="sessionData.courseName" disabled />
+    </div>
+
+    <div class="field">
+      <label>Module Name</label>
+      <input [value]="sessionData.moduleName" disabled />
+    </div>
+
+    <div class="field">
+  <label>Batch Name</label>
+  <input [value]="sessionData.batchName" disabled />
+</div>
+
+    <div class="field">
+      <label>Session Title</label>
+      <input [value]="sessionData.sessionTitle" disabled />
+    </div>
+
+  </div>
+
+
+
+  <!-- ATTENDANCE -->
+  <h4 class="section-title">Mark Student Attendance</h4>
+
+  <div class="attendance-grid">
+    <div
+      class="attendance-card"
+      *ngFor="let s of sessionData.attendance">
+
+      <span>{{ s.name }}</span>
+
+      <div class="actions">
+        <button
+          class="present"
+          [class.active]="s.present"
+          (click)="s.present = true">
+          ✓
+        </button>
+
+        <button
+          class="absent"
+          [class.active]="!s.present"
+          (click)="s.present = false">
+          ✕
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ATTACH DOCUMENT -->
+<!-- ATTACH DOCUMENT -->
+<h4 class="section-title">Attach Document</h4>
+
+<div class="upload-box" (click)="fileInput.click()">
+  <div class="upload-icon">📤</div>
+  <p><span>Click here</span> to upload or drop files here</p>
+
+  <input
+    #fileInput
+    type="file"
+    multiple
+    (change)="onFileSelect($event)"
+  />
+</div>
+
+<!-- Uploaded Files -->
+<div class="uploaded-files">
+  <div class="file" *ngFor="let f of sessionData.attachments">
+    {{ f.name }}
+    <span (click)="removeFile(f)">✕</span>
+  </div>
+</div>
+
+
+  <!-- FOOTER -->
+  <button class="modal-submit" (click)="submitCompletion()">
+    Mark As Complete
+  </button>
+
+</div>
+ 

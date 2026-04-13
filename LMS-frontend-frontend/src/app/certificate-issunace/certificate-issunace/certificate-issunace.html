@@ -1,0 +1,337 @@
+<div class="issunace-wrapper">
+ 
+  <!-- HEADER -->
+  <div class="header-container">
+    <h2 class="management-header">Certificate Dashboard</h2>
+  </div>
+ 
+  <hr class="divider" />
+ 
+  <!-- TABS -->
+  <div class="tabs">
+    <span
+      (click)="setTab('active')"
+      [class.active]="activeTab === 'active'"
+    >
+      Certificate Issuance
+    </span>
+ 
+    <!-- <span
+      (click)="setTab('completed')"
+      [class.active]="activeTab === 'completed'"
+    >
+      Completion Verification
+    </span> -->
+  </div>
+ 
+  <!-- ================= CERTIFICATE ISSUNACE ================= -->
+ 
+  <div class="certificate-issunace" *ngIf="activeTab === 'active'">
+     <div class="for-gap">
+    <!-- CARDS -->
+    <div class="cards-container">
+      <div class="card" *ngFor="let card of cards">
+        <div class="card-header">
+          <div class="icon">
+            <img [src]="card.image" />
+          </div>
+          <div class="title">{{ card.title }}</div>
+        </div>
+ 
+        <div class="card-body">
+          <div class="value">{{ card.value }}</div>
+        </div>
+ 
+        <div class="card-footer">
+          Update: Last updated today
+        </div>
+      </div>
+    </div>
+ 
+    <!-- TABLE -->
+    <div class="table-wrapper">
+ 
+      <div class="table-header">
+        <h3>Certificate Issuance Tracking</h3>
+ 
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input placeholder="Search using Name, ID" />
+        </div>
+      </div>
+ 
+      <table class="tracking-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Course Name</th>
+            <th>Batch</th>
+            <th>Trainer</th>
+            <th>Attendance %</th>
+            <!-- <th>Quiz Pass %</th> -->
+            <th>Eligibility</th>
+            <th>Certificate Status</th>
+          </tr>
+        </thead>
+ 
+        <tbody>
+          <tr *ngFor="let r of records">
+            <td>{{ r.student }}</td>
+            <td class="link">{{ r.course }}</td>
+            <td>{{ r.batch }}</td>
+            <td>{{ r.trainer }}</td>
+ 
+            <td [class]="attendanceClass(r.attendance)">
+              {{ r.attendance }}%
+            </td>
+ 
+            <!-- <td [class]="quizClass(r.quiz)">
+              {{ r.quiz }}%
+            </td> -->
+ 
+            <td>
+              <span [class.green]="r.eligible" [class.red]="!r.eligible">
+                {{ r.eligible ? 'Eligible' : 'Not Eligible' }}
+              </span>
+            </td>
+ 
+            <td>
+              <span *ngIf="r.status === 'Issued'" class="green">
+                Issued
+             
+              </span>
+            <span *ngIf="r.status === 'Rejected'" class="red">Rejected</span>
+              <span *ngIf="r.status === 'Pending'" class="orange">
+                Pending
+              </span>
+ 
+              <div *ngIf="r.status === 'Action'" class="action-btns">
+<button
+  class="issue-btn"
+  (click)="openIssueModal(r); $event.stopPropagation()">
+  Issue
+</button>
+ 
+<button
+  class="reject-btn"
+  (click)="openRejectModal(r); $event.stopPropagation()">
+  Reject
+</button>
+ 
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+ 
+    </div>
+  </div>
+</div>
+  <!-- ================= COMPLETION VERIFICATION ================= -->
+  <div class="completion-verification" *ngIf="activeTab === 'completed'">
+ 
+    <div class="verification-wrapper">
+ 
+  <!-- Header -->
+  <div class="header-bar">
+    <h3>Completion Verification</h3>
+ 
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input placeholder="Search using Name, ID" />
+    </div>
+  </div>
+ 
+  <!-- Filter -->
+  <div class="filter-row">
+    <select [(ngModel)]="selectedCourse">
+      <option *ngFor="let c of courses" [value]="c">
+        {{ c }}
+      </option>
+    </select>
+  </div>
+ 
+  <!-- Table -->
+  <table class="verification-table">
+    <thead>
+      <tr>
+        <th>Course Name</th>
+        <th>Batch</th>
+        <th>Trainer</th>
+        <th>Total Students</th>
+        <th>Eligible Students</th>
+        <th>Attendance %</th>
+        <!-- <th>Quiz Pass %</th> -->
+        <th>Completion %</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+ 
+    <tbody>
+      <tr *ngFor="let r of records1">
+        <td class="link">{{ r.course }}</td>
+        <td>{{ r.batch }}</td>
+        <td>{{ r.trainer }}</td>
+        <td>{{ r.total }}</td>
+        <td>{{ r.eligible }}</td>
+ 
+        <td class="green">{{ r.attendance }}%</td>
+        <!-- <td class="green">{{ r.quiz }}%</td> -->
+        <td class="green">{{ r.completion }}%</td>
+ 
+        <td>
+          <button class="details-btn" (click)="openDetails(r)">
+  View Details
+</button>
+ 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+ 
+</div>
+ 
+ 
+  </div>
+  <div class="modal-backdrop" *ngIf="showDetails">
+ 
+  <div class="details-modal">
+ 
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h3>Completion Verification Details</h3>
+      <span class="close-btn" (click)="closeDetails()">✕</span>
+    </div>
+ 
+    <!-- FORM ROW -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Course Name</label>
+        <input [value]="selectedRow?.course" disabled />
+      </div>
+ 
+      <div class="form-group">
+        <label>Batch</label>
+        <input [value]="selectedRow?.batch" disabled />
+      </div>
+ 
+      <div class="form-group">
+        <label>Trainer</label>
+        <input [value]="selectedRow?.trainer" disabled />
+      </div>
+ 
+      <div class="form-group">
+        <label>Overall Quiz %</label>
+        <input value="88%" class="success-input" disabled />
+      </div>
+    </div>
+ 
+    <hr class="section-divider" />
+ 
+    <!-- STUDENTS HEADER -->
+    <div class="students-header">
+      <h4>Students List</h4>
+ 
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input placeholder="Search using Name, ID" />
+      </div>
+    </div>
+ 
+    <!-- TABLE -->
+    <table class="students-table">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Attendance %</th>
+          <th>Quiz Evaluation %</th>
+          <th>Certificate Eligibility</th>
+          <th>Trainer Approval</th>
+          <th>Certificate Status</th>
+        </tr>
+      </thead>
+ 
+      <tbody>
+        <tr *ngFor="let s of records">
+          <td class="link">{{ s.student }}</td>
+          <td class="green">{{ s.attendance }}%</td>
+          <td class="green">{{ s.quiz }}%</td>
+          <td class="green">Eligible</td>
+          <td class="green">Approved</td>
+          <td class="green">Issued</td>
+        </tr>
+      </tbody>
+    </table>
+ 
+  </div>
+</div>
+ 
+<!-- ================= ISSUE CERTIFICATE MODAL ================= -->
+<div class="modal-backdrop" *ngIf="showIssueModal">
+ 
+  <div class="issue-modal">
+ 
+    <!-- Header -->
+    <div class="modal-header">
+      <h3>Select Reason</h3>
+      <span class="close-btn" (click)="closeIssueModal()">✕</span>
+    </div>
+ 
+    <!-- Reason -->
+    <div class="form-group">
+      <label>Reason <span class="required">*</span></label>
+      <select>
+        <option value="">Select The Reason</option>
+        <option>Completed Successfully</option>
+        <option>Trainer Approved</option>
+        <option>Manual Override</option>
+      </select>
+    </div>
+ 
+    <!-- Remarks -->
+    <div class="form-group">
+      <label>Remarks</label>
+      <textarea placeholder="Enter Remarks"></textarea>
+    </div>
+ 
+    <!-- Action -->
+<button
+  class="issue-submit-btn"
+  (click)="confirmIssueCertificate()">
+  Issue Certificate
+</button>
+ 
+ 
+  </div>
+</div>
+<!-- ================= REJECT CERTIFICATE MODAL ================= -->
+<div class="modal-backdrop" *ngIf="showRejectModal">
+  <div class="issue-modal">
+    <div class="modal-header">
+      <h3>Reject Certificate</h3>
+      <span class="close-btn" (click)="closeRejectModal()">✕</span>
+    </div>
+ 
+    <div class="form-group">
+      <label>Reason <span class="required">*</span></label>
+      <select [(ngModel)]="rejectReason">  <!-- ✅ bind reason -->
+        <option value="">Select The Reason</option>
+        <option value="Attendance Not Met">Attendance Not Met</option>
+        <option value="Trainer Not Approved">Trainer Not Approved</option>
+        <option value="Incomplete Course">Incomplete Course</option>
+      </select>
+    </div>
+ 
+    <div class="form-group">
+      <label>Remarks</label>
+      <textarea [(ngModel)]="rejectRemarks"></textarea>  <!-- ✅ bind remarks -->
+    </div>
+ 
+    <button class="reject-btn" (click)="confirmRejectCertificate()">  <!-- ✅ call method -->
+      Reject Certificate
+    </button>
+  </div>
+</div>
+ 
+ 
+</div>

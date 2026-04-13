@@ -1,0 +1,118 @@
+<div class="main-container">
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+
+    <div class="card-header">
+      <div class="icon">
+        <i class="fa-solid" [ngClass]="card.icon"></i>
+      </div>
+
+      <span class="card-title">{{ card.title }}</span>
+
+      <span 
+        *ngIf="card.change"
+        class="badge"
+        [ngClass]="{
+          'badge-up': card.changeType === 'up',
+          'badge-down': card.changeType === 'down'
+        }"
+      >
+        {{ card.change }}
+      </span>
+    </div>
+
+    <div class="card-value">
+      {{ card.value }}
+      <span *ngIf="card.currency"> {{ card.currency }}</span>
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+
+  </div>
+</div>
+
+
+
+ <div class="table-card">
+
+  
+  <div class="table-header">
+    <h3>Individual Trainee Payments</h3>
+<!-- 
+    <div class="header-actions">
+
+      <button class="export-btn">Export Report</button>
+    </div> -->
+  </div>
+
+  <!-- TABLE -->
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" /></th>
+        <th>Transaction ID</th>
+        <th>Trainee Name</th>
+        <th>Email ID</th>
+        <th>Contact No</th>
+        <th>Batch Name</th>
+        <th>Payment Date</th>
+        <th>Payment Method</th>
+        <th>Amount To Pay</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- <tr *ngFor="let p of payments">
+        <td><input type="checkbox" /></td>
+        <td class="link">{{ p.transactionId }}</td>
+        <td class="link">{{ p.traineeName }}</td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.contact }}</td>
+        <td>{{ p.batch }}</td>
+        <td>{{ p.date }}</td>
+        <td class="method">{{ p.method }}</td>
+        <td class="amount">{{ p.amount }}</td>
+        <td>
+          <span 
+            class="status"
+            [ngClass]="{
+              'paid': p.status === 'Paid',
+              'failed': p.status === 'Failed',
+              'refunded': p.status === 'Refunded'
+            }"
+          >
+            {{ p.status }}
+          </span>
+        </td>
+      </tr> -->
+    </tbody>
+  </table>
+
+  <!-- FOOTER -->
+  <div class="table-footer">
+    <div class="rows">
+      Show
+      <select>
+        <option>10</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+      <button disabled>&lt;</button>
+      <button class="active">1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <span>...</span>
+      <button>10</button>
+      <button>&gt;</button>
+    </div>
+  </div>
+
+</div>
+</div>

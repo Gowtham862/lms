@@ -1,0 +1,289 @@
+/* HEADER */
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0b3a82;
+  margin-bottom: 10px;
+}
+
+/* TOP BAR */
+.dashboard-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0 22px;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.tab {
+  font-size: 15px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  padding-bottom: 6px;
+  text-decoration: none;
+}
+
+.tab.active {
+  color: #0b3a82;
+  border-bottom: 2px solid #0b3a82;
+}
+
+/* MONTH BUTTON */
+.month-btn {
+  background: #0b3a82;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+ 
+/* card */
+.card {
+  background: #ffffff;
+  border: 1px solid #e5edf6;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+ 
+/* header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.card-header .icon {
+  width: 32px;
+  height: 32px;
+  background: #f2f6fb;
+  border-radius: 6px;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+ 
+.card-header .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0f172a;
+}
+ 
+/* body */
+.card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+ 
+.value {
+  font-size: 25px;
+  font-weight: 600;
+  color: #020617;
+}
+ 
+/* badge */
+.badge {
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+ 
+.badge.info {
+  background: #e8f0fb;
+  color: #1e40af;
+}
+ 
+.badge.success {
+  background: #eaf7ec;
+  color: #16a34a;
+}
+ 
+.badge.danger {
+  background: #ffecec;
+  color: #dc2626;
+}
+ 
+.icon {
+  width: 32px;
+  height: 32px;
+  background: #f2f6fb;
+  border-radius: 6px;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+ 
+ 
+/* footer */
+.card-footer {
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #eaeef4;
+  font-size: 12px;
+  color: #9ca3af;
+}
+/* STATUS COLORS */
+.statusPending {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.statusCompleted {
+  color: #22c55e;
+  font-weight: 500;
+}
+
+.statusAssigned {
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.statusActive {
+  color: #0b3a82;
+  font-weight: 600;
+}
+
+/* PENDING DURATION */
+.danger {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.neutral {
+  color: #111827;
+}
+
+/* LINKS */
+.link {
+  color: #062f6f;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* TABLE CARD */
+.table-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  border: 1px solid #e5ecf6;
+  margin-top: 24px;
+}
+
+/* HEADER */
+.table-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.table-top h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.export-btn {
+  background: #062f6f;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* TABLE */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.quiz-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.quiz-table thead th {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  padding: 14px 12px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.quiz-table tbody td {
+  font-size: 14px;
+  color: #1f2937;
+  padding: 16px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+/* FOOTER */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.table-footer select {
+  margin: 0 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+.pagination {
+  display: flex;
+  gap: 6px;
+}
+
+.pagination button {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background: #062f6f;
+  color: #ffffff;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+}

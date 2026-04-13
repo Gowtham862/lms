@@ -1,0 +1,244 @@
+.form-page {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+}
+.bread{
+  font-size: 16px;
+  border: transparent;
+  background-color: transparent;
+  color: #062f6f;
+  font-weight: 600;
+  cursor: pointer;
+}
+.breadcrumb {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.breadcrumb span {
+  color: #062f6f;
+  font-weight: 600;
+}
+
+.section-title {
+  margin: 24px 0 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.photo-upload {
+  margin-bottom: 20px;
+}
+.photo-box {
+  width: 120px;
+  height: 120px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* ✅ keeps image inside box */
+}
+.photo-box i {
+  font-size: 24px;
+  color: #888;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.form-grid div,
+.full-width {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+input, select, textarea {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.full-width {
+  margin-top: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.btn-primary {
+  background: #062f6f;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-outline {
+  background: #fff;
+  border: 1px solid #062f6f;
+  padding: 10px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.btn-danger {
+  background: #fff;
+  color: #ff3b30;
+  border: 1.5px solid #ff3b30;
+  padding: 10px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-danger:hover {
+  background: #ff3b30;
+  color: #fff;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* SUCCESS MODAL */
+.success-modal {
+  background: #fff;
+  width: 260px;              /* reduced width */
+  padding: 18px 15px;        /* less padding */
+  border-radius: 10px;       /* softer corners */
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  animation: popup 0.25s ease;
+}
+
+/* GIF ICON */
+.success-modal .icon-gif {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+.success-modal p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* BUTTON */
+.success-modal button {
+  padding: 6px 18px;
+  border: none;
+  background: #1c225b;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+@media (max-width: 1024px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.multi-select {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* BOX (same as other inputs) */
+.select-box {
+  height: 38px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 12px;
+  background: #fff;
+  font-size: 14px;
+  cursor: pointer;
+
+  display: flex !important;      
+  flex-direction: row !important; 
+  align-items: center !important;  
+  justify-content: space-between;  
+}
+
+
+.select-box span:first-child {
+   color: #6b7280;
+}
+
+
+.arrow {
+  font-size: 12px;
+  color: #6b7280;
+  margin-left: 8px;
+  flex-shrink: 0;  
+}
+
+.dropdown-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  margin-top: 4px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 10;
+  padding: 8px 0;
+}
+
+/* ITEMS */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f3f4f6;
+}
+
+/* CHECKBOX */
+.dropdown-item input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.required{
+  color: #ff3b30;
+}

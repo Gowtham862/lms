@@ -1,0 +1,137 @@
+<div class="modal-backdrop" *ngIf="show" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h3>CAPM® - Arabic Course - Module 1 Batch 1</h3>
+      <span class="close" (click)="closeModal()">×</span>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="settings">
+      <input type="datetime-local" [(ngModel)]="quizDateTime">
+      <label><input type="checkbox" [(ngModel)]="shuffleQuestions"> Shuffle Questions</label>
+      <label><input type="checkbox" [(ngModel)]="shuffleAnswers"> Shuffle Answers</label>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="quiz-grid">
+
+      <!-- QUESTION LIST -->
+      <div class="question-list">
+        <h4>Question</h4>
+
+        <div *ngFor="let q of questions; let i = index" class="question-item"
+          [class.active]="i === selectedQuestionIndex" (click)="selectQuestion(i)">
+
+          <span>{{ i + 1 }}. {{ q.questionText || 'Type your question here' }}</span>
+
+          <span class="remove-question" (click)="removeQuestion(i); $event.stopPropagation()">
+            ✕
+          </span>
+        </div>
+
+        <button class="add-btn" (click)="addQuestion()">Add Question</button>
+      </div>
+
+
+      <!-- ANSWER TYPE -->
+      <div class="answer-type">
+        <h4>Answer type</h4>
+
+        <label class="type-box" [class.active]="activeQuestion.type==='TF'">
+          <input type="radio" (change)="changeType('TF')" [checked]="activeQuestion.type==='TF'">
+          True or False
+        </label>
+
+        <label class="type-box" [class.active]="activeQuestion.type==='MCQ'">
+          <input type="radio" (change)="changeType('MCQ')" [checked]="activeQuestion.type==='MCQ'">
+          Multiple Choice
+        </label>
+
+        <label class="type-box" [class.active]="activeQuestion.type==='STATEMENT'">
+          <input type="radio" (change)="changeType('STATEMENT')" [checked]="activeQuestion.type==='STATEMENT'">
+          Statement
+        </label>
+      </div>
+
+      <!-- ANSWERS -->
+      <div class="answers">
+        <h4>Question</h4>
+
+        <textarea [(ngModel)]="activeQuestion.questionText" placeholder="Type your question here">
+        </textarea>
+
+        <div *ngFor="let opt of activeQuestion.options; let i = index" class="answer-option">
+
+          <!-- ✔ Correct answer selector (TRAINER) -->
+          <input type="radio" name="correctAnswer{{ selectedQuestionIndex }}" [checked]="opt.isCorrect"
+            (change)="selectCorrectAnswer(i)">
+
+          <!-- Option text -->
+          <input [(ngModel)]="opt.text">
+
+          <!-- Remove choice (only for MCQ / STATEMENT) -->
+          <span *ngIf="activeQuestion.type !== 'TF'" (click)="removeChoice(i)">
+            ✕
+          </span>
+        </div>
+
+
+        <button *ngIf="activeQuestion.type !== 'TF'" class="primary" (click)="addChoice()">
+          Add Choice
+        </button>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="actions">
+      <button class="primary" (click)="closeModal()">Close</button>
+      <button class="primary" (click)="saveQuiz()">Save Quiz</button>
+      <button class="primary" (click)="openPreview()">Preview</button>
+
+    </div>
+
+  </div>
+
+  <!-- ================= PREVIEW MODAL ================= -->
+  <div class="modal-backdrop" *ngIf="showPreview" (click)="closePreview()">
+    <div class="modal preview-modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h3>Quiz Preview</h3>
+        <span class="close" (click)="closePreview()">×</span>
+      </div>
+
+      <div class="preview-grid">
+
+        <!-- LEFT QUESTION LIST -->
+        <div class="preview-left">
+          <div *ngFor="let q of questions; let i = index" class="preview-question" [class.active]="i === previewIndex"
+            (click)="previewIndex = i">
+
+            {{ i + 1 }}. {{ q.questionText }}
+          </div>
+        </div>
+
+        <!-- RIGHT QUESTION VIEW -->
+        <div class="preview-right">
+          <h4>
+            {{ previewIndex + 1 }}.
+            {{ questions[previewIndex].questionText }}
+          </h4>
+
+          <div *ngFor="let opt of questions[previewIndex].options" class="preview-option">
+
+            <input type="radio" disabled>
+            {{ opt.text }}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

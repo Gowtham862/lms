@@ -1,0 +1,116 @@
+<header class="header">
+    <div class="header-container">
+
+        <div class="logo">
+            <img src="assets/lmslogo.png" alt="BAYAN">
+        </div>
+
+        <div class="mobile-menu-btn" (click)="toggleMobileMenu()">
+            ☰
+        </div>
+
+        <!-- MOBILE MENU PANEL -->
+        <div class="mobile-menu" [class.open]="mobileMenuOpen">
+
+            <button class="m-link" routerLink="/landing-page" routerLinkActive="active"
+                (click)="closeMenu()">Home</button>
+            <button class="m-link" routerLink="/about-us" routerLinkActive="active" (click)="closeMenu()">About
+                Us</button>
+
+            <p class="m-title">Learning Programs</p>
+            <!-- <button class="m-link" routerLink="/course-page" (click)="closeMenu()">CAPM® – Arabic Course</button>
+  <button class="m-link" routerLink="/course" (click)="closeMenu()">CAPM® – Arabic Course</button> -->
+
+            <hr>
+
+
+            <div class="m-lang">
+                <span>ENG</span> | <span>AR</span>
+            </div>
+
+        </div>
+
+
+        <div class="middle-group">
+
+            <div class="header-btn">
+                <button class="h-btn" routerLink="/landing-page" routerLinkActive="active">Home</button>
+                <button class="h-btn" routerLink="/about-us" routerLinkActive="active">About Us</button>
+
+
+                <div class="dropdown">
+                    <button class="dropdown-btn">Learning Programs <span class="arrow">▾</span></button>
+
+                    <!-- <div class="dropdown-content"> -->
+                    <!-- <a routerLink="/course" routerLinkActive="active">CAPM® - Arabic Course</a>
+    <a routerLink="/course" routerLinkActive="active">CAPM® - Arabic Course</a>
+    <a routerLink="/course" routerLinkActive="active">CAPM® - Arabic Course</a> -->
+                    <!-- </div> -->
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <nav class="nav-links">
+            <a class="outline-btn" *ngIf="show" routerLink="/dashboard">Dashboard</a>
+
+            <div class="dropdown">
+                <button class="dropdown-btn" *ngIf="show1"> Hey {{ getUserName()}} <span class="arrow">▾</span></button>
+
+                <!-- <div class="dropdown-content">
+
+                    <a *ngIf="show1" routerLink="/">Profile</a>
+                    <a (click)="logout()" *ngIf="show1" routerLink="/landing-page">Logout</a>
+                </div> -->
+                <div class="dropdown-content">
+
+                    <!-- <a *ngIf="show1" routerLink="/">
+    <i class="fa-regular fa-user"></i>
+     Profile
+  </a> -->
+
+                    <a *ngIf="show1" (click)="logout()" routerLink="/landing-page">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+            <a class="outline-btn" *ngIf="!show1" routerLink="/login">Login</a>
+
+
+            <div class="lang-box">
+
+                <span [class.lang-active]="activeLang === 'en'" [class.lang-inactive]="activeLang !== 'en'"
+                    (click)="changeLang('en')">
+                    ENG
+                </span>
+
+                |
+
+                <span [class.lang-active]="activeLang === 'ar'" [class.lang-inactive]="activeLang !== 'ar'"
+                    (click)="changeLang('ar')">
+                    AR
+                </span>
+
+            </div>
+
+        </nav>
+
+    </div>
+    <div class="ad-bar" *ngIf="showAd">
+        <div class="ad-content">
+            <span class="ad-text">
+                {{ timeLeft }} left. {{ adText }}
+            </span>
+
+            <button class="ad-btn" routerLink="/course">Enroll Now</button>
+        </div>
+    </div>
+
+
+</header>

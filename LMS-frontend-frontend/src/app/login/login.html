@@ -1,0 +1,97 @@
+<div class="page">
+
+  <!-- PAGE BACKGROUND -->
+  <div class="page-bg">
+    <div class="page-bg-left"></div>
+    <div class="page-bg-right"></div>
+  </div>
+
+  <!-- LOGIN CARD -->
+  <div class="login-card">
+
+    <!-- LEFT SIDE -->
+    <div class="card-left">
+
+      <!-- LOGO + TITLE -->
+      <div class="brand">
+        <img src="/lmslogo.png" class="logo" />
+        <h1>AI Bayan Learning</h1>
+      </div>
+
+      <h2 class="subt">Welcome Back to AI Bayan Learning</h2>
+      <p class="subtitle">
+        Log in to continue your learning journey.
+      </p>
+
+
+     <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+        <p *ngIf="message" [ngClass]="{'error-message': message!=='Login Successful', 'success-message': message==='Login Successful'}" class="message">
+        {{ message }}
+      </p>
+      <!-- EMAIL -->
+      <fieldset class="input-field">
+        <legend>Email</legend>
+        <input type="email" name="email" placeholder="Enter Your Email" [(ngModel)]="login.email" />
+      </fieldset>
+
+      <!-- PASSWORD -->
+      <fieldset class="input-field password-field">
+        <legend>Password</legend>
+        <input name="password" [type]="showPassword ? 'text' : 'password'" placeholder="Enter Your Password" [(ngModel)]="login.password"/>
+        <span class="eye" (click)="togglePassword()"></span>
+      </fieldset>
+
+      <div class="options">
+        <label class="remember">
+          <input type="checkbox" />
+          Remember me
+        </label>
+        <a class="forgot" routerLink="/forgot-password" >Forgot Password</a>
+      </div>
+
+      <!-- <button class="login-btn" type="submit"  [disabled]="loading">Login</button> -->
+
+      
+      <button
+        type="submit"
+        [disabled]="loading"
+        class="login-btn"
+      >
+        <span *ngIf="!loading">Login</span>
+        <span *ngIf="loading" class="loader-wrapper">
+          <span class="loader"></span>
+          Verifying email…
+        </span>
+      </button>
+ </form>
+      <p class="signup">
+        Don't have an account?
+        <span class="signup-link" routerLink="/signup">Sign up</span>
+      </p>
+
+
+      <!-- OR LOGIN WITH -->
+      <div class="divider">
+        <span>Or login with</span>
+      </div>
+
+      <div class="social-login">
+        <button class="social-btn">
+          <img src="/fb.png" />
+        </button>
+        <button class="social-btn">
+          <img src="/google.jpg" />
+        </button>
+        <button class="social-btn">
+          <img src="/apple-logo.png" />
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="card-right"></div>
+
+  </div>
+
+</div>

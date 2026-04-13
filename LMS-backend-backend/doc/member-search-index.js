@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.example.LMS.service","c":"Adminservice","l":"Adminservice()","u":"%3Cinit%3E()"},{"p":"com.example.LMS.service","c":"Adminservice","l":"saveadmin(Admin)","u":"saveadmin(com.example.LMS.Entity.Admin)"}];updateSearchResults();

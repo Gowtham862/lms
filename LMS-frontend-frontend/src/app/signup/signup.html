@@ -1,0 +1,163 @@
+<div class="page">
+
+  <!-- PAGE BACKGROUND -->
+  <div class="page-bg">
+    <div class="page-bg-left signup-bg-left"></div>
+    <div class="page-bg-right signup-bg-right"></div>
+  </div>
+
+  <!-- SIGNUP CARD -->
+  <div class="login-card signup-card">
+
+    <!-- LEFT IMAGE -->
+    <div class="card-right signup-image"></div>
+
+    <!-- RIGHT FORM -->
+    <div class="card-left">
+
+      <!-- BRAND -->
+      <div class="brand">
+        <img src="/lmslogo.png" class="logo" />
+        <h1>AI Bayan Learning</h1>
+      </div>
+
+      <h2>Create Your AI Bayan Learning Account</h2>
+      <p class="subtitle">
+        Join our live training programs and start learning with expert trainers.
+      </p>
+
+      <!-- SUCCESS MESSAGE -->
+      <!-- <div class="success-toast" *ngIf="showSuccess">
+         Account created successfully
+      </div> -->
+
+
+      <!-- FORM START -->
+      <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+          <p
+        *ngIf="message"
+        [ngClass]="{
+          'error-message':
+            message.includes('failed') ||
+            message.includes('not match') ||
+            message.includes('fill') ||
+            message.includes('must be')||
+            message.includes('email')||
+            message.includes('Unable to')||
+              message. includes('valid'),
+
+          'success-message': message.includes('Successful')
+        }"
+        class="message"
+      >
+        {{ message }}
+      </p>
+        <!-- NAME -->
+        <div class="row">
+          <fieldset class="input-field">
+            <legend>First Name</legend>
+            <input type="text" name="firstname" [(ngModel)]="user.firstname" />
+          </fieldset>
+
+          <fieldset class="input-field">
+            <legend>Last Name</legend>
+            <input type="text" name="lastname" [(ngModel)]="user.lastname" />
+          </fieldset>
+        </div>
+
+        <!-- EMAIL / PHONE -->
+        <div class="row">
+          <fieldset class="input-field">
+            <legend>Email</legend>
+            <input type="email" name="email" [(ngModel)]="user.email" email #email="ngModel" />
+          </fieldset>
+
+          <fieldset class="input-field">
+            <legend>Phone Number</legend>
+            <input type="text" name="phone" [(ngModel)]="user.phone" pattern="^[0-9]{10}$" #phone="ngModel" />
+          </fieldset>
+        </div>
+
+        <!-- EMAIL ERROR -->
+        <p class="error" *ngIf="email.invalid && email.touched">
+          Enter a valid email address
+        </p>
+
+        <!-- PHONE ERROR -->
+        <p class="error" *ngIf="phone.invalid && phone.touched">
+          Enter a valid 10-digit phone number
+        </p>
+
+        <!-- PASSWORD -->
+        <fieldset class="input-field">
+          <legend>Password</legend>
+          <input type="password" name="password" [(ngModel)]="user.password"  minlength="6"
+            #password="ngModel" />
+        </fieldset>
+
+        <!-- CONFIRM PASSWORD -->
+        <fieldset class="input-field">
+          <legend>Confirm Password</legend>
+          <input type="password" name="confirmPassword" [(ngModel)]="user.confirmPassword" 
+            #confirmPassword="ngModel" />
+        </fieldset>
+
+        <!-- PASSWORD MATCH ERROR -->
+        <p class="error" *ngIf="confirmPassword.touched && !passwordsMatch()">
+          Passwords do not match
+        </p>
+
+        <!-- TERMS -->
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" name="terms" [(ngModel)]="user.terms"  />
+            I agree to the
+            <span>Terms</span> and <span>Privacy Policies</span>
+          </label>
+        </div>
+<p class="error" *ngIf="!user.terms && signupForm.submitted">
+  You must accept Terms & Conditions
+</p>
+
+        <!-- SUBMIT BUTTON -->
+        
+        <!-- <button class="login-btn" type="submit" [disabled]="isLoading">
+          Create Account
+        </button> -->
+          <button
+        type="submit"
+        [disabled]="loading"
+        class="login-btn"
+      >
+        <span *ngIf="!loading">Create Account</span>
+        <span *ngIf="loading" class="loader-wrapper">
+          <span class="loader"></span>
+         Creating account...
+        </span>
+      </button>
+
+
+      </form>
+      <!-- FORM END -->
+
+      <!-- LOGIN LINK -->
+      <p class="signup">
+        Already have an account?
+        <span routerLink="/login">Login</span>
+      </p>
+
+      <!-- DIVIDER -->
+      <div class="divider">
+        <span>Or Sign up with</span>
+      </div>
+
+      <!-- SOCIAL LOGIN -->
+      <div class="social-login">
+        <button class="social-btn"><img src="/fb.png" /></button>
+        <button class="social-btn"><img src="/google.jpg" /></button>
+        <button class="social-btn"><img src="/apple-logo.png" /></button>
+      </div>
+
+    </div>
+  </div>
+</div>

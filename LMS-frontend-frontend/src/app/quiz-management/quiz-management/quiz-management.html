@@ -1,0 +1,81 @@
+<h2 class="page-title">Quiz Management</h2>
+
+<!-- COURSE TABS -->
+<div class="course-tabs">
+  <button
+    *ngFor="let course of courses"
+    [class.active]="activeCourse === course.id"
+    (click)="activeCourse = course.id">
+    {{ course.name }}
+  </button>
+</div>
+
+<hr />
+
+<!-- COMPLETED MODULE DETAILS -->
+<div class="card">
+  <h3>Completed Module Details</h3>
+
+  <div class="module-card" *ngFor="let module of completedModules">
+    <div class="module-left">
+      <img src="/course.jpg" />
+
+      <div>
+        <h4>{{ module.title }}</h4>
+
+        <div class="meta">
+          <span>⏱ {{ module.date }}</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="primary-btn" (click)="showCreateQuiz = true">
+  Create Quiz
+</button>
+
+<app-create-quiz
+  [show]="showCreateQuiz"
+  (close)="showCreateQuiz = false">
+</app-create-quiz>
+
+  </div>
+</div>
+
+<!-- QUIZ MANAGEMENT TABLE -->
+<div class="card">
+  <h3>Quiz Management</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Batch Number</th>
+        <th >Created Date</th>
+        <th>Last Date</th>
+        <th class="align">Total Students</th>
+        <th class="align">Completed Students</th>
+        <th class="align">Yet To Complete</th>
+        <th class="align">Quiz Completion %</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let q of quizStats">
+        <td class="link">{{ q.batch }}</td>
+        <td>{{ q.created }}</td>
+        <td>{{ q.last }}</td>
+        <td class="align">{{ q.total }}</td>
+        <td class="align">{{ q.completed }}</td>
+        <td class="align">{{ q.pending }}</td>
+        <td class="align"
+          [class.red]="q.percent < 60"
+          [class.orange]="q.percent >= 60">
+          {{ q.percent }}%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- <app-create-quiz
+  *ngIf="showCreateQuiz"
+  (close)="closeCreateQuiz()">
+</app-create-quiz> -->

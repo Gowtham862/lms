@@ -1,0 +1,61 @@
+<div class="quiz-page">
+
+  <!-- LEFT -->
+  <aside class="quiz-sidebar">
+    <h4>Upcoming Quizzes</h4>
+
+    <div class="question-grid">
+       <span
+    *ngFor="let q of qui; let i = index"
+    class="dot"
+    [ngClass]="getQuestionStatus(i)"
+    (click)="currentIndex = i"
+  >
+    {{ i + 1 }}
+  </span>
+    </div>
+
+    <div class="legend">
+      <p><span class="dot answered"></span> Answered</p>
+      <p><span class="dot not-answered"></span> Not Answered</p>
+      <p><span class="dot current"></span> Current Question</p>
+      <p><span class="dot pending"></span> Yet To Answer</p>
+    </div>
+  </aside>
+
+  <!-- RIGHT -->
+  <main class="quiz-main">
+
+    <div class="quiz-header">
+      <span>CAPM® Certification &gt; Module 4</span>
+      <span class="timer">{{ timeLeft }} <b>X</b></span>
+    </div>
+
+    <div class="question-box">
+      <h4>Question {{ currentIndex + 1 }}</h4>
+      <!-- <p>{{ currentQuestion?.question}}</p> -->
+
+      <label class="option" *ngFor="let ans of currentQuestion.answers">
+        <input   type="radio"
+      name="q{{ currentIndex }}"
+      [checked]="selectedAnswers[currentIndex] === ans.text"
+      (change)="selectAnswer(ans.text)" />
+       {{ ans.text }}
+      </label>
+    </div>
+
+    <div class="quiz-actions">
+      <button  class="prev"
+    (click)="prevQuestion()"
+    [disabled]="currentIndex === 0">Previous</button>
+      <button  class="submit"
+    *ngIf="currentIndex === qui.length - 1"
+    (click)="submitQuiz()">Submit</button>
+      <button   class="next"
+    (click)="nextQuestion()"
+    [disabled]="currentIndex === qui.length - 1">Next</button>
+    </div>
+
+  </main>
+
+</div>

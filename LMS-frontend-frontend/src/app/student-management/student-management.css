@@ -1,0 +1,276 @@
+.courses-header h2 {
+    color: #0b3a82;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.tabs span {
+  cursor: pointer;
+  padding-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+}
+
+.tabs .active {
+  color: #0b3a82;
+  border-bottom: 2px solid #0b3a82;
+}
+
+.courses-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px; 
+  gap: 24px;
+  transition: grid-template-columns 0.25s ease;
+}
+
+.btn-tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+ 
+.btn-tabs button {
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 1%;
+  color: #666;
+  padding: 8px;
+  background-color:white;
+  border: 0.3px solid #02122b;
+  border-radius: 6px;
+}
+ 
+.btn-tabs .active {
+  color: white;
+  background-color: #0b3a82;
+  border-bottom: 1px solid #0b3a82;
+}
+
+.btn-tabs-batch {
+  display: flex;
+  gap: 15px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+ 
+.btn-tabs-batch button {
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 1%;
+  color: #666;
+  padding: 8px;
+  background-color:white;
+  border: 0.3px solid #02122b;
+  border-radius: 4px;
+}
+ 
+.btn-tabs-batch .active {
+  color: white;
+  background-color: #0b3a82;
+  border-bottom: 1px solid #0b3a82;
+}
+
+/* table */
+.table-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+/* Header */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.table-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Search */
+.search-box {
+  position: relative;
+  /* width: 400px; */
+}
+
+.search-box i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.search-box input {
+  padding: 8px 12px 8px 38px;
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
+  font-size: 13px;
+  width: 400px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  text-align: left;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+  padding: 12px 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tbody td {
+  padding: 14px 8px;
+  font-size: 13px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+
+.name {
+  color: #0b3a82;
+  font-weight: 700;
+}
+
+.id {
+  color: #0b3a82;
+  font-weight: 700;
+}
+
+.attendance {
+  color: #ff3b00;
+  font-weight: 700;
+}
+
+.status {
+  color: #0b3a82;
+  font-weight: 700;
+}
+
+/* table footer */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.pagination {
+  display: flex;
+  gap: 6px;
+}
+
+.pagination button {
+ 
+  padding: 5px 9px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination .active {
+  background: #0f2a55;
+  color: white;
+}
+
+.low-attendance {
+  color: #dc2626; 
+  font-weight: 700;
+}
+
+.medium-attendance {
+  color: #f97316; 
+  font-weight: 700;
+}
+
+.high-attendance {
+  color: #16a34a; 
+  font-weight: 700;
+}
+
+.score-red,
+.text-red {
+  color: #ff3b00;
+  font-weight: 700;
+}
+
+.score-green,
+.text-green {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.review-btn {
+  background-color: #0a2e6e;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.review-btn:hover {
+  background-color: #08245a;
+}
+
+.text-green {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.text-red {
+  color: #ff3b00;
+  font-weight: 700;
+}
+
+.text-orange {
+  color: #f59e0b;
+  font-weight: 700;
+}
+
+.approve-btn {
+  background-color: #0a2e6e;
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background-color: #08245a;
+}
+table tbody td {
+  text-align: center;
+  vertical-align: middle;
+}
+table thead th {
+  text-align: center;
+}

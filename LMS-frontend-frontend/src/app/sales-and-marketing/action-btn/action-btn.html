@@ -1,0 +1,176 @@
+<div class="page-wrapper">
+
+  <!-- BREADCRUMB -->
+
+
+  <!-- CARD -->
+  <div class="card">
+      <div class="breadcrumb">
+    <span class="header-bread" (click)="goBack()">Interested Students ></span>
+    <span class="link">Yaqoob Y</span>
+  </div>
+
+    <!-- TITLE -->
+    <h3>Trainee Details</h3>
+
+    <!-- DETAILS GRID -->
+    <div class="grid">
+
+      <div class="form-group">
+        <label>Lead ID</label>
+        <input [value]="trainee.leadId" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Trainee Name</label>
+        <input [value]="trainee.name" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Email ID</label>
+        <input [value]="trainee.email" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Contact No</label>
+        <input [value]="trainee.contact" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Interested Course</label>
+        <input [value]="trainee.course" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Batch (Optional)</label>
+        <input [value]="trainee.batch" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Lead Source</label>
+        <input [value]="trainee.source" readonly>
+      </div>
+
+      <div class="form-group">
+        <label>Course Fees</label>
+        <input [value]="trainee.fees" readonly>
+      </div>
+
+    </div>
+
+    <!-- SALES UPDATE -->
+<div class="sales-update">
+
+  <h3 class="section-title">
+    Sales Update
+  </h3>
+
+  <div class="action-buttons">
+    <button class="btn green">
+      Enable Payment
+    </button>
+
+    <button class="btn blue">
+      Follow Up Reminder
+    </button>
+  </div>
+
+</div>
+
+
+    <div class="grid">
+
+      <div class="form-group">
+        <label>Date *</label>
+        <input type="date" [(ngModel)]="sales.date">
+      </div>
+
+      <div class="form-group">
+        <label>Current Status *</label>
+        <select [(ngModel)]="sales.status">
+          <option value="">Select Status</option>
+          <option>Yet To Connect</option>
+          <option>First Call</option>
+          <option>Follow Up Call</option>
+          <option>Payment Enabled</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Notes *</label>
+        <input [(ngModel)]="sales.notes" placeholder="Update Notes">
+      </div>
+
+      <div class="form-group">
+        <label>Next Status *</label>
+        <select [(ngModel)]="sales.nextStatus">
+          <option value="">Select Status</option>
+          <option>First Call</option>
+          <option>Follow Up Call</option>
+          <option>Enable Payment</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="action-row">
+
+    
+      <button class="btn dark">Update Notes</button>
+
+    </div>
+
+    <!-- JOURNEY -->
+    <h3 class="section-title">Trainee Journey</h3>
+
+    <div class="journey-table">
+
+      <table>
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>Date</th>
+            <th>Current Status</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="journeyList.length > 0">
+          <tr *ngFor="let j of journeyList">
+            <td>{{ j.sno }}</td>
+            <td>{{ j.date }}</td>
+            <td>{{ j.status }}</td>
+            <td>{{ j.notes }}</td>
+          </tr>
+        </tbody>
+
+        <tbody *ngIf="journeyList.length === 0">
+          <tr>
+            <td colspan="4" class="no-record">
+              No Records Found
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- FOOTER BUTTONS -->
+    <div class="footer">
+
+      <button class="btn red-outline">
+        Deactivate Trainee
+      </button>
+
+      <div class="right-btns">
+        <button class="btn light" (click)="goBack()">Back</button>
+        <button class="btn dark" (click)="saveChanges()">Save Changes</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

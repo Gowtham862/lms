@@ -1,0 +1,36 @@
+services:
+
+  mongodb:
+    image: mongo:6
+    container_name: lms-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - mongo-data:/data/db
+
+  lms-app:
+    build: ./LMS-backend-backend   
+    container_name: lms-springboot
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_APPLICATION_NAME: LMS
+      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongodb:27017/lmsjson?authSource=admin
+
+  frontend:
+    build: ./LMS-frontend-frontend 
+    container_name: lms-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - lms-app
+
+volumes:
+  mongo-data:

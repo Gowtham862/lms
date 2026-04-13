@@ -1,0 +1,39 @@
+<div class="timeline-card">
+
+  <!-- HEADER -->
+  <div class="timeline-header">
+
+  <!-- LEFT -->
+  <h3>Batches Timeline</h3>
+
+  <!-- CENTER -->
+  <div class="view-switch center">
+    <button
+      (click)="changeView('dayGridMonth')"
+      [class.active]="viewType === 'dayGridMonth'">
+      Monthly
+    </button>
+    <button
+      (click)="changeView('timeGridWeek')"
+      [class.active]="viewType === 'timeGridWeek'">
+      Weekly
+    </button>
+    <button
+      (click)="changeView('timeGridDay')"
+      [class.active]="viewType === 'timeGridDay'">
+      Daily
+    </button>
+  </div>
+
+  <!-- RIGHT -->
+  <select class="month-select">
+    <option>January 2026</option>
+  </select>
+
+</div>
+
+
+  <!-- CALENDAR -->
+  <full-calendar [options]="calendarOptions"></full-calendar>
+
+</div>

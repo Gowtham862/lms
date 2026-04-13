@@ -1,0 +1,253 @@
+.completed-wrapper {
+  background: #f6f8fc;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid #e6edf5;
+  margin-top: 18px;
+}
+/* PAGE TITLE */
+.page-title {
+  color: #062f6f;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.certificate-section-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px;
+  border: 1px solid #e6edf5;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+
+.completed-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+/* CARD */
+.completed-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e5ecf6;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.completed-card img {
+  width: 100%;
+  height: 150px;          
+  object-fit: cover;
+}
+
+.completed-card .card-body {
+  padding: 14px;          
+}
+
+.completed-card h3 {
+
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* META */
+.completed-card .meta {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+/* TIMELINE */
+.completed-card p {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* DOWNLOAD BUTTON — REF SIZE */
+.download-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 9px;
+  border-radius: 10px;
+  background: #062f6f;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ACTIVE (LEFT CARD) */
+.completed-card.active {
+  background: #062f6f;
+  color: #fff;
+}
+
+.completed-card.active .download-btn {
+  background: #fff;
+  color: #062f6f;
+}
+
+/* ================= MODULE REPORT ================= */
+
+.module-report-card {
+  margin-top: 32px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5ecf6;
+}
+
+.module-report-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+/* HEADER */
+.module-report-header {
+  display: grid;
+  grid-template-columns: 2.8fr 1.6fr 1.2fr 1.2fr 1.2fr 1fr;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+/* ROW */
+.module-report-row {
+  display: grid;
+  grid-template-columns: 2.8fr 1.6fr 1.2fr 1.2fr 1.2fr 1fr;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.module-name {
+  color: #1e3a8a;
+  font-weight: 500;
+}
+
+/* TRAINER CELL */
+.trainer-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trainer-cell img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* QUIZ SCORE */
+.quiz-score.good {
+  color: #2fb344;
+  font-weight: 600;
+}
+
+.quiz-score.bad {
+  color: #ff3b30;
+  font-weight: 600;
+}
+
+/* STATUS */
+.status.completed {
+  background: #eaf7ea;
+  color: #2fb344;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  width: fit-content;
+}
+
+@media (max-width: 1024px) {
+
+  .completed-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .module-report-card {
+    overflow-x: auto;
+  }
+
+  .module-report-header,
+  .module-report-row {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .completed-wrapper {
+    padding: 16px;
+  }
+
+  .certificate-section-card {
+    padding: 16px;
+  }
+
+  /* Certificate cards: 1 per row */
+  .completed-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Card image smaller */
+  .completed-card img {
+    height: 140px;
+  }
+
+  .completed-card h3 {
+    font-size: 14px;
+  }
+
+  .completed-card .meta,
+  .completed-card p {
+    font-size: 12px;
+  }
+
+  .download-btn {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  /* Module report */
+  .module-report-title {
+    font-size: 16px;
+  }
+
+  .module-report-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Page title */
+  .page-title {
+    font-size: 18px;
+  }
+
+  /* Certificate cards compact */
+  .completed-card img {
+    height: 120px;
+  }
+
+  /* Trainer avatar smaller */
+  .trainer-cell img {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Status pill smaller */
+  .status.completed {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}

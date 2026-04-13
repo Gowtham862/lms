@@ -1,0 +1,85 @@
+<div class="app-layout">
+ 
+  <!-- FIXED SIDEBAR -->
+  <aside class="sidebar">
+  <div class="brand">
+    <img src="/lmslogo.png" />
+    <span>AI Bayan Learning</span>
+  </div>
+ 
+ <ul class="menu">
+  <!-- <li
+    *ngFor="let item of filteredNavigation"
+    [routerLink]="item.route"
+    routerLinkActive="active"
+  > -->
+<li
+  *ngFor="let item of filteredNavigation"
+  [routerLink]="!item.islogout ? item.route : null"
+  routerLinkActive="active"
+  [class.logout-item]="item.islogout"
+  (click)="onMenuClick(item)"
+>
+  <img [src]="item.iconDefault" class="icon default" />
+  <img [src]="item.iconActive" class="icon active" />
+  <span>{{ item.label }}</span>
+</li>
+
+</ul>
+ 
+</aside>
+ 
+ 
+  <!-- PAGE CONTENT -->
+  <main class="content">
+ 
+    <!-- TOP BAR -->
+    <div class="topbar">
+     
+  <!-- LEFT -->
+  <div class="greeting">
+    <h2>Hello {{ getUserName()  }}!</h2>
+    <!-- <p>{{ user.greeting }}</p> -->
+  </div>
+ 
+  <!-- RIGHT -->
+  <div class="top-actions">
+ 
+    <!-- SEARCH -->
+    <!-- <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass icon-big"></i>
+       <img src="/search.png" alt="" class="search-img">
+      <input placeholder="Search" />
+    </div> -->
+ 
+    <!-- NOTIFICATION -->
+    <!-- <div class="notification">
+      <i class="fa-regular fa-bell"></i>
+      <span class="badge">{{ user.notifications }}</span>
+    </div> -->
+ 
+    <!-- PROFILE -->
+ <div class="profile">
+  <div class="profile-letter">
+    {{ getUserName().charAt(0) }}
+  </div>
+  <span>{{ getUserName() }}</span>
+  <i class="fa-solid fa-chevron-down"></i>
+</div>
+
+ 
+    <!-- LANGUAGE -->
+    <div class="lang">
+      <button class="active">ENG</button>
+      <button>AR</button>
+    </div>
+ 
+  </div>
+</div>
+ 
+    <router-outlet></router-outlet>
+  </main>
+ 
+ 
+ 
+</div>

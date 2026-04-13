@@ -1,0 +1,174 @@
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #0b3a82;
+}
+
+.dashboard-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.month-btn {
+  background: #0b3a82;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  width: 260px;
+  height: 155px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e6ecf5;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  background: #f3f6fb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0b3a82;
+}
+
+.stat-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 14px 0;
+}
+
+.stat-footer {
+  font-size: 12px;
+  color: #9aa4b2;
+}
+
+.admin-section {
+  background: #fff;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #e6ecf5;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-btn {
+  background: #0b3a82;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  font-size: 13px;
+  color: #202021;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.admin-table td {
+  padding: 14px 0;
+  font-size: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.link {
+  color: #0b3a82;
+  font-weight: 500;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.status.active {
+  
+  color: #1e3a8a;
+}
+
+.status.inactive {
+ 
+  color: #b91c1c;
+}
+
+
+.edit-icon {
+  color: #0b3a82;
+  cursor: pointer;
+}
+.edit-img-btn {
+  
+  
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}

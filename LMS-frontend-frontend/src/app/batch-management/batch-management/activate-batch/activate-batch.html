@@ -1,0 +1,346 @@
+<div class="page-wrapper">
+
+
+
+  <!-- Card -->
+  <div class="card">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>All Batch</span>
+      <span class="arrow">></span>
+      <span class="active">Create New Batch</span>
+    </div>
+
+    <h4 class="card-title">Batch Details</h4>
+
+    <form #batchForm="ngForm" novalidate>
+
+      <h4 class="card-title">Batch Details</h4>
+
+      <div class="form-grid">
+
+        <!-- Course Name -->
+        <div class="form-group">
+          <label>Course Name <span>*</span></label>
+          <input type="text" name="courseName" [(ngModel)]="batch.courseName" required #courseName="ngModel" />
+          <div *ngIf="courseName.invalid && courseName.touched" class="error-text">
+            Course name is required
+          </div>
+        </div>
+
+        <!-- Batch No -->
+        <div class="form-group">
+
+          <label class="field-label">
+            Batch No <span class="required">*</span>
+          </label>
+          <input type="number" name="batchno" [(ngModel)]="batch.batchno" required #batchno="ngModel" />
+          <small class="error-text" *ngIf="batchno.invalid && (batchno.touched || batchForm.submitted)">
+            Batch No is required
+          </small>
+        </div>
+
+        <!-- Training Mode -->
+        <div class="form-group">
+          <label class="field-label">
+            Training Mode <span class="required">*</span>
+          </label>
+          <input type="text" name="trainingMode" [(ngModel)]="batch.training_ngmode" #trainingMode="ngModel" required
+            class="input-box" />
+          <small class="error-text" *ngIf="trainingMode.invalid && (trainingMode.touched || batchForm.submitted)">
+            Training mode is required
+          </small>
+        </div>
+
+        <!-- Capacity -->
+        <div class="form-group">
+          <label>Max Student Capacity <span>*</span></label>
+          <input name="maxstudentcapacity" [(ngModel)]="batch.maxstudentcapacity" required pattern="^[0-9]*$"
+            #capacity="ngModel" />
+          <div *ngIf="capacity.invalid && capacity.touched" class="error-text">
+            <small *ngIf="capacity.errors?.['required']">Capacity is required</small>
+            <small *ngIf="capacity.errors?.['pattern']">Numbers only</small>
+          </div>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+          <label>Batch Start Date <span>*</span></label>
+          <input type="date" name="batchstartdate" [(ngModel)]="batch.batchstartdate" [min]="minDate" required
+            #sDate="ngModel" />
+          <div *ngIf="sDate.invalid && sDate.touched" class="error-text">
+            Start date is required
+          </div>
+        </div>
+
+        <!-- End Date -->
+        <div class="form-group">
+          <label>Batch End Date <span>*</span></label>
+          <input type="date" name="batchendate" [(ngModel)]="batch.batchendate" [min]="batch.batchstartdate || minDate"
+            [min]="minDate" #eDate="ngModel" />
+          <div *ngIf="eDate.invalid && eDate.touched" class="error-text">
+            End date is required
+          </div>
+        </div>
+
+        <!-- Primary Trainer -->
+        <!-- <div class="form-group">
+          <label>Primary Trainer <span>*</span></label>
+          <select
+            name="primarytrainerid"
+            [(ngModel)]="batch.primarytrainerid"
+            required
+            #pTrainer="ngModel"
+          >
+            <option [ngValue]="">Select Trainer</option>
+            <option *ngFor="let t of trainers" [value]="t.trainerid">
+              {{ t.trainername }}
+            </option>
+          </select>
+          <div *ngIf="pTrainer.invalid && pTrainer.touched" class="error-text">
+            Select a trainer
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label>Primary Trainer <span>*</span></label>
+
+          <input type="text" [value]="getTrainerName(batch.primarytrainerid)" disabled />
+
+          <!-- Hidden field to keep actual ID -->
+          <input type="hidden" name="primarytrainerid" [(ngModel)]="batch.primarytrainerid" />
+        </div>
+        <!-- Backup Trainer -->
+        <!-- <div class="form-group">
+          <label>Backup Trainer <span>*</span></label>
+          <select
+            name="backuptrainerid"
+            [(ngModel)]="batch.backuptrainerid"
+            required
+            #bTrainer="ngModel"
+          >
+            <option [ngValue]="">Select Trainer</option>
+            <option *ngFor="let t of trainers" [value]="t.trainerid">
+              {{ t.trainername }}
+            </option>
+          </select>
+          <div *ngIf="bTrainer.invalid && bTrainer.touched" class="error-text">
+            Select backup trainer
+          </div>
+        </div> -->
+
+      </div>
+
+
+
+
+
+      <hr class="divider" />
+      <!-- Create Session -->
+      <h4 class="section-title">Create Session</h4>
+      <!-- Tabs -->
+      <div class="tabs">
+        <button [class.active]="activeTab === 'modules'" (click)="activeTab = 'modules'"> Module Overview </button>
+        <button [class.active]="activeTab === 'students'" (click)="activeTab = 'students'"> Students List </button>
+      </div>
+      <!-- Module Table -->
+      <div class="table-wrapper">
+        <table *ngIf="activeTab === 'modules'" class="module-table">
+          <thead>
+            <tr>
+              <th>Module Name</th>
+              <th>Module No</th>
+              <th>Module Duration</th>
+              <th>Total Sessions</th>
+              <th>Session Details</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let m of modules; let i = index">
+              <td class="link">{{ m.moduleName }}</td>
+              <td>{{ m.moduleNo }}</td>
+              <td>{{ m.moduleDuration }}</td>
+              <td>{{ m.sessions.length || 0 }}</td>
+              <td class="updated">
+                updated
+              </td>
+              <td class="actions">
+                <i class="fa-regular fa-pen-to-square" (click)="edit(m)"></i>
+                <i class="fa-regular fa-trash-can"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table *ngIf="activeTab === 'students'" class="module-table">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Enrollment Date</th>
+              <th>Assigned Date</th>
+              <th>Course Name</th>
+              <th>Batch No</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let s of students">
+              <td>{{ s.studentName }}</td>
+              <td>{{ s.enrollmentDate | date:'dd-MM-yyyy' }}</td>
+              <td>{{ s.enrollmentDate | date:'dd-MM-yyyy' }}</td>
+              <td>{{ s.courseName }}</td>
+              <td>{{ s.batchNo }}</td>
+            </tr>
+
+            <tr *ngIf="students.length === 0">
+              <td colspan="5">No Students Found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-backdrop" *ngIf="showSuccessModal">
+        <div class="success-modal">
+          <div class="success-icon">
+            <img src="success.gif" alt="tick" class="icon-gif" />
+          </div>
+
+          <p class="success-text">Batch Activated Successfully!</p>
+
+          <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+        </div>
+      </div>
+      <div class="actions-footer">
+
+        <!-- Deactivate -->
+        <!-- <button type="button" class="danger-outline" (click)="deactivateBatch()">
+          Deactivate Batch
+        </button> -->
+
+        <div class="right-actions">
+          <button type="button" class="btn-outline" (click)="close.emit()">
+            Back
+          </button>
+
+          <button type="button" class="btn-primary" (click)="updateCourseBatch(batchForm)">
+            Activate Batch
+          </button>
+
+        </div>
+      </div>
+    </form>
+
+    <!-- Batch Details -->
+
+
+
+    <div class="modal-overlay" *ngIf="showEditModal">
+
+      <div class="modal-container">
+
+        <!-- Header -->
+        <div class="modal-header">
+          <!-- <button class="footer-btn" type="button" (click)="saveSessionUpdates()">Update Session Details</button> -->
+          <h3>Update Session Details</h3>
+
+          <span class="close-btn" (click)="closeEditModal()">✖</span>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+
+          <!-- Row 1 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Course Name</label>
+              <input [value]="batch.courseName" disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Module Name</label>
+              <input [value]="selectedModule?.moduleName" disabled>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label>Module Duration</label>
+              <input [value]="selectedModule?.moduleDuration" disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Total Sessions</label>
+              <input [value]="selectedSessions.length" disabled>
+            </div>
+          </div>
+
+
+          <!-- <div class="form-row">
+        <div class="form-group">
+          <label>Primary Trainer *</label>
+         <select [(ngModel)]="batch.primarytrainerid"
+        name="primaryTrainer">
+  <option *ngFor="let t of trainers"
+          [value]="t.trainerid">
+    {{ t.trainername }}
+  </option>
+</select>
+
+        </div>
+
+        <div class="form-group">
+          <label>Backup Trainer *</label>
+          <select [(ngModel)]="batch.backuptrainerid"
+        name="backupTrainer">
+  <option *ngFor="let t of trainers"
+          [value]="t.trainerid">
+    {{ t.trainername }}
+  </option>
+</select>
+
+        </div>
+      </div> -->
+
+          <hr>
+
+
+
+
+          <!-- Sessions Loop -->
+          <div *ngFor="let s of selectedSessions; let i = index">
+
+            <h3>Session {{ i + 1 }}</h3>
+
+            <div class="form-row session-row">
+
+              <input type="date" [(ngModel)]="s.startDate" [min]="minDate" name="startDate{{i}}">
+
+
+              <input type="date" [(ngModel)]="s.startDate" [min]="minDate" name="startDate{{i}}">
+
+              <!-- Start Time -->
+              <input type="time" [(ngModel)]="s.startTime" name="startTime{{i}}">
+
+              <!-- End Date -->
+              <input type="date" [(ngModel)]="s.endDate" [min]="s.startDate || minDate" name="endDate{{i}}">
+
+              <!-- End Time -->
+              <input type="time" [(ngModel)]="s.endTime" name="endTime{{i}}">
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+        <button class="footer-btn" type="button" (click)="saveSessionUpdates()">Update Session Details</button>
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>

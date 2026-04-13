@@ -1,0 +1,454 @@
+<!-- <app-header></app-header> -->
+<!-- Content -->
+<app-header (languageChange)="switchLanguage($event)"></app-header>
+<div class="hero-section">
+
+  <div class="hero-left">
+
+    <div class="hero-tag">
+      {{ heroContent[currentLang].tag }}
+    </div>
+
+    <h1 class="hero-title">
+      {{ heroContent[currentLang].title1 }}
+      <span class="highlight">
+        {{ heroContent[currentLang].highlight }}
+      </span>
+      <span class="highlight1">
+        {{ heroContent[currentLang].highlight1 }}
+      </span>
+    </h1>
+
+    <p class="hero-desc">
+      {{ heroContent[currentLang].description }}
+    </p>
+
+    <button class="hero-btn" routerLink="/gow">
+      {{ heroContent[currentLang].button }}
+    </button>
+
+  </div>
+  <div class="hero-right">
+
+    <div class="girl-card">
+      <img src="assets/girl.png" class="girl-image">
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 2nd section -->
+<section class="why-section">
+
+  <div class="why-badge">Why Choose AI Bayan Learning?</div>
+
+  <h2 class="why-title">AI-Driven Learning</h2>
+  <p class="why-subtitle">
+    {{ whySectionContent[currentLang].subtitle }}
+  </p>
+
+  <div class="why-cards">
+
+    <div class="why-card" *ngFor="let card of whyCardsContent[currentLang]">
+      <img [src]="card.icon" class="why-icon">
+      <h3>{{ card.title }}</h3>
+      <p>{{ card.desc }}</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 3rd Section -->
+<div class="stats-section">
+
+  <div class="stat-box">
+    <img src="assets/Icon 1.png" class="stat-icon">
+    <h2 class="stat-number" data-target="73500">0</h2>
+    <p class="stat-label">LEARNERS</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="stat-box">
+    <img src="assets/Icon 2.png" class="stat-icon">
+    <h2 class="stat-number" data-target="4900">0</h2>
+    <p class="stat-label">SESSIONS</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="stat-box">
+    <img src="assets/Icon 3.png" class="stat-icon">
+    <h2 class="stat-number" data-target="6900">0</h2>
+    <p class="stat-label">PROGRAMS & SOLUTIONS</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="stat-box">
+    <img src="assets/Icon 4.png" class="stat-icon">
+    <h2 class="stat-number" data-target="900">0</h2>
+    <p class="stat-label">B2B CLIENTS</p>
+  </div>
+
+</div>
+<!-- 4th Section -->
+<section class="products-section">
+
+  <!-- TOP CONTENT -->
+  <div class="products-header">
+
+    <!-- LEFT -->
+    <div class="header-left">
+      <span class="pill">Explore Our Products</span>
+
+      <h2>
+        Empowering Learning Through
+
+        <span>Smart Digital Solutions</span>
+      </h2>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="header-right">
+      <p>
+        {{ productsSectionContent[currentLang].description }}
+      </p>
+    </div>
+
+  </div>
+
+  <!-- CARDS -->
+  <div class="products-grid">
+
+    <div class="product-card">
+      <img src="assets/learn-t.png" alt="Learn Together" />
+      <h4>Learn
+        together</h4>
+      <p>
+        {{ learnTogether[currentLang].description }}
+      </p>
+    </div>
+
+    <div class="product-card">
+      <img src="assets/legacy.png" alt="Legacy Leadership Programs" />
+      <h4>Legacy Leadership
+        Programs</h4>
+      <p>
+        {{ legacyLeadership[currentLang].description }}
+      </p>
+    </div>
+
+    <div class="product-card">
+      <img src="assets/career-j.png" alt="Career Journey" />
+      <h4>Career
+        Journey</h4>
+      <p>
+        {{ careerJourney[currentLang].description }}
+      </p>
+    </div>
+
+    <div class="product-card">
+      <img src="assets/growth.png" alt="Growth Path Coaching" />
+      <h4>Growth Path
+        Coaching</h4>
+      <p>
+        {{ growthPath[currentLang].description }}
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- 5th Section -->
+<section class="courses-section">
+
+  <div class="courses-header">
+
+    <!-- <button class="explore-btn">Explore Our Courses</button> -->
+
+    <div class="title-row">
+      <h1 class="courses-title">
+        {{ coursesHeader[currentLang].title1 }}
+        <span>{{ coursesHeader[currentLang].highlight }}</span>
+      </h1>
+
+      <p class="courses-subtitle">
+        {{ coursesHeader1[currentLang].subtitle }}
+      </p>
+    </div>
+
+  </div>
+
+  <h3 class="small-title">Learning Programmes</h3>
+
+  <div class="category-scroll">
+    <div class="category-wrapper">
+      <div class="category-btn" *ngFor="let cat of categories" [class.active]="cat === selectedCategory"
+        (click)="selectCategory(cat)">
+        {{ cat }}
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="course-grid">
+    <div class="course-card" *ngFor="let cours of filteredCourses
+">
+
+      <div class="course-img">
+        <!-- <img *ngIf="cours.metadata?.length"  
+         [src]="'http://192.168.11.105:8080/uploads/' + cours.metadata[0].fileName"
+        alt="Course Image" /> -->
+        <img *ngIf="cours.metadata?.length" [src]="imageBaseUrl + cours.metadata[0].fileName" alt="Course Image" />
+      </div>
+
+      <h2 class="course-name">{{ cours.coursename }}</h2>
+      <!-- <p class="course-author">By {{ cours.adminname }}</p> -->
+
+      <!-- <div class="rating-row">
+        <ng-container *ngFor="let r of [1,2,3,4,5]">
+          <svg class="star-icon" viewBox="0 0 24 24">
+            <path fill="#f7b500"
+              d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z" />
+          </svg>
+        </ng-container>
+        <span class="rating-text">{{ cours.rating }} Ratings</span>
+      </div> -->
+
+      <p class="course-desc">{{ cours.coursedesc}}</p>
+      <p class="course-footer">{{ cours.courseduration }}</p>
+
+      <button class="course-btn" (click)="editTrainer(cours)">
+        Explore Details
+        <span>➜</span>
+      </button>
+
+
+    </div>
+  </div>
+
+  <!-- <button class="ex-course-btn">Explore All Courses ➜</button> -->
+</section>
+
+<!-- 6th Section -->
+
+<!-- 7th Section -->
+<section class="testimonial-section">
+
+  <div class="left-title">
+    <div class="badge">What Our Students Say</div>
+
+    <h2 class="main-title">
+      Learning That Makes A
+
+      <span>Difference</span>
+    </h2>
+  </div>
+
+  <div class="right-text">
+    Our students come from diverse backgrounds and goals — but they all share one thing: growth.
+    Read how learners have advanced their careers, strengthened their knowledge,
+    and found new opportunities through our platform.
+  </div>
+
+  <!-- FIRST AUTO SCROLL ROW -->
+  <div class="testimonial-scroll">
+    <div class="scroll-track">
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+        <img class="person-img" [src]="t.img">
+        <div class="content">
+          <div class="quote">“</div>
+          <p class="message">{{ t.message }}</p>
+          <p class="author">— {{ t.author }}</p>
+        </div>
+      </div>
+
+      <!-- DUPLICATE FOR LOOPING -->
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+        <img class="person-img" [src]="t.img">
+        <div class="content">
+          <div class="quote">“</div>
+          <p class="message">{{ t.message }}</p>
+          <p class="author">— {{ t.author }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  SECOND AUTO SCROLL ROW -->
+  <div class="testimonial-scroll second-row">
+    <div class="scroll-track reverse">
+      <div class="testimonial-card" *ngFor="let t of testimonials2">
+        <img class="person-img" [src]="t.img">
+        <div class="content">
+          <div class="quote">“</div>
+          <p class="message">{{ t.message }}</p>
+          <p class="author">— {{ t.author }}</p>
+        </div>
+      </div>
+
+      <!-- DUPLICATE FOR  LOOP -->
+      <div class="testimonial-card" *ngFor="let t of testimonials2">
+        <img class="person-img" [src]="t.img">
+        <div class="content">
+          <div class="quote">“</div>
+          <p class="message">{{ t.message }}</p>
+          <p class="author">— {{ t.author }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- 8th Section -->
+<div class="partner1">
+  <div class="partners-slider">
+    <button class="partners-title">Accreditation Partners</button>
+    <div class="partners-track">
+
+      <img src="assets/alstom.png">
+      <img src="assets/ford.png">
+      <img src="assets/quber.png">
+      <img src="assets/gigsumo.png">
+      <img src="assets/savavet.png">
+      <img src="assets/capgemini.png">
+      <img src="assets/silverlake.png">
+      <img src="assets/prince-pharma.png">
+      <img src="assets/dr-reddy.png">
+
+      <img src="assets/alstom.png">
+      <img src="assets/ford.png">
+      <img src="assets/quber.png">
+      <img src="assets/gigsumo.png">
+      <img src="assets/savavet.png">
+      <img src="assets/capgemini.png">
+      <img src="assets/silverlake.png">
+      <img src="assets/prince-pharma.png">
+      <img src="assets/dr-reddy.png">
+    </div>
+  </div>
+
+</div>
+<div class="partner1">
+  <div class="partners-slider">
+    <button class="partners-title">Organization Partners</button>
+    <div class="partners-track">
+
+      <img src="assets/alstom.png">
+      <img src="assets/ford.png">
+      <img src="assets/quber.png">
+      <img src="assets/gigsumo.png">
+      <img src="assets/savavet.png">
+      <img src="assets/capgemini.png">
+      <img src="assets/silverlake.png">
+      <img src="assets/prince-pharma.png">
+      <img src="assets/dr-reddy.png">
+
+      <img src="assets/alstom.png">
+      <img src="assets/ford.png">
+      <img src="assets/quber.png">
+      <img src="assets/gigsumo.png">
+      <img src="assets/savavet.png">
+      <img src="assets/capgemini.png">
+      <img src="assets/silverlake.png">
+      <img src="assets/prince-pharma.png">
+      <img src="assets/dr-reddy.png">
+    </div>
+  </div>
+
+</div>
+<!-- 9th Section -->
+<section class="newsletter-section">
+
+  <div class="newsletter-box">
+
+    <div class="newsletter-left">
+      <h2 class="newsletter-title">
+        Learning Tips, Updates & Inspiration—Delivered to You
+      </h2>
+
+      <p class="newsletter-desc">
+        Sign up to receive helpful study guides, educational insights, and platform updates
+        created specifically for students. Stay inspired and keep learning with Al Bayan.
+      </p>
+    </div>
+
+    <div class="newsletter-right">
+      <div class="newsletter-input-wrap">
+        <input type="email" placeholder="Enter your email address" class="newsletter-input" />
+        <button class="newsletter-btn">Subscribe</button>
+      </div>
+
+      <p class="newsletter-privacy">
+        By subscribing you agree to with our <span>Privacy Policy</span>
+      </p>
+    </div>
+
+  </div>
+
+</section>
+<!-- Footer -->
+<footer class="footer-section">
+
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <img src="assets/lmslogo.png" class="footer-logo" alt="Logo">
+
+      <p class="footer-text">{{ contact.email }}</p>
+      <p class="footer-text">{{ contact.phone }}</p>
+
+      <p class="footer-text" *ngFor="let line of contact.address">
+        {{ line }}
+      </p>
+
+      <p class="footer-follow">Follow</p>
+
+      <div class="footer-icons">
+        <a *ngFor="let s of socials" [href]="s.link" target="_blank">
+          <img [src]="s.icon" class="footer-icon" />
+        </a>
+      </div>
+
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Quick Links</h4>
+
+      <a class="footer-link" *ngFor="let q of quickLinks">
+        {{ q }}
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Learning Programs</h4>
+
+      <a class="footer-link" *ngFor="let p of programs">
+        {{ p }}
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Articles</h4>
+
+      <div class="footer-article" *ngFor="let a of articles">
+        <p class="footer-article-title">{{ a.title }}</p>
+        <span class="footer-date">{{ a.date }}</span>
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+
+<div class="footer-bottom">
+  © 2025 Al-Bayan. All rights reserved
+</div>

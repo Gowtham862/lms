@@ -1,0 +1,285 @@
+
+/* Breadcrumb */
+.breadcrumb {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.breadcrumb .arrow {
+  margin: 0 6px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #94a3b8;
+}
+
+.breadcrumb .active {
+  color: #0b3ea8;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 18px;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Form grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-group span {
+  color: red;
+}
+
+.form-group input {
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  padding: 0 10px;
+  font-size: 13px;
+  background: #f9fafb;
+}
+
+.divider {
+  margin: 18px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Section */
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 12px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 8px 0;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  border-bottom: 2px solid #0b3ea8;
+  color: #0b3ea8;
+  font-weight: 600;
+}
+
+/* Table */
+.module-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.module-table th,
+.module-table td {
+  padding: 12px;
+  font-size: 13px;
+  text-align: center;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.module-table th:first-child,
+.module-table td:first-child {
+  text-align: left;
+}
+
+.link {
+  color: #0b3ea8;
+  font-weight: 600;
+}
+
+.updated {
+  color: #0b3ea8;
+  font-weight: 600;
+}
+
+.actions i {
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.actions-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.danger-outline {
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  height: 40px;
+  width: 150px;
+  background: #fff;
+  padding: 6px 14px;
+  border-radius: 4px;
+}
+
+.right-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-outline {
+  border: 1px solid #1f2937;
+  background: #fff;
+  height: 40px;
+  width: 100px;
+  padding: 6px 16px;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background: #0b2f6a;
+  color: #fff;
+  border: none;
+  height: 40px;
+  width: 150px;
+  padding: 6px 16px;
+  border-radius: 4px;
+}
+
+.form-group select {
+  width: 67%;            
+  height: 38px;         
+  padding: 0.5rem 0.75rem; 
+  font-size: 1rem;        
+  border: 1px solid #ccc; 
+  border-radius: 4px;     
+  background-color: #fff; 
+  box-sizing: border-box; 
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #999;     
+}
+
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.field-label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.required {
+  color: red;
+  font-size: 14px;
+}
+
+.input-box {
+  width: 59%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-box.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.save-btn {
+  padding: 8px 16px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* SUCCESS MODAL */
+.success-modal {
+  background: #fff;
+  width: 260px;              /* reduced width */
+  padding: 18px 15px;        /* less padding */
+  border-radius: 10px;       /* softer corners */
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  animation: popup 0.25s ease;
+}
+
+/* GIF ICON */
+.success-modal .icon-gif {
+  width: 60px;
+  margin-bottom: 10px;
+}
+
+/* TEXT */
+.success-modal p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* BUTTON */
+.success-modal button {
+  padding: 6px 18px;
+  border: none;
+  background: #1c225b;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.completed-btn {
+  background-color: #28a745;
+  color: white;
+  border: Green;
+  height: 40px;       
+  width: 150px;        
+  padding: 6px 16px;   
+  border-radius: 4px;
+ 
+}

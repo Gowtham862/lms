@@ -1,0 +1,68 @@
+.timeline-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #e6edf5;
+  margin-top: 2%;
+}
+
+/* HEADER */
+.timeline-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+/* CENTER ALIGN */
+.view-switch.center {
+  justify-self: center;
+}
+
+
+.timeline-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* VIEW SWITCH */
+.view-switch {
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.view-switch button {
+  border: none;
+  background: transparent;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.view-switch button.active {
+  background: #fff;
+  font-weight: 600;
+}
+
+/* MONTH DROPDOWN */
+select {
+  background: #0b3a82;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* FULLCALENDAR TWEAKS */
+:host ::ng-deep .fc {
+  font-size: 12px;
+}
+
+:host ::ng-deep .fc-daygrid-event {
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+}

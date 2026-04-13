@@ -1,0 +1,206 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Quiz Performance Dashboard</h2>
+</div>
+
+<hr />
+
+<!-- CARDS -->
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+
+<!-- TABLE CARD -->
+<div class="table-card">
+
+  <!-- HEADER -->
+  <div class="table-top">
+    <h3>Quiz Evaluation Overview</h3>
+
+    <input type="text" placeholder="Search using Name, ID" [(ngModel)]="searchText" class="search-input" />
+  </div>
+
+  <!-- TABLE WRAPPER (IMPORTANT) -->
+  <div class="table-wrapper">
+    <table class="attendance-table quiz-table">
+      <thead>
+        <tr>
+          <th>Quiz Name</th>
+          <th>Course Name</th>
+          <th>Module No</th>
+          <th>Batch</th>
+          <th>Trainer</th>
+          <th>Students Appear</th>
+          <th>Avg Score%</th>
+          <th>Pass:Fail Ratio</th>
+          <th>Status</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of paginatedQuizzes">
+          <td>{{ row.quizName }}</td>
+          <td class="link">{{ row.courseName }}</td>
+          <td>{{ row.moduleNo }}</td>
+          <td>{{ row.batch }}</td>
+          <td>{{ row.trainer }}</td>
+          <td>{{ row.studentsAppeared }}</td>
+
+          <td [ngClass]="{
+              good: row.avgScore >= 85,
+              average: row.avgScore < 85
+            }">
+            {{ row.avgScore }}%
+          </td>
+
+          <td class="link">{{ row.passFail }}</td>
+
+          <td [ngClass]="{
+              completed: row.status === 'Completed',
+              ongoing: row.status === 'Ongoing'
+            }">
+            {{ row.status }}
+          </td>
+
+          <td>
+            <button class="view-btn" (click)="viewDetail(row)">
+              View Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="table-footer">
+    <div>
+      Show
+      <select (change)="changePageSize($event)">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+
+      <button *ngFor="let p of [].constructor(totalPages); let i = index" (click)="goToPage(i + 1)"
+        [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        ›
+      </button>
+    </div>
+  </div>
+
+</div>
+<!-- QUIZ DETAILS MODAL -->
+<div class="modal-backdrop" *ngIf="showQuizModal">
+  <div class="modal-card">
+
+    <!-- HEADER -->
+    <div class="modal-header">
+      <h3>Quiz Evaluation Details</h3>
+      <button class="close-btn" (click)="closeModal()">×</button>
+    </div>
+
+    <!-- TOP INFO -->
+    <div class="modal-info">
+      <div>
+        <label>Course Name</label>
+        <input type="text" [value]="selectedQuiz?.courseName + ' - Beginner'" disabled />
+      </div>
+
+      <div>
+        <label>Module Name</label>
+        <input type="text" [value]="selectedQuiz?.quizName" disabled />
+      </div>
+
+      <div>
+        <label>Session Title</label>
+        <input type="text" value="Session 11" disabled />
+      </div>
+
+      <div>
+        <label>Overall Quiz %</label>
+        <input type="text" [value]="selectedQuiz?.avgScore + '%'" class="score-box" disabled />
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- STUDENT LIST -->
+    <div class="modal-table-header">
+      <h4>Students List</h4>
+
+      <input type="text" placeholder="Search using Name, ID" [(ngModel)]="studentSearch" class="search-input" />
+    </div>
+
+    <div class="table-wrapper">
+      <table class="quiz-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Quiz Due Date</th>
+            <th>Quiz Attended Date</th>
+            <th>Quiz Evaluation</th>
+            <th>Quiz Result</th>
+            <th>Quiz Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let s of filteredStudents">
+            <td class="link">{{ s.name }}</td>
+            <td>{{ s.dueDate }}</td>
+            <td>{{ s.attendedDate }}</td>
+
+            <td [ngClass]="{
+    good: s.score !== null && s.score >= 80,
+    average: s.score !== null && s.score < 80,
+    danger: s.score === null
+  }">
+              {{ s.score !== null ? s.score + '%' : 'NA' }}
+            </td>
+
+            <td [ngClass]="{
+                good: s.result === 'Pass',
+                danger: s.result === 'Fail'
+              }">
+              {{ s.result }}
+            </td>
+
+            <td [ngClass]="{
+                completed: s.status === 'Completed',
+                danger: s.status === 'Due Date Missed'
+              }">
+              {{ s.status }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

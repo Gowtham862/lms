@@ -1,0 +1,98 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Trainee Management</h2>
+</div>
+
+<hr />
+
+<!-- STATS CARDS -->
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+      <span *ngIf="card.badgeText" class="badge" [ngClass]="card.badgeType">
+        {{ card.badgeText }}
+      </span>
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+
+<!-- TABLE CARD -->
+<div class="table-card">
+
+  <!-- TABLE HEADER -->
+  <div class="table-header">
+    <h3>Trainee Overview</h3>
+
+    <input type="text" placeholder="Search using Name, ID" [(ngModel)]="searchText" class="search-input" />
+  </div>
+
+  <!-- TABLE -->
+  <table class="attendance-table">
+    <thead>
+      <tr>
+        <th>Trainee Name</th>
+        <th>Trainee ID</th>
+        <th>Enrolled Courses</th>
+        <th>Enrolled Date</th>
+        <th>Batch Date</th>
+        <th>Batch No</th>
+        <th>Email Id</th>
+        <th>Contact</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of filteredTrainees" class="rows">
+        <td>{{ row.username }}</td>
+        <td>{{ row.userid }}</td>
+        <td>{{ row.coursename }}</td>
+        <td>{{ row.enrollDate | date:'yyyy-MM-dd' }}</td>
+        <td>{{ row.batchstartdate }}</td>
+        <td>{{ row.batchno }}</td>
+        <td>{{ row.useremail }}</td>
+        <td>{{ row.usercontact }}</td>
+        <td> {{ row.status }} </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TABLE FOOTER -->
+  <!-- <div class="table-footer">
+    <div>
+      Show
+      <select (change)="changePageSize($event)">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+
+      <button
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        (click)="goToPage(i + 1)"
+        [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">›</button>
+    </div>
+  </div> -->
+
+</div>

@@ -1,0 +1,111 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Enrollment Reports</h2>
+</div>
+
+<hr />
+
+<!-- TABS + MONTH -->
+<div class="dashboard-topbar">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <span class="tab active">Course Wise Enrollment</span>
+    <span class="tab" routerLink="/batchwise">Batch Wise Enrollment</span>
+    <span class="tab" routerLink="/studentwise">Student Wise Enrollment</span>
+  </div>
+
+</div>
+
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+<div class="table-card">
+
+  <!-- HEADER -->
+  <div class="table-top">
+    <h3>Course Wise Enrollment Overview</h3>
+
+    <button class="export-btn" (click)="exportReport()">
+      Export Report
+    </button>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrapper">
+    <table class="quiz-table">
+      <thead>
+        <tr>
+          <th>
+            <input type="checkbox" (change)="toggleAll($event)" />
+          </th>
+          <th>Course Name</th>
+          <th>Course Category</th>
+          <th>Total Enrollments</th>
+          <th>Active</th>
+          <th>Completed</th>
+          <th>Cancelled</th>
+          <th>Revenue Generated</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of paginatedCourses">
+          <td>
+            <input type="checkbox" [(ngModel)]="c.selected" />
+          </td>
+          <td class="link">{{ c.courseName }}</td>
+          <td>{{ c.category }}</td>
+          <td>{{ c.totalEnrollments }}</td>
+          <td>{{ c.active }}</td>
+          <td>{{ c.completed }}</td>
+          <td>{{ c.cancelled }}</td>
+          <td class="link">{{ c.revenue }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="table-footer">
+    <div>
+      Show
+      <select (change)="changePageSize($event)">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+
+      <button
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        (click)="goToPage(i + 1)"
+        [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">›</button>
+    </div>
+  </div>
+
+</div>

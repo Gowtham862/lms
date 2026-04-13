@@ -1,0 +1,339 @@
+<div class="courses-page">
+  <!-- HEADER -->
+  <div class="courses-header">
+    <h2>My Courses</h2>
+
+    <div class="tabs">
+      <span (click)="activeTab = 'active'" [class.active]="activeTab === 'active'">
+        Active Courses
+      </span>
+      <span (click)="activeTab = 'completed'" [class.active]="activeTab === 'completed'">
+        Completed Courses
+      </span>
+      <span (click)="openSimilarTab()" [class.active]="activeTab === 'similar'">
+        Recommended Courses
+      </span>
+    </div>
+  </div>
+
+  <!-- ================= ACTIVE COURSES ================= -->
+  <div *ngIf="activeTab === 'active'">
+    <div class="courses-layout">
+      <!-- LEFT -->
+      <div class="courses-list">
+        <div class="course-card" *ngFor="let cours of course">
+          <!-- Course Image -->
+          <img *ngIf="cours.metadata?.length" [src]="getCourseImage(cours)" alt="Course Image" />
+
+          <div class="course-info">
+            <!-- Course Name -->
+            <h3>{{ cours.courseName }}</h3>
+
+            <!-- Rating (if available) -->
+            <div class="stars" *ngIf="cours.rating">
+              <i class="fa-solid fa-star" *ngFor="let s of [].constructor(+cours.rating)"> </i>
+            </div>
+
+            <!-- Category + Modules -->
+            <p class="meta">
+              {{ cours.courseCategory }}
+              {{ cours.modules.length }} Modules
+              {{ cours.courseLevel }}
+            </p>
+            <!-- Trainer -->
+            <p class="trainer">
+              <b> {{ cours.trainerName }}</b>
+            </p>
+
+            <!-- Batch Timeline -->
+            <p class="timeline">
+              <span class="section-title">Course Timeline</span>
+
+              Start Date : {{ getCourseStartDate(cours) }}
+
+              End Date : {{ getCourseEndDate(cours) }}
+            </p>
+
+            <!-- Progress -->
+            <!-- <p>
+      Progress : {{ cours.progressPercentage | number:'1.0-0' }}%
+    </p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPORT -->
+    <div class="report-card">
+      <h3 class="report-title">Overall Course Report</h3>
+
+      <div class="report-header">
+        <span>Course Name</span>
+        <span>Trainer Name</span>
+        <span>Start Date</span>
+        <span>End Date</span>
+        <span>Status</span>
+      </div>
+
+      <div class="report-row" *ngFor="let item of reports">
+        <div class="course-cell">
+          <!-- <img [src]="item.courseImage" /> -->
+          <span>{{ item.courseName }}</span>
+        </div>
+        <div class="trainer-cell">
+          <span>{{ item.trainerName }}</span>
+        </div>
+        <span>{{ item.batchStartDate }}</span>
+        <span>{{ item.batchEndDate }}</span>
+        <span class="status in-progress">{{ item.status }}</span>
+      </div>
+    </div>
+
+    <app-live-class></app-live-class>
+  </div>
+
+  <!-- ================= COMPLETED COURSES ================= -->
+  <div *ngIf="activeTab === 'completed'" class="completed-topcontainer">
+    <div class="certificate-section-card">
+      <div class="completed-wrapper">
+        <!-- SAFE CHECK -->
+        <ng-container *ngIf="completed as completedList">
+          <!-- IF DATA EXISTS -->
+          <div class="completed-grid" *ngIf="completedList.length > 0; else noCompletedCourses">
+            <div
+              class="completed-card"
+              *ngFor="let c of completedList; let i = index"
+              [class.active]="i === 0"
+              (click)="selectCompletedCourse(c)"
+            >
+              <img [src]="getCourseImage(c)" />
+
+              <div class="card-body">
+                <h3>{{ c.courseName }}</h3>
+
+                <p class="trainer">Trainer: {{ c.trainername }}</p>
+
+                <p class="meta">
+                  {{ c.modules.length }} Modules ·
+                  {{ c.courselevel || '-' }}
+                </p>
+
+                <p class="timeline">
+                  <span class="section-title">Course Timeline</span>
+
+                  Start Date : {{ c.batchStartDate }}
+
+                  End Date : {{ c.batchEndDate }}
+                </p>
+
+                <button type="button" class="download-btn" (click)="downloadFile(c.courseId)">
+                  Download Certificate
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #noCompletedCourses>
+          <div class="empty-card">
+            <img src="assets/no-courses.png" alt="No Courses" />
+
+            <h3>No Completed Courses Yet</h3>
+
+            <p>
+              You haven’t completed any courses. Complete a course to download your certificate.
+            </p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="training-card" *ngIf="showTrainingContent">
+      <!-- Header -->
+      <div class="header">
+        <h2>CAPM® Certification Training</h2>
+
+        <div class="filters">
+          <div class="field">
+            <label>Select Module *</label>
+            <!-- <select [(ngModel)]="selectedModule" (change)="onModuleChange()">
+          <option value="">Select Module</option>
+          <option *ngFor="let m of modules" [value]="m.id">
+            {{ m.name }}
+          </option>
+        </select> -->
+            <!-- MODULE -->
+            <select [(ngModel)]="selectedModule" (change)="onModuleChange()">
+              <option value="">Select Module</option>
+
+              <option *ngFor="let m of modules" [value]="m.moduleNo">
+                {{ m.moduleName }}
+              </option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Select Session *</label>
+            <!-- <select [(ngModel)]="selectedSession">
+          <option value="">Select Session</option>
+          <option *ngFor="let s of sessions" [value]="s.id">
+            {{ s.name }}
+          </option>
+        </select> -->
+            <!-- SESSION -->
+            <select [(ngModel)]="selectedSession" (change)="onSessionChange()">
+              <option value="">Select Session</option>
+
+              <option *ngFor="let s of sessions" [value]="s.sessionReportId">
+                Session {{ s.sessionNo }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <!-- LEFT : Recording Card -->
+        <div class="recording">
+          <h3>Recording Session</h3>
+
+          <div class="video-card">
+            <div class="thumbnail">
+              <img src="course.jpg" alt="" />
+
+              <span class="duration">
+                {{ recording?.duration || '0 min' }}
+              </span>
+            </div>
+
+            <div class="video-info">
+              <h4>
+                {{ recording?.title || 'No Recording Available' }}
+              </h4>
+
+              <!-- <p class="author">
+    <img src="women.jpg">
+    {{ recording?.author }} |
+    {{ recording?.time }}
+  </p> -->
+
+              <button class="watch-btn" *ngIf="recording" (click)="playVideo()">WATCH NOW</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="documents">
+          <h3>Document Library</h3>
+
+          <table>
+            <thead>
+              <tr>
+                <th>File Name</th>
+                <th>Uploaded By</th>
+                <th>Upload Date</th>
+                <th>File Size</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let doc of documents">
+                <td class="file">
+                  <img src="pdf.png" />
+                  {{ doc.name }}
+                </td>
+
+                <td>{{ doc.uploadedBy }}</td>
+
+                <td>{{ doc.date }}</td>
+                <td>{{ doc.size }}</td>
+
+                <td>
+                  <button class="download-btn" (click)="downloadDocument(doc)">Download</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- video player -->
+      <!-- 🎥 Video Player -->
+      <div class="video-player" *ngIf="showVideoPlayer && recording">
+        <div class="player-header">
+          <h3>{{ recording.title }}</h3>
+          <button (click)="closeVideo()">✖</button>
+        </div>
+
+        <video width="100%" height="420" controls autoplay>
+          <source [src]="recording.videoUrl" type="video/mp4" />
+
+          Your browser does not support video playback.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'similar'" class="similar-topcontainer">
+    <div class="capm-wrapper">
+      <div *ngIf="!recommendedCourses?.length">No Recommended Courses Found</div>
+
+      <div class="capm-grid">
+        <div class="capm-card" *ngFor="let course of recommendedCourses">
+          <!-- Image -->
+          <div class="capm-img-box">
+            <img [src]="getRecommendedImage(course)" alt="course image" />
+          </div>
+
+          <!-- Content -->
+          <div class="capm-content">
+            <!-- Title -->
+            <h3 class="capm-title">
+              {{ course.coursename }}
+            </h3>
+
+            <!-- Author -->
+            <!-- <p class="capm-author">
+  By {{ course.trainerName }}
+</p> -->
+
+            <!-- Rating -->
+            <div class="capm-rating-row">
+              <!-- <div class="capm-stars">
+            ★★★★★
+          </div> -->
+
+              <!-- <span class="capm-rating-count">
+            ({{ course.rating }} Ratings)
+          </span> -->
+            </div>
+
+            <!-- Info -->
+            <p class="capm-info">
+              {{ course.courseduration }}
+              • {{ course.courselevel }}
+            </p>
+
+            <!-- Description -->
+            <p class="capm-desc">
+              {{ course.coursedesc }}
+            </p>
+            <!-- Price -->
+            <p class="capm-price">
+              ₹{{ course.price - course.discount | number: '1.0-0' }}
+
+              <span class="capm-old"> ₹{{ course.price | number: '1.0-0' }} </span>
+
+              <span class="capm-off" *ngIf="course.discount > 0">
+                ₹{{ course.discount | number: '1.0-0' }} OFF
+              </span>
+            </p>
+
+            <!-- Button -->
+            <button class="capm-btn" (click)="goToCourse(course.courseid)">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

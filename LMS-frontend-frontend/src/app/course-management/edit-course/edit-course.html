@@ -1,0 +1,210 @@
+<div class="course-wrapper">
+
+  <!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <button class="rt-btn" routerLink="/Course-management">
+      Courses &gt;
+    </button>
+    <button class="rt-btn2">Edit Course</button>
+  </div>
+
+
+  <h3 class="section-title">Course Details</h3>
+
+  <!-- COURSE DETAILS -->
+  <div class="form-grid">
+
+    <!-- THUMBNAIL -->
+    <div class="thumb-box">
+      <label>Course Thumbnail *</label>
+
+      <div class="thumb-upload" (click)="fileInput.click()">
+        <img
+          *ngIf="thumbnailPreview; else placeholder"
+          [src]="thumbnailPreview"
+          alt="Course Thumbnail"
+        />
+
+        <ng-template #placeholder>
+          <span class="upload-text">Upload Image</span>
+        </ng-template>
+      </div>
+
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        #fileInput
+        (change)="onThumbnailSelected($event)"
+      />
+    </div>
+
+    <div>
+      <label>Course ID *</label>
+      <input [value]="course.courseid" disabled />
+    </div>
+
+    <div>
+      <label>Course Name *</label>
+      <input [(ngModel)]="course.coursename" />
+    </div>
+
+    <div class="full">
+      <label>Course Description *</label>
+      <input [(ngModel)]="course.coursedesc" />
+    </div>
+
+    <div>
+      <label>Course Category *</label>
+      <input [(ngModel)]="course.coursecategory" />
+    </div>
+
+    <div>
+      <label>Course Duration *</label>
+      <input [(ngModel)]="course.courseduration" />
+    </div>
+
+    <div>
+      <label>Training Mode *</label>
+      <input [(ngModel)]="course.trainingmode" />
+    </div>
+
+     <div>
+      <label>Course Level *</label>
+      <input [(ngModel)]="course.courselevel" />
+    </div>
+
+    <div>
+      <label>Language of Instruction *</label>
+      <input [(ngModel)]="course.language" />
+    </div>
+
+    <div>
+      <label>Certification Availability *</label>
+      <input [(ngModel)]="course.certificateavalibility" />
+    </div>
+
+
+  <div class="form-group">
+    <label>
+      Recommended Course
+      <!-- <span class="required">*</span> -->
+    </label>
+
+    <!-- Input Styled Box -->
+    <div class="rc-input-wrapper" (click)="toggleDropdown()">
+
+      <input
+        type="text"
+        class="form-control"
+        [value]="getSelectedCourseNames()"
+
+        readonly
+      />
+
+      <span class="arrow">▼</span>
+    </div>
+
+    <!-- Dropdown -->
+    <div class="rc-dropdown" *ngIf="showDropdown">
+
+<div class="rc-item" *ngFor="let c of courses">
+
+  <label class="rc-checkbox">
+    <input
+      type="checkbox"
+      [checked]="isSelected(c)"
+      (change)="onCourseCheckboxChange($event, c)"
+    />
+    <span class="course-name">{{ c.coursename }}</span>
+  </label>
+
+</div>
+
+    </div>
+  </div>
+
+   <div class="form-group">
+  <label>Price <span class="required">*</span></label>
+  <input
+    type="number"
+    placeholder="Enter the price"
+    [(ngModel)]="course.price" />
+</div>
+
+<div class="form-group">
+  <label>Discount <span class="required">*</span></label>
+  <input
+    type="number"
+    placeholder="Enter discount"
+    [(ngModel)]="course.discount" />
+</div>
+  </div>
+
+  <hr />
+
+  <!-- MODULES SECTION -->
+  <h3 class="section-title">Modules</h3>
+
+  <div class="table-wrapper">
+    <table>
+       <thead>
+      <tr>
+        <th>Module Name</th>
+        <th>Module No</th>
+        <th>Module Duration</th>
+        <th>Total Session</th>
+        <!-- <th>Edit</th> -->
+      </tr>
+    </thead>
+
+<tbody>
+  <tr *ngFor="let m of modules">
+    <td class="table-text">{{ m.moduleName }}</td>
+    <td class="table-text">{{ m.moduleNo }}</td>
+    <td class="table-text">{{ m.sessionDuration }}</td>
+    <td class="table-text">{{ m.totalsession }}</td>
+      <!-- <td>
+      <i
+        class="fa-solid fa-pen"
+        style="cursor:pointer"
+
+      ></i>
+    </td> -->
+  </tr>
+</tbody>
+
+
+    </table>
+  </div>
+<div class="modal-backdrop" *ngIf="showSuccessModal">
+        <div class="success-modal">
+          <div class="success-icon">
+            <img src="success.gif" alt="tick" class="icon-gif" />
+          </div>
+
+          <p class="success-text">Course Updated Successfully!</p>
+
+          <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+        </div>
+      </div>
+  <!-- FOOTER ACTIONS -->
+  <div class="footer-actions">
+     <button class="danger" (click)="deleteCourse(course.courseid)">Delete Course</button>
+    <button class="dark" (click)="setStatus('Archived')">Mark Archive</button>
+<button class="primary" (click)="setStatus('Published')">Publish Course</button>
+
+
+    <div class="right">
+      <button class="outline" routerLink="/Course-management">
+        Back
+      </button>
+      <button class="primary" (click)="saveCourse()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+
+</div>
+
+ 

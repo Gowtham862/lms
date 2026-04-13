@@ -1,0 +1,261 @@
+<!-- ================= HEADER ================= -->
+<div class="session-container">
+<div class="courses-header">
+  <h2>Session & Attendance Monitoring</h2>
+
+  <div class="tabs">
+    <span
+      (click)="setTab('overview')"
+      [class.active]="activeTab === 'overview'">
+      Session Monitoring
+    </span>
+
+    <span
+      (click)="setTab('completion')"
+      [class.active]="activeTab === 'completion'">
+      Attendance Monitoring
+    </span>
+
+    <div class="month-dropdown">
+      <select>
+        <option>January 2026</option>
+        <option>February 2026</option>
+        <option>March 2026</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- =============== SESSION MONITORING ================= -->
+<!-- ===================================================== -->
+
+<div *ngIf="activeTab === 'overview'" class="certificate-issunace">
+<div class="for-gap">
+  <!-- CARDS -->
+  <div class="cards-container">
+    <div class="card" *ngFor="let card of cards">
+      <div class="card-header">
+        <div class="icon">
+          <img [src]="card.image" />
+        </div>
+        <div class="title">{{ card.title }}</div>
+      </div>
+
+      <div class="card-body">
+        <div class="value">{{ card.value }}</div>
+      </div>
+
+      <div class="card-footer">
+        Update: Last updated today
+      </div>
+    </div>
+  </div>
+
+  <!-- SESSION TABLE -->
+  <div class="table-wrapper">
+
+    <div class="table-header">
+      <h3>Session Monitoring</h3>
+
+      <div class="search-box">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Search using Name, ID" class="input-box"/>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Course Name</th>
+          <th>Batch Name</th>
+          <th>Module Name</th>
+          <th>Session Title</th>
+          <th>Planned Duration</th>
+          <th>Actual Duration</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let s of sessions">
+          <td class="link">{{ s.course }}</td>
+          <td>{{ s.batch }}</td>
+          <td>{{ s.module }}</td>
+          <td>{{ s.title }}</td>
+          <td>{{ s.planned }}</td>
+          <td>{{ s.actual }}</td>
+          <td class="status" [ngClass]="getStatusClass(s.status)">
+            {{ s.status }}
+          </td>
+          <td>
+            <button class="view-btn" (click)="viewDetails(s)">
+              View Details
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  </div>
+</div>
+
+
+<!-- ============== ATTENDANCE MONITORING ================ -->
+
+
+<div *ngIf="activeTab === 'completion'" class="certificate-issunace">
+ <div class="for-gap">
+  <!-- CARDS -->
+  <div class="cards-container">
+    <div class="card" *ngFor="let card of cards1">
+      <div class="card-header">
+        <div class="icon">
+          <img [src]="card.image" />
+        </div>
+        <div class="title">{{ card.title }}</div>
+      </div>
+
+      <div class="card-body">
+        <div class="value">{{ card.value }}</div>
+      </div>
+
+      <div class="card-footer">
+        Update: Last updated today
+      </div>
+    </div>
+  </div>
+
+  <!-- ATTENDANCE TABLES -->
+  <div class="attendance-wrapper">
+
+    <!-- HEADER -->
+    <div class="attendance-header">
+      <h3>Attendance Monitoring</h3>
+
+      <div class="right-controls">
+
+        <div class="search-box">
+          <i class="fa fa-search"></i>
+          <input type="text" placeholder="Search using Name, ID" />
+        </div>
+
+        <div class="view-toggle">
+          <button
+            (click)="setView('session')"
+            [class.active]="activeView === 'session'">
+            Session Wise
+          </button>
+
+          <button
+            (click)="setView('batch')"
+            [class.active]="activeView === 'batch'">
+            Batch Wise
+          </button>
+
+          <button
+            (click)="setView('student')"
+            [class.active]="activeView === 'student'">
+            Student Wise
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SESSION WISE -->
+    <table *ngIf="activeView === 'session'">
+      <thead>
+        <tr>
+          <th>Session Title</th>
+          <th>Session Date</th>
+          <th>Batch Name</th>
+          <th>Module Name</th>
+          <th>Trainer Name</th>
+          <th>Total Students</th>
+          <th>Present</th>
+          <th>Absent</th>
+          <th>Attendance %</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of sessionWiseData">
+          <td class="link">{{ s.title }}</td>
+          <td>{{ s.date }}</td>
+          <td>{{ s.batch }}</td>
+          <td>{{ s.module }}</td>
+          <td>{{ s.trainer }}</td>
+          <td>{{ s.total }}</td>
+          <td>{{ s.present }}</td>
+          <td>{{ s.absent }}</td>
+          <td [class]="percentClass(s.percent)">{{ s.percent }}%</td>
+          <td><button class="export">Export</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- BATCH WISE -->
+    <table *ngIf="activeView === 'batch'">
+      <thead>
+        <tr>
+          <th>Batch Name</th>
+          <th>Trainer Name</th>
+          <th>Total Students</th>
+          <th>Session Held</th>
+          <th>Avg Attendance %</th>
+          <th>Best Session %</th>
+          <th>Worst Session %</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of batchWiseData">
+          <td class="link">{{ b.batch }}</td>
+          <td>{{ b.trainer }}</td>
+          <td>{{ b.total }}</td>
+          <td>{{ b.held }}</td>
+          <td class="red">{{ b.avg }}%</td>
+          <td>{{ b.bestDate }} <span class="green">({{ b.bestPercent }}%)</span></td>
+          <td>{{ b.worstDate }} <span class="red">({{ b.worstPercent }}%)</span></td>
+          <td><button class="export">Export</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- STUDENT WISE -->
+    <table *ngIf="activeView === 'student'">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Batch Name</th>
+          <th>Total Sessions</th>
+          <th>Sessions Attended</th>
+          <th>Attendance %</th>
+          <th>Last Absent</th>
+          <th>Risk Level</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let st of studentWiseData">
+          <td class="link">{{ st.id }}</td>
+          <td>{{ st.name }}</td>
+          <td>{{ st.batch }}</td>
+          <td>{{ st.total }}</td>
+          <td>{{ st.attended }}</td>
+          <td [class]="percentClass(st.percent)">{{ st.percent }}%</td>
+          <td>{{ st.lastAbsent }}</td>
+          <td [class]="percentClass(st.percent)">{{ st.risk }}</td>
+          <td><button class="export">Export</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  </div>
+</div>
+</div>

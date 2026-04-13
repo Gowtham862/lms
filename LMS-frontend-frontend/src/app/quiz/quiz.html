@@ -1,0 +1,96 @@
+<div class="quiz">
+
+
+    <div class="quiz-header1">
+
+        <h2 class>Quiz</h2>
+
+        <div class="tabs">
+            <button (click)="activeTab='course-1'" [class.active]="activeTab==='course-1'">
+                CAPM® Certification Training 1
+            </button>
+            <button (click)="activeTab='course-2'" [class.active]="activeTab==='course-2'">
+                CAPM® Certification Training 2
+            </button>
+        </div>
+
+    </div>
+    
+</div>
+
+<!-- QUIZ  -->
+<div class="quiz-layout">
+
+  <!-- LEFT  -->
+  <div class="quiz-report-card">
+
+    <h3 class="quiz-title">Course Modules Quiz Overview</h3>
+
+    <div class="quiz-header">
+      <span>Module Name</span>
+      <span>Created By</span>
+      <span>Start Date</span>
+      <span>End Date</span>
+      <span>Completed Date</span>
+      <span>Score</span>
+    </div>
+
+    <div class="quiz-row" *ngFor="let q of moduleQuizOverview">
+
+      <span>{{ q.moduleName }}</span>
+      <span>{{ q.createdBy }}</span>
+      <span>{{ q.startDate }}</span>
+      <span>{{ q.endDate }}</span>
+      <span>{{ q.completedDate }}</span>
+
+
+
+      <span
+        class="score"
+        [class.good]="q.score >= 80"
+        [class.avg]="q.score >= 60 && q.score < 80"
+        [class.bad]="q.score < 60">
+        {{ q.score }}%
+      </span>
+
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="upcoming-quiz-card">
+
+    <h3 class="quiz-title">Upcoming Quizzes</h3>
+
+    <div class="quiz-item" *ngFor="let u of upcomingQuizzes">
+
+      <div class="quiz-date" [class.inactive]="!u.active">
+        <span class="day">{{ u.day }}</span> 
+        <span class="month">{{ u.month }}</span>
+      </div>
+
+      <div class="quiz-info">
+        <p class="quiz-name">{{ u.title }}</p>
+        <p class="quiz-meta">
+          <span [class.live]="u.active">{{ u.timer }}</span> |
+          {{ u.questions }} Questions |
+          {{ u.duration }}
+        </p>
+      </div>
+
+      <button
+  class="quiz-btn"
+  [disabled]="!u.active"
+  routerLink="/quiz/start">
+  Start
+</button>
+
+
+
+    </div>
+
+  </div>
+
+</div>
+<!-- <router-outlet></router-outlet> -->

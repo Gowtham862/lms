@@ -1,0 +1,519 @@
+<app-header></app-header>
+<div class="course-page">
+
+  <!-- LEFT CONTENT -->
+  <div class="course-left">
+
+    <nav class="breadcrumb">
+      <ng-container *ngFor="let crumb of course?.breadcrumb; let i = index">
+
+        <a *ngIf="i < (course?.breadcrumb?.length ?? 0) - 1" [routerLink]="getBreadcrumbLink(crumb)" class="crumb-link">
+          {{ crumb }}
+        </a>
+
+        <span *ngIf="i === (course?.breadcrumb?.length ?? 0) - 1" class="active">
+          {{ crumb }}
+        </span>
+
+        <!-- Divider -->
+        <span *ngIf="i < (course?.breadcrumb?.length ?? 0) - 1" class="divider">›</span>
+
+      </ng-container>
+    </nav>
+
+
+
+    <!-- Title -->
+    <h1 class="course-title">{{ course.coursename }}</h1>
+
+    <!-- Subtitle -->
+    <p class="course-subtitle">{{ course.coursedesc }}</p>
+
+    <!-- Rating Row -->
+    <!-- <div class="rating">
+      <span class="rate-num">{{ course.rating }}</span>
+      <span class="stars">★★★★★</span>
+      <span class="count">({{ course.totalRatings }} ratings)</span>
+      <span class="details">
+        | {{ course.hours }} Total Hours. {{ course.lectures }} Lectures. {{ course.levels }}
+      </span>
+    </div> -->
+
+    <!-- Instructor -->
+    <!-- <div class="instructor-row"> -->
+    <!-- <img [src]="'http://192.168.11.124:8080/uploads/'"
+  class="inst-img"
+/> -->
+
+    <!-- <span class="inst-text">Created by <b>{{ course.instructor.name }}</b></span> -->
+    <!-- <span class="dot">|</span>
+    </div> -->
+
+    <!-- Delivery Methods and Dates -->
+    <div class="options-row">
+
+      <!-- Delivery Methods -->
+      <div class="option-card">
+        <h3>Delivery Method</h3>
+
+        <div class="option-buttons">
+          <button class="opt-btn" *ngFor="let d of coursed.deliveryMethods">
+            <span>{{ d.icon }}</span> {{ d.title }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Dates -->
+      <div class="option-card">
+        <h3>Available Batches</h3>
+
+        <div class="option-buttons">
+          <button class="opt-btn" [class.selected]="selectedBatch" (click)="toggleBatchPopup()">
+            <span>📅</span>
+
+            <ng-container *ngIf="!selectedBatch; else batchSelected">
+              Select Batch
+            </ng-container>
+
+            <ng-template #batchSelected>
+              Batch {{ selectedBatch?.batchno }}
+              ({{ selectedBatch?.startdate | date:'dd MMM yyyy' }})
+            </ng-template>
+
+          </button>
+
+
+        </div>
+
+
+
+        <!-- DATE PICKER POPUP -->
+        <div class="date-picker-popup" *ngIf="showBatchPopup">
+
+          <div class="batch-header">
+            Available Batches
+          </div>
+
+          <div class="batch-list">
+
+            <div class="batch-item" *ngFor="let batch of batches"
+              [class.selected]="selectedBatch?.batchid === batch.batchid" (click)="selectBatch(batch)">
+              <div class="batch-name">
+                Batch {{ batch.batchno }}
+              </div>
+
+              <div class="batch-date">
+                (Starts: {{ batch.startdate | date:'dd MMM yyyy' }})
+              </div>
+            </div>
+
+            <!-- Empty state -->
+            <div *ngIf="batches.length === 0" class="no-batch">
+              No batches available
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- RIGHT SIDEBAR BOX -->
+  <div class="course-right">
+    <div class="course-box">
+
+      <!-- Course Image -->
+      <!-- <img src="assets1/course.jpg" class="side-img" /> -->
+      <img [src]="getCourseImage()" class="side-img" />
+      <!-- Pricing Row -->
+
+
+      <!-- <div class="price-row">
+    <span class="price-now">
+      ${{ coursed.price.current }}
+    </span>
+
+    <span class="price-old">
+      ${{ coursed.price.old }}
+    </span>
+
+    <span class="discount">
+      {{ coursed.price.discount }}
+    </span>
+  </div> -->
+      <div class="price-row" *ngIf="coursed?.price">
+
+        <!-- Current Price -->
+        <span class="price-now">
+          ₹{{ coursed.price.current | number:'1.0-0' }}
+        </span>
+
+        <!-- Old Price (Only if discount exists) -->
+        <span class="price-old" *ngIf="coursed.price.old > coursed.price.current">
+          ₹{{ coursed.price.old | number:'1.0-0' }}
+        </span>
+
+        <!-- Discount Badge -->
+        <span class="discount" *ngIf="coursed.price.discount">
+          {{ coursed.price.discount }}
+        </span>
+
+      </div>
+
+
+
+
+
+      <!-- <button
+  class="enroll-btn"
+  (click)="goToPayment()"
+>
+  Enroll Now
+</button> -->
+      <!-- <button class="enroll-btn" (click)="interested()">Interested</button> -->
+      <!-- Interest Button -->
+      <button class="enroll-btn" [disabled]="alreadyInterested" (click)="interested()">
+        {{ alreadyInterested ? 'Registered' : 'Interested' }}
+      </button>
+
+      <!-- Status Messages -->
+      <div class="interest-message">
+        <span *ngIf="interestSubmitted" class="success-msg">Interest submitted successfully!</span>
+        <span *ngIf="alreadyInterested && !interestSubmitted" class="info-msg">You have already registered for this
+          batch.</span>
+        <span *ngIf="interestError && !alreadyInterested" class="error-msg">{{ interestError }}</span>
+      </div>
+
+
+      <!-- <button class="org-btn">For Organization</button> -->
+
+      <div class="share-title">Share</div>
+
+      <div class="share-icons">
+        <img *ngFor="let icon of coursed.shareIcons" [src]="icon" />
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- 2nd section -->
+
+<div class="tabs-container">
+
+  <div class="tabs">
+    <button *ngFor="let t of tabs" (click)="setActiveTab(t.key)" [class.active]="activeTab === t.key">
+      {{ t.label }}
+    </button>
+  </div>
+
+  <div class="tab-content">
+
+    <ng-container *ngIf="activeTab === 'description'">
+      <div class="description-section">
+        <h2>Course Description</h2>
+        <p>{{ course.coursedesc }}</p>
+        <hr class="section-divider">
+      </div>
+
+      <div class="description-section" *ngFor="let trainer of trainers">
+
+        <!-- Course Description -->
+        <!-- <h2>Course Description</h2>
+        <p>{{ course.coursedesc }}</p>
+
+        <hr class="section-divider"> -->
+
+        <!-- Instructor Section -->
+        <h3 class="instructor-title">Instructor</h3>
+
+        <div class="instructor-box">
+          <!-- <img [src]="instructor.image"> -->
+          <img [src]="trainer.image" class="instructor-box" alt="Trainer Photo">
+          <div>
+            <h4>{{ trainer.name }}</h4>
+            <!-- <p>{{ trainer.image }}</p> -->
+
+            <p>{{ trainer.qualification }}</p>
+            <!-- <p>{{ trainer.email }}</p> -->
+            <p>
+              Experience:
+              {{ trainer.yearofexperience }} Years
+            </p>
+            <!-- <p>Qualification:{{trainer.qualification}}</p> -->
+            <!-- <p>Email: {{ trainer.email }}</p>
+    <p>Exp: {{ trainer.experience }} Years</p> -->
+            <!-- <div class="inst-stats">
+              <span>⭐ {{ instructor.reviews }} Reviews</span>
+              <span>🎓 {{ instructor.students }} Students</span>
+              <span>▶ {{ instructor.courses }} Courses</span>
+            </div> -->
+            <p>
+
+            </p>
+
+          </div>
+        </div>
+
+        <!-- Bio Paragraph -->
+        <p class="instructor-bio"> {{ trainer.abouttrainer }}</p>
+
+      </div>
+
+    </ng-container>
+
+
+    <!-- SYLLABUS -->
+    <ng-container *ngIf="activeTab === 'syllabus'">
+      <div class="syllabus-wrapper">
+
+        <div class="syllabus-item" *ngFor="let item of syllabus">
+          <div class="syllabus-header" (click)="toggleSyllabus(item)">
+
+            <div class="left">
+              <!-- <span class="arrow" [class.open]="item.open">⌄</span> -->
+              <span class="title">{{ item.title }}</span>
+            </div>
+
+            <div class="right">
+              <span>{{ item.lessons }} Sessions</span>
+              <span>•</span>
+              <span>{{ item.time }}</span>
+            </div>
+
+          </div>
+
+          <!-- <div class="syllabus-body-wrapper" [class.open]="item.open">
+            <div class="syllabus-body">
+              <p *ngFor="let p of item.points">• {{ p }}</p>
+            </div>
+          </div> -->
+
+        </div>
+
+      </div>
+    </ng-container>
+
+
+
+    <!-- EXAM DETAILS -->
+    <!-- <ng-container *ngIf="activeTab === 'exam'">
+
+
+      <h2 class="exam-title">COBIT®5 Foundation Exam Prerequisite</h2>
+      <p class="exam-text">{{ examDetails.prerequisite }}</p>
+
+
+      <h2 class="exam-title">COBIT®5 Certification Exam Format</h2>
+      <ul class="exam-list">
+        <li *ngFor="let f of examDetails.format" [innerHTML]="f"></li>
+      </ul>
+
+
+      <h2 class="exam-title">3. Self Study COBIT®5 Foundation Course</h2>
+      <p class="exam-text">After enrolling in this course, you'll get:</p>
+
+      <ul class="exam-list">
+        <li *ngFor="let s of examDetails.study" [innerHTML]="s"></li>
+      </ul>
+
+    </ng-container> -->
+
+
+    <!-- FAQ -->
+    <!-- <ng-container *ngIf="activeTab === 'faq'">
+      <div class="faq-box" *ngFor="let q of faq; let i = index">
+
+        <p class="faq-title1">{{ i + 1 }}. {{ q.question }}</p>
+
+        <p class="faq-desc">{{ q.description }}</p>
+
+        <ul class="faq-list">
+          <li *ngFor="let a of q.answer" [innerHTML]="a"></li>
+        </ul>
+
+      </div>
+    </ng-container> -->
+
+
+  </div>
+</div>
+
+<!-- 3rd -->
+
+<section class="courses-section">
+
+  <div class="courses-header">
+    <h2 class="explore-btn">More Courses Like This</h2>
+  </div>
+
+  <div *ngIf="loadingRecommended">Loading recommended courses...</div>
+  <div *ngIf="!loadingRecommended && recommendedCourses.length === 0">
+    No recommended courses found.
+  </div>
+
+  <div class="course-grid" *ngIf="recommendedCourses.length > 0">
+    <div class="course-card" *ngFor="let c of recommendedCourses">
+
+      <div class="course-img">
+        <img [src]="getRecommendedImage(c)" alt="Course Image" />
+      </div>
+
+      <h2 class="course-name">{{ c.coursename }}</h2>
+      <!-- <p class="course-author">By {{ c.adminname }}</p> -->
+      <p class="course-author">By {{ c.coursedesc }}</p>
+
+      <!-- <div class="rating-row">
+        <ng-container *ngFor="let r of [1,2,3,4,5]">
+          <svg class="star-icon" viewBox="0 0 24 24">
+            <path fill="#f7b500"
+              d="M12 .587l3.668 7.568L24 9.748l-6 5.848L19.335 24 12 19.897 4.665 24 6 15.596 0 9.748l8.332-1.593z" />
+          </svg>
+        </ng-container>
+        <span class="rating-text">{{ c.ratingText }}</span>
+      </div> -->
+
+      <p class="course-desc">{{ c.description }}</p>
+      <p class="course-footer">{{ c.footer }}</p>
+
+      <button class="course-btn" (click)="openCourse(c)">
+        Explore Details
+        <span>➜</span>
+      </button>
+
+    </div>
+  </div>
+
+</section>
+
+<!--  -->
+
+<div class="faq-wrapper">
+
+  <!-- LEFT SIDE -->
+  <div class="faq-left">
+    <div class="faq-badge">Frequently Asked Questions</div>
+
+    <h1 class="faq-title">
+      Lear Answers To Help You
+      <span class="highlight">Learn With Confidence</span>
+    </h1>
+
+    <p class="faq-subtext">
+      Whether you're exploring courses or getting started with your first lesson,
+      our FAQ section provides simple, helpful answers to make your
+      learning experience smooth and stress-free.
+    </p>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="faq-right">
+
+    <div class="faq-item" *ngFor="let f of faqs; let i = index">
+      <div class="faq-question" (click)="toggle(i)">
+        <p>{{ f.question }}</p>
+        <span class="icon">{{ activeIndex === i ? '−' : '+' }}</span>
+      </div>
+
+      <div class="faq-answer" [class.open]="activeIndex === i">
+        <p>{{ f.answer }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- subs -->
+<section class="newsletter-section">
+
+  <div class="newsletter-box">
+
+    <div class="newsletter-left">
+      <h2 class="newsletter-title">
+        Learning Tips, Updates & Inspiration—Delivered to You
+      </h2>
+
+      <p class="newsletter-desc">
+        Sign up to receive helpful study guides, educational insights, and platform updates
+        created specifically for students in Abu Dhabi. Stay inspired and keep learning with Al Bayan.
+      </p>
+    </div>
+
+    <div class="newsletter-right">
+      <div class="newsletter-input-wrap">
+        <input type="email" placeholder="Enter your email address" class="newsletter-input" />
+        <button class="newsletter-btn">Subscribe</button>
+      </div>
+
+      <p class="newsletter-privacy">
+        By subscribing you agree to with our <span>Privacy Policy</span>
+      </p>
+    </div>
+
+  </div>
+
+</section>
+<!-- Footer -->
+<footer class="footer-section">
+
+  <div class="footer-container">
+
+    <div class="footer-col">
+      <img src="assets/lmslogo.png" class="footer-logo" alt="Logo">
+
+      <p class="footer-text">{{ contact.email }}</p>
+      <p class="footer-text">{{ contact.phone }}</p>
+
+      <p class="footer-text" *ngFor="let line of contact.address">
+        {{ line }}
+      </p>
+
+      <p class="footer-follow">Follow</p>
+
+      <div class="footer-icons">
+        <a *ngFor="let s of socials" [href]="s.link" target="_blank">
+          <img [src]="s.icon" class="footer-icon" />
+        </a>
+      </div>
+
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Quick Links</h4>
+
+      <a class="footer-link" *ngFor="let q of quickLinks">
+        {{ q }}
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Learning Programs</h4>
+
+      <a class="footer-link" *ngFor="let p of programs">
+        {{ p }}
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4 class="footer-heading">Articles</h4>
+
+      <div class="footer-article" *ngFor="let a of articles">
+        <p class="footer-article-title">{{ a.title }}</p>
+        <span class="footer-date">{{ a.date }}</span>
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+
+<div class="footer-bottom">
+  © 2025 Al-Bayan. All rights reserved
+</div>

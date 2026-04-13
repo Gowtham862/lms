@@ -1,0 +1,151 @@
+<h2 class="page-title">Dashboard</h2>
+<hr />
+
+<!-- STATS -->
+<!-- STATS ROW -->
+<div class="stats-row">
+  <div class="stat-card" *ngFor="let stat of stats; let i = index">
+
+    <!-- HEADER -->
+    <div class="stat-header">
+      <div class="stat-icon">
+        <i class="fa-solid fa-graduation-cap" *ngIf="i === 0 || i === 1"></i>
+        <i class="fa-solid fa-file-lines" *ngIf="i === 2"></i>
+        <i class="fa-solid fa-calendar-days" *ngIf="i === 3"></i>
+      </div>
+
+      <span class="stat-title">{{ stat.title }}</span>
+    </div>
+
+    <!-- VALUE + ACTION -->
+    <div class="stat-main">
+      <span class="stat-value">{{ stat.value }}</span>
+
+      <!-- <button
+        class="stat-btn"
+        *ngIf="stat.title.includes('Active') || stat.title.includes('Total')">
+     
+      </button>
+    </div> -->
+
+    <!-- PROGRESS -->
+    <!-- <div class="stat-progress">
+      <span
+        class="progress-fill"
+        [style.width.%]="stat.progress">
+      </span>
+    </div> -->
+
+    <!-- FOOTER -->
+    <div class="stat-footer">
+      <span *ngIf="i < 2">Update: Last updated today</span>
+     <span *ngIf="i === 2 && stat.value > 0">
+  Great, You have already completed some milestones.
+</span>
+<span *ngIf="i === 2 && stat.value === 0">
+  No batches completed yet. Keep going!
+</span>
+      <span *ngIf="i === 3" class="link">
+        View Sessions <i class="fa-solid fa-chevron-right"></i>
+      </span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- UPCOMING LIVE CLASSES -->
+  <div class="live-classes">
+    <h3>Upcoming Live Classes</h3>
+
+    <div class="class-card" *ngFor="let cls of liveClasses">
+      <div class="class-info">
+        <h4>{{ cls.title }}</h4>
+
+        <div class="meta">
+           <span>🕒 {{ cls.startDateTime | date:'dd-MM-yyyy h:mm a' }}</span>
+          <span>🕒 {{ cls.endDateTime | date:'dd-MM-yyyy h:mm a' }}</span>
+          <!-- Duration -->
+          <!-- <span>⏱ {{ cls.duration }}</span> -->
+        </div>
+      </div>
+
+   <div class="class-action">
+ <button
+          class="btn-primary"
+          [class.completed]="cls.status === 'completed'"
+          [disabled]="cls.status !== 'live'">
+
+          <ng-container [ngSwitch]="cls.status">
+            <span *ngSwitchCase="'live'">join Now</span>
+              <span *ngSwitchCase="'upcoming'" class="countdown-inline">
+              <div class="countdown">
+                 <span>starts in</span>
+                  
+              </div> 
+             
+                </span>
+                
+            <span *ngSwitchDefault>Completed</span>
+          </ng-container>
+        </button>
+        <!-- <span>{{ cls.countdown }}</span>    -->
+        
+
+
+</div>
+
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+<!-- <div class="calendar-card">
+  <h3>My Schedule</h3>
+
+  <div class="calendar-card">
+
+  <div class="calendar-header">
+    <h3>My Schedule Calendar</h3>
+  </div>
+
+  <div class="calendar-legend">
+    <span><i class="dot live"></i> Live class</span>
+    <span><i class="dot quiz"></i> Quiz Day</span>
+    <span><i class="dot assessment"></i> Assessment Review</span>
+  </div>
+
+  <div class="calendar-nav">
+    <span class="month-text">{{ currentMonthName }}, {{ currentYear }}</span>
+    <button class="nav-btn" (click)="prevMonth()">←</button>
+    <button class="nav-btn" (click)="nextMonth()">→</button>
+  </div>
+
+ <div class="calendar-grid">
+
+  <span class="day-name" *ngFor="let d of weekDays">{{ d }}</span>
+
+  <span
+    *ngFor="let d of calendarDates"
+    class="date"
+    [class.empty]="!d.date"
+    [ngClass]="d.type">
+
+    {{ d.date || '' }}
+
+  </span>
+
+</div>
+
+
+</div>
+
+</div> -->
+
+
+
+
+</div>
+<!-- <app-batches-timeline></app-batches-timeline> -->

@@ -1,0 +1,92 @@
+<!-- TOP HEADER -->
+<div class="dashboard-topbar">
+  <h2 class="dashboard-title">Admin Management</h2>
+
+  <button class="month-btn" routerLink="/add-admin">
+    <i class="fa-solid fa-plus"></i>
+    Add New Admin
+  </button>
+</div>
+
+<hr />
+
+<!-- STATS -->
+<div class="stats-grid">
+  <div class="stat-card" *ngFor="let s of stats">
+    <div class="card-header">
+      <div class="stat-icon">
+        <img src="/a-dash.png" class="svg-btn" />
+
+      </div>
+      <p class="stat-title">{{ s.title }}</p>
+    </div>
+
+    <h2 class="stat-value">{{ s.value }}</h2>
+
+    <hr />
+
+    <p class="stat-footer">Update: Last updated today</p>
+  </div>
+</div>
+
+<!-- ADMIN LIST -->
+<div class="admin-section">
+  <div class="admin-header">
+    <h3>Admin Overview</h3>
+
+    <div class="admin-actions">
+      <button class="filter-btn">
+        <i class="fa-solid fa-filter"></i>
+      </button>
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" placeholder="Search using Name, ID" [(ngModel)]="searchText" (input)="onSearch()" />
+      </div>
+    </div>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Profile</th>
+        <th>Admin Name</th>
+        <th>Admin ID</th>
+        <th>Admin Role</th>
+        <th>Login ID</th>
+        <th> Date OF Birth</th>
+        <th>Trainer Status</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let admin of filteredAdmins">
+        <td>
+          <img [src]="admin.file" alt="{{ admin.adminname }}" class="avatar" />
+        </td>
+
+        <td class="link">{{ admin.adminname }}</td>
+        <td class="link">{{ admin.adminid }}</td>
+        <td class="link">{{ admin.adminrole }}</td>
+        <td>{{ admin.loginemail }}</td>
+        <td>{{ admin.dateofbirth }}</td>
+        <td>
+          <span class="status" [ngClass]="{
+    'active': admin.adminstatus === 'Active',
+    'inactive': admin.adminstatus === 'Inactive',
+    'deactivated': admin.adminstatus === 'Deactivated'
+  }">
+            {{ admin.adminstatus }}
+          </span>
+        </td>
+
+
+        <td>
+          <img src="/edit.png" alt="Edit" class="edit-img-btn" routerLink="/edit-admin/{{admin.adminid}}"
+            (click)="editAdmin(admin)" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

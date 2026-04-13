@@ -1,0 +1,341 @@
+<div class="form-page">
+
+  <!-- HEADER -->
+ <h2 class="breadcrumb">
+  <a routerLink="/super-admin" class="breadcrumb-link">
+    Admin Overview
+  </a>
+  &gt;
+  <span>Add New Admin</span>
+</h2>
+
+
+  <form #trainerForm="ngForm" (ngSubmit)="submitTrainer(trainerForm)">
+
+    <!-- PERSONAL DETAILS -->
+    <h3 class="section-title">Personal Details</h3>
+
+    <!-- PHOTO UPLOAD -->
+    <div class="photo-upload">
+      <label>Admin Photo *</label>
+
+      <div class="photo-box" (click)="photoInput.click()">
+        <ng-container *ngIf="!photoPreview">
+          <i class="fa-solid fa-camera"></i>
+        </ng-container>
+
+        <img
+          *ngIf="photoPreview"
+          [src]="photoPreview"
+          class="photo-preview"
+        />
+      </div>
+
+      <input
+        type="file"
+        accept="image/*"
+        hidden
+        #photoInput
+        (change)="onPhotoSelected($event)"
+        required
+      />
+
+      <small class="error" *ngIf="trainerForm.submitted && !photoPreview">
+        Trainer photo is required
+      </small>
+    </div>
+
+
+    <div class="form-grid">
+
+      <!-- Trainer ID -->
+      <div>
+        <label>Admin ID *</label>
+        <input
+          type="text"
+           [value]="admin.adminid || ''"
+          disabled
+          name="adminId"
+        />
+      </div>
+
+      <!-- Admin Name -->
+      <div>
+        <label>Admin Name *</label>
+        <input
+          type="text"
+          name="name"
+          required
+          placeholder="Enter Admin Name"
+          [(ngModel)]="admin.adminname"
+          #name="ngModel"
+          [class.invalid]="trainerForm.submitted && name.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && name.invalid">
+          Admin Name is required
+        </small>
+      </div>
+
+      <!-- Personal Email -->
+      <div>
+        <label>Personal Email ID *</label>
+        <input
+          type="email"
+          name="personalEmail"
+          required
+          placeholder="Enter Email ID"
+          [(ngModel)]="admin.personalemailid"
+          #personalEmail="ngModel"
+          [class.invalid]="trainerForm.submitted && personalEmail.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && personalEmail.invalid">
+          Valid Email is required
+        </small>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <label>Contact No *</label>
+        <input
+          type="text"
+          name="contactNo"
+          required
+          placeholder="Enter Contact No"
+          [(ngModel)]="admin.contactnumber"
+          #contactNo="ngModel"
+          [class.invalid]="trainerForm.submitted && contactNo.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && contactNo.invalid">
+          Contact number is required
+        </small>
+      </div>
+
+      <!-- DOB -->
+      <div>
+        <label>Date Of Birth *</label>
+        <input
+          type="date"
+          name="dob"
+          required
+          [(ngModel)]="admin.dateofbirth"
+          #dob="ngModel"
+          [class.invalid]="trainerForm.submitted && dob.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && dob.invalid">
+          Date of Birth is required
+        </small>
+      </div>
+
+      <!-- Address -->
+      <div>
+        <label>Full Address *</label>
+        <input
+          type="text"
+          name="address"
+          required
+          placeholder="Enter Full Address"
+          [(ngModel)]="admin.address"
+          #address="ngModel"
+          [class.invalid]="trainerForm.submitted && address.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && address.invalid">
+          Address is required
+        </small>
+      </div>
+
+      <!-- State -->
+      <div>
+        <label>State *</label>
+        <select
+          name="state"
+          required
+          [(ngModel)]="admin.state"
+          #state="ngModel"
+          [class.invalid]="trainerForm.submitted && state.invalid">
+          <option value="">Select State</option>
+         <option>Abu Dhabi</option>
+    <option>Dubai</option>
+    <option>Sharjah</option>
+    <option>Ajman</option>
+    <option>Umm Al Quwain</option>
+    <option>Ras Al Khaimah</option>
+    <option>Fujairah</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && state.invalid">
+          State is required
+        </small>
+      </div>
+
+      <!-- City -->
+      <div>
+        <label>City *</label>
+        <select
+          name="city"
+          required
+          [(ngModel)]="admin.city"
+          #city="ngModel"
+          [class.invalid]="trainerForm.submitted && city.invalid">
+          <option value="">Select City</option>
+           <option>Deira</option>
+    <option>Bur Dubai</option>
+    <option>Karama</option>
+    <option>Al Qusais</option>
+    <option>Al Nahda</option>
+    <option>Al Barsha</option>
+    <option>Jumeirah</option>
+    <option>Dubai Marina</option>
+    <option>Downtown Dubai</option>
+    <option>Business Bay</option>
+    <option>Silicon Oasis</option>
+    <option>International City</option>
+    <option>Discovery Gardens</option>
+    <option>Palm Jumeirah</option>
+    <option>Jebel Ali</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && city.invalid">
+          City is required
+        </small>
+      </div>
+
+      <!-- Login Email -->
+      <div>
+        <label>Login Email *</label>
+        <input
+          type="email"
+          name="loginEmail"
+          required
+          placeholder="Enter Login Email"
+          [(ngModel)]="admin.loginemail"
+          #loginEmail="ngModel"
+          [class.invalid]="trainerForm.submitted && loginEmail.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && loginEmail.invalid">
+          Login Email is required
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label>Temporary Password *</label>
+        <input
+          type="password"
+          name="password"
+          required
+          placeholder="Enter Temporary Password"
+          [(ngModel)]="admin.temporaraypassword"
+          #password="ngModel"
+          [class.invalid]="trainerForm.submitted && password.invalid"
+        />
+        <small class="error" *ngIf="trainerForm.submitted && password.invalid">
+          Password is required
+        </small>
+      </div>
+
+    </div>
+
+    <!-- PROFESSIONAL DETAILS -->
+    <h3 class="section-title">Professional Details</h3>
+
+    <div class="form-grid">
+<div>
+  <label>Admin Role</label>
+  <select [(ngModel)]="admin.adminrole" name="adminrole" required>
+    <option *ngFor="let role of adminRoles" [value]="role">{{ role }}</option>
+  </select>
+</div>
+
+<div>
+  <label>Admin Status</label>
+  <select [(ngModel)]="admin.adminstatus" name="adminstatus" required>
+    <option *ngFor="let status of adminStatuses" [value]="status">{{ status }}</option>
+  </select>
+</div>
+
+      <!-- <div>
+        <label>Admin Role *</label>
+        <select
+          name="adminRole"
+          required
+          [(ngModel)]="admin.adminrole"
+          #adminRole="ngModel"
+          [class.invalid]="trainerForm.submitted && adminRole.invalid">
+          <option value="">Select Admin Role</option>
+          <option>Project Management</option>
+          <option>Agile</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && adminRole.invalid">
+          Admin Role is required
+        </small>
+      </div> -->
+
+      <!-- <div>
+        <label>Admin Status*</label>
+        <select
+          name="adminStatus"
+          required
+          [(ngModel)]="admin.adminstatus"
+          #adminStatus="ngModel"
+          [class.invalid]="trainerForm.submitted && adminStatus.invalid">
+          <option value="">Select</option>
+          <option>Active</option>
+          <option>Inactive</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && adminStatus.invalid">
+          Admin Status is required
+        </small>
+      </div> -->
+
+     
+
+    </div>
+
+<div class="modal-backdrop success-backdrop" *ngIf="showSuccessModal">
+  <div class="success-modal">
+    <img src="success.gif" class="icon-gif" />
+    <p>Admin Added Successfully!</p>
+    <button (click)="closeSuccessModal()">OK</button>
+  </div>
+</div>
+    
+    <!-- ACTIONS -->
+    <div class="form-actions">
+      <button type="button" routerLink="/super-admin" class="btn-outline">
+  Back
+</button>
+
+<!-- 
+    <button 
+  type="submit" 
+  class="btn-primary"
+  [disabled]="isLoading">
+
+  <span *ngIf="!isLoading">Create Admin</span>
+
+  <span *ngIf="isLoading" class="btn-loader">
+    <span class="spinner"></span>
+    Creating...
+  </span>
+
+</button> -->
+<button 
+  type="submit" 
+  class="btn-primary"
+  [disabled]="isLoading">
+
+  <ng-container *ngIf="!isLoading">
+    Create Admin
+  </ng-container>
+
+  <ng-container *ngIf="isLoading">
+    <span class="btn-loader">
+      <span class="spinner"></span>
+      Creating...
+    </span>
+  </ng-container>
+
+</button>
+    </div>
+
+  </form>
+
+</div>

@@ -1,0 +1,242 @@
+<div class="page-wrapper">
+  <div class="card">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>All Batch</span>
+      <span class="arrow">></span>
+      <span class="active">Edit Batch</span>
+    </div>
+
+    <!-- FORM -->
+    <form #batchForm="ngForm" novalidate>
+
+      <h4 class="card-title">Batch Details</h4>
+
+      <div class="form-grid">
+
+        <!-- Course Name -->
+        <div class="form-group">
+          <label>Course Name <span>*</span></label>
+          <input type="text" name="courseName" [(ngModel)]="batch.courseName" required #courseName="ngModel" />
+          <div *ngIf="courseName.invalid && courseName.touched" class="error-text">
+            Course name is required
+          </div>
+        </div>
+
+        <!-- Batch No -->
+        <div class="form-group">
+
+          <label class="field-label">
+            Batch No <span class="required">*</span>
+          </label>
+          <input type="number" name="batchNo" [(ngModel)]="batch.batchNo" required #batchNo="ngModel" />
+          <small class="error-text" *ngIf="batchNo.invalid && (batchNo.touched || batchForm.submitted)">
+            Batch No is required
+          </small>
+        </div>
+
+        <!-- Training Mode -->
+        <div class="form-group">
+          <label class="field-label">
+            Training Mode <span class="required">*</span>
+          </label>
+          <input type="text" name="trainingMode" [(ngModel)]="batch.trainingMode" #trainingMode="ngModel" required
+            class="input-box" />
+          <small class="error-text" *ngIf="trainingMode.invalid && (trainingMode.touched || batchForm.submitted)">
+            Training mode is required
+          </small>
+        </div>
+
+        <!-- Capacity -->
+        <div class="form-group">
+          <label>Max Student Capacity <span>*</span></label>
+          <input name="maxstudentcapacity" [(ngModel)]="batch.maxstudentcapacity" required pattern="^[0-9]*$"
+            #capacity="ngModel" />
+          <div *ngIf="capacity.invalid && capacity.touched" class="error-text">
+            <small *ngIf="capacity.errors?.['required']">Capacity is required</small>
+            <small *ngIf="capacity.errors?.['pattern']">Numbers only</small>
+          </div>
+        </div>
+
+        <!-- Start Date -->
+        <div class="form-group">
+          <label>Batch Start Date <span>*</span></label>
+          <input type="date" name="batchstartdate" [(ngModel)]="batch.batchstartdate" [min]="minDate" required
+            #sDate="ngModel" />
+          <div *ngIf="sDate.invalid && sDate.touched" class="error-text">
+            Start date is required
+          </div>
+        </div>
+
+        <!-- <div class="form-group">
+          <label>Batch Start Date <span>*</span></label>
+          <input type="date" name="startDate" [(ngModel)]="batch.startDate" [min]="minDate" required
+            #startDateRef="ngModel" />
+          <small class="error-text" *ngIf="startDateRef.invalid && (startDateRef.touched || submitted)">
+            Start Date is required
+          </small>
+        </div> -->
+
+        <!-- End Date -->
+        <div class="form-group">
+          <label>Batch End Date <span>*</span></label>
+          <input type="date" name="end_date" [(ngModel)]="batch.batchendate" [min]="minDate" #eDate="ngModel" />
+          <div *ngIf="eDate.invalid && eDate.touched" class="error-text">
+            End date is required
+          </div>
+        </div>
+
+        <!-- Primary Trainer -->
+        <div class="form-group">
+          <label>Primary Trainer <span>*</span></label>
+          <!-- <select
+            name="primarytrainerid"
+            [(ngModel)]="batch.primarytrainerid"
+            required
+            #pTrainer="ngModel"
+          >
+            <option [ngValue]="">Select Trainer</option>
+            <option *ngFor="let t of trainers" [value]="t.trainerid.toString()">
+              {{ t.trainername }}
+            </option>
+          </select> -->
+          <select name="primarytrainerid" [(ngModel)]="batch.primarytrainerid" #pTrainer="ngModel" required>
+            <option [ngValue]="">Select Trainer</option>
+            <option *ngFor="let t of trainers" [value]="t.trainerid.toString()">
+              {{ t.trainername }}
+            </option>
+          </select>
+          <div *ngIf="pTrainer.invalid && pTrainer.touched" class="error-text">
+            Select a trainer
+          </div>
+        </div>
+
+        <!-- Backup Trainer -->
+        <!-- <div class="form-group">
+          <label>Backup Trainer <span>*</span></label>
+          <select
+            name="backuptrainerid"
+            [(ngModel)]="batch.backuptrainerid"
+            required
+            #bTrainer="ngModel"
+          >
+            <option [ngValue]="">Select Trainer</option>
+            <option *ngFor="let t of trainers" [value]="t.trainerid">
+              {{ t.trainername }}
+            </option>
+          </select>
+          <div *ngIf="bTrainer.invalid && bTrainer.touched" class="error-text">
+            Select backup trainer
+          </div>
+        </div> -->
+
+      </div>
+
+
+
+
+
+      <hr class="divider" />
+      <!-- Create Session -->
+      <h4 class="section-title">Create Session</h4>
+      <!-- Tabs -->
+      <div class="tabs">
+        <button [class.active]="activeTab === 'modules'" (click)="activeTab = 'modules'"> Module Overview </button>
+        <button [class.active]="activeTab === 'students'" (click)="activeTab = 'students'"> Students List </button>
+      </div>
+      <!-- Module Table -->
+      <table *ngIf="activeTab === 'modules'" class="module-table">
+        <thead>
+          <tr>
+            <th>Module Name</th>
+            <th>Module No</th>
+            <th>Module Duration</th>
+            <th>Total Sessions</th>
+            <th>Session Details</th>
+            <!-- <th>Action</th>  -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of modules; let i = index">
+            <td class="link">{{ m.moduleName }}</td>
+            <td>{{ i + 1 }}</td>
+            <td>{{ m.sessionDuration }}</td>
+            <td>{{ m.totalsession.length || 0 }}</td>
+            <td class="updated">Updated</td>
+            <!-- <td class="actions"> 
+                            <i class="fa-regular fa-pen-to-square"></i> 
+      <i class="fa-regular fa-trash-can"></i> 
+    </td>  -->
+          </tr>
+        </tbody>
+      </table>
+
+      <table *ngIf="activeTab === 'students'" class="module-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Enrolment Date</th>
+            <th>Course Name</th>
+            <th>Assigned Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of students">
+            <td class="link">{{ s.studentName }}</td>
+            <td>{{ s.enrollmentDate | date:'dd-MM-yyyy' }}</td>
+            <td>{{ s.courseName }}</td>
+            <td>{{ s.assignedDate | date:'dd-MM-yyyy' }}</td>
+            <td class="actions">
+              <i class="fa-regular fa-pen-to-square" style="cursor:pointer"></i>
+              <i class="fa-regular fa-trash-can"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="modal-backdrop" *ngIf="showSuccessModal">
+        <div class="success-modal">
+          <div class="success-icon">
+            <img src="success.gif" alt="tick" class="icon-gif" />
+          </div>
+
+          <p class="success-text">Batch Updated Successfully!</p>
+
+          <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+        </div>
+      </div>
+
+
+      <div class="actions-footer">
+
+        <!-- Deactivate -->
+        <!-- <button
+          type="button"
+          class="danger-outline"
+          
+        >
+        Completed
+    
+
+        </button> -->
+        <button type="button" class="completed-btn" (click)="markAsCompleted()"
+          [disabled]="batch.status === 'Completed'">
+          Completed
+        </button>
+
+        <div class="right-actions">
+          <button type="button" class="btn-outline" (click)="close.emit()" routerLink="/batch-management">
+            Back
+          </button>
+
+          <button type="button" class="btn-primary" [disabled]="batchForm.invalid"
+            (click)="updateCourseBatch(batchForm)">
+            Save Changes
+          </button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

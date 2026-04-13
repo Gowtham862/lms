@@ -1,0 +1,79 @@
+<div class="add-modules-container">
+  <form #modulesForm="ngForm" (ngSubmit)="submitModules(modulesForm)">
+
+
+    <h3 class="section-title">Add Modules</h3>
+
+    <div class="module-row" *ngFor="let module of modules; let i = index">
+
+      <!-- Module No -->
+      <div class="field small">
+        <label>Module No</label>
+        <input type="text" [value]="i + 1" disabled />
+      </div>
+
+      <!-- Module Name -->
+      <div class="field large">
+        <label>Module Name *</label>
+        <input type="text" name="moduleName" required [(ngModel)]="module.moduleName" placeholder="Enter Module Name" />
+        <small class="error" *ngIf="modulesForm.submitted && !module.moduleName">
+          Module Name is required
+        </small>
+      </div>
+
+      <!-- Session Duration -->
+      <div class="field medium">
+        <label>Session Duration *</label>
+        <select name="sessionDuration" required [(ngModel)]="module.sessionDuration">
+          <option value="">Select Duration</option>
+          <option>1 Hour</option>
+          <option>2 Hours</option>
+          <option>3 Hours</option>
+        </select>
+        <small class="error" *ngIf="modulesForm.submitted && !module.sessionDuration">
+          Session Duration is required
+        </small>
+      </div>
+
+      <!-- Total Sessions -->
+      <div class="field medium">
+        <label>Total Sessions *</label>
+        <input type="number" name="totalsession" required [(ngModel)]="module.totalsession" />
+        <small class="error" *ngIf="modulesForm.submitted && !module.totalsession">
+          Total Sessions is required
+        </small>
+      </div>
+
+      <!-- Delete -->
+      <div class="field icon">
+        <img src="delete.jpg" class="delete-icon" (click)="openDeleteModal(module)" />
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="form-footer">
+      <button class="back-btn" (click)="goBack()">Back</button>
+      <button class="confirm-course-btn">
+        Create Course
+      </button>
+    </div>
+  </form>
+  <!-- DELETE MODAL -->
+  <div class="modal-backdrop" *ngIf="showDeleteModal">
+    <div class="delete-modal">
+      <h3>Delete Module?</h3>
+      <button (click)="deleteModule()">Yes Delete</button>
+      <button (click)="showDeleteModal=false">Cancel</button>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal-backdrop" *ngIf="showSuccessModal">
+    <div class="success-modal">
+      <p>Course Created Successfully!</p>
+      <button (click)="closeSuccessModal()">OK</button>
+    </div>
+  </div>
+
+</div>

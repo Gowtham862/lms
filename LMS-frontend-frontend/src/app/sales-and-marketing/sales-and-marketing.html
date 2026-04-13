@@ -1,0 +1,175 @@
+<ng-container *ngIf="!showDetails">
+
+    <!-- Header -->
+    <div class="courses-header">
+        <h2>Leads And Funel Management</h2>
+
+        <div class="tabs1">
+            <span (click)="setTab('active')" [class.active]="activeTab1==='active'">
+                Interested Student
+            </span>
+        </div>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="table-card">
+
+            <div class="top-bar">
+
+                <div class="title">
+                    Interested Students (Leads) Table
+                </div>
+
+                <!-- <div class="tabs">
+                    <button *ngFor="let tab of tabs" [class.active]="activeTab === tab" (click)="selectTab(tab)">
+                        {{ tab }}
+                    </button>
+                </div>
+
+                <button class="export-btn">
+                    Export Report
+                </button> -->
+
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th><input type="checkbox"></th>
+                        <th>Lead ID</th>
+                        <th>Name</th>
+                        <th>Email ID</th>
+                        <th>Contact</th>
+                        <th>Course Name</th>
+                        <th>Batch No</th>
+                        <!-- <th>Lead Source</th> -->
+                        <!-- <th>Current Status</th>
+                        <th>Next Status</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let lead of filteredLeads">
+
+                        <td><input type="checkbox"></td>
+                        <td class="link">{{ lead.id }}</td>
+                        <td class="link">{{ lead.name }}</td>
+                        <td>{{ lead.email }}</td>
+                        <td>{{ lead.contact }}</td>
+                        <td>{{ lead.course }}</td>
+                        <th>{{lead.batchno}}</th>
+                        <!-- <td>{{ lead.source }}</td> -->
+
+                        <!-- <td>
+                            <span [ngClass]="statusClass(lead.currentStatus)">
+                                {{ lead.currentStatus }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <span [ngClass]="statusClass(lead.nextStatus)">
+                                {{ lead.nextStatus }}
+                            </span>
+                        </td> -->
+
+                        <td>
+
+                            <!-- SHOW BUTTONS (if no status yet) -->
+                            <div class="paidOrDenied" *ngIf="!lead.paymentStatus">
+
+                                <!-- <button
+      class="paid-btn"
+      (click)="updatePaymentStatus(lead)">
+      Paid
+    </button>
+
+    <button
+      class="denied-btn"
+      (click)="updatePayment(lead.id)">
+      Denied
+    </button> -->
+
+                                <button class="paid-btn" (click)="openConfirmModal(lead, 'Paid')">
+                                    Paid
+                                </button>
+
+                                <!-- <button
+  class="denied-btn"
+  (click)="openConfirmModal(lead, 'Denied')">
+  Denied
+</button> -->
+
+                            </div>
+
+                            <!-- SHOW STATUS BOX -->
+                            <div *ngIf="lead.paymentStatus" class="status-box" [ngClass]="{
+      'paid-box': lead.paymentStatus === 'Paid',
+      'denied-box': lead.paymentStatus === 'Denied'
+    }">
+
+                                {{ lead.paymentStatus }}
+
+                            </div>
+
+                        </td>
+
+
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="showDetails">
+
+    <app-action-btn *ngIf="showDetails" [leadId]="selectedLeadId" (close)="closeDetails()">
+    </app-action-btn>
+
+
+</ng-container>
+
+<!-- Confirmation Modal -->
+<div class="modal-backdrop" *ngIf="showConfirmModal">
+    <div class="confirm-modal">
+
+        <h3>Confirm Action</h3>
+
+        <p *ngIf="selectedAction === 'Paid'">
+            Are you sure you want to mark this lead as <b>Paid</b>?
+        </p>
+
+        <p *ngIf="selectedAction === 'Denied'">
+            Are you sure you want to mark this lead as <b>Denied</b>?
+        </p>
+
+        <div class="modal-actions">
+            <button class="btn-primary" (click)="confirmAction()">OK</button>
+            <button class="btn-outline" (click)="closeModal()">Cancel</button>
+
+        </div>
+
+    </div>
+
+    <!-- Pagination -->
+
+</div>
+<div class="pagination-bar">
+    <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 0">
+        ‹ Previous
+    </button>
+
+    <span class="page-info">Page {{ currentPage + 1 }}</span>
+
+    <button [disabled]="!hasNextPage" class="page-btn" (click)="nextPage()" >
+        Next ›
+    </button>
+</div>

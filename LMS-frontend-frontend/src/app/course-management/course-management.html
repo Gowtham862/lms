@@ -1,0 +1,373 @@
+<div class="header-wrapper">
+  <!-- ================= HEADER ================= -->
+  <div class="header-container">
+    <h2 class="management-header">Course Management</h2>
+
+    <!-- Button shows ONLY when list view is active -->
+    <button class="header-btn" *ngIf="!showCreateForm" (click)="openCreateForm()">
+      <span class="plus">+</span>
+      <span>Create New Course</span>
+    </button>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ================= LIST VIEW (CARDS + TABLE) ================= -->
+  <ng-container *ngIf="!showCreateForm">
+    <!-- Cards -->
+    <div class="cards-container">
+      <div class="card" *ngFor="let card of cards">
+        <div class="card-header">
+          <div class="icon">
+            <img [src]="card.image" alt="icon" />
+          </div>
+          <div class="title">{{ card.title }}</div>
+        </div>
+
+        <div class="card-body">
+          <div class="value">{{ card.value }}</div>
+
+          <!-- <span
+            *ngIf="card.badgeText"
+            class="badge"
+            [ngClass]="card.badgeType"
+          >
+            {{ card.badgeText }}
+          </span> -->
+        </div>
+
+        <div class="card-footer">Update: Last updated today</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <div class="table-header">
+        <h3>Courses Overview</h3>
+
+        <div class="table-actions">
+          <!-- <img src="filter.png" alt="filter" /> -->
+
+          <div class="search-box">
+            <input placeholder="Search using Name, ID" [(ngModel)]="searchText" />
+          </div>
+        </div>
+      </div>
+
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>Course Name</th>
+            <th>Course ID</th>
+            <th>Course Category</th>
+            <th>Course Duration</th>
+            <th>Training Mode</th>
+            <th>Total Module</th>
+            <th>Status</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let course of CoursesOverviewList">
+            <td class="course-name">
+              <img [src]="course.thumbnailUrl" alt="course" class="course-thumbnail" />
+              <div>
+                <p class="title">{{ course.coursename }}</p>
+                <p class="desc">{{ course.coursedesc }}</p>
+              </div>
+            </td>
+
+            <td class="link">{{ course.courseid }}</td>
+            <td>{{ course.coursecategory }}</td>
+            <td>{{ course.courseduration }}</td>
+            <td>{{ course.trainingmode }}</td>
+            <td>{{ course.noofmodule }}</td>
+            <td>
+              <span class="status" [class.published]="course.status === 'Published'"
+                [class.unpublished]="course.status === 'Unpublished'" [class.archived]="course.status === 'Archived'">
+                {{ course.status }}
+              </span>
+            </td>
+
+            <td class="edit">
+              <img src="edit.png" alt="edit" style="cursor:pointer" [routerLink]="['/edit-course']"
+                [state]="{ courseId: course.courseid }" />
+            </td>
+          </tr>
+        </tbody>
+        <tr *ngIf="CoursesOverviewList.length === 0">
+          <td colspan="3" class="text-center py-3">
+            No Data Found
+          </td>
+        </tr>
+      </table>
+    </div>
+  </ng-container>
+
+  <!-- ================= CREATE COURSE VIEW ================= -->
+  <ng-container *ngIf="showCreateForm">
+    <div class="course-card">
+      <form #courseForm="ngForm" (ngSubmit)="openAddModules(courseForm)">
+        <div class="breadcrumb">
+          <button class="btn1" (click)="goBack()">All Courses &gt;</button>
+          <strong class="header-head">Create New Course</strong>
+        </div>
+
+        <h3 class="section-title">Course Details</h3>
+
+        <!-- THUMBNAIL -->
+        <div class="photo-upload">
+          <label>Thumbnail *</label>
+
+          <div class="photo-box" (click)="photoInput.click()">
+            <ng-container *ngIf="!photoPreview">
+              <i class="fa-solid fa-camera"></i>
+            </ng-container>
+
+            <img *ngIf="photoPreview" [src]="photoPreview" class="photo-preview" />
+          </div>
+
+          <input type="file" accept="image/*" name="thumbnail" hidden #photoInput (change)="onCourseFileSelect($event)"
+            required />
+          <small class="error" *ngIf="courseForm.submitted && !photoPreview">
+            Thumbnail is required
+          </small>
+
+        </div>
+
+        <!-- FORM -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Course ID <span class="required">*</span></label>
+            <input type="text" [value]="course.courseid" disabled />
+          </div>
+
+          <div class="form-group">
+            <label>Course Name <span class="required">*</span></label>
+            <input type="text" name="coursename" required [(ngModel)]="course.coursename" #coursename="ngModel" />
+
+            <small class="error" *ngIf="courseForm.submitted && coursename.invalid">
+              Course Name is required
+            </small>
+          </div>
+
+          <div class="form-group full">
+            <label>Course Description <span class="required">*</span></label>
+            <input type="text" name="coursedesc" required [(ngModel)]="course.coursedesc" #coursedesc="ngModel" />
+
+            <small class="error" *ngIf="courseForm.submitted && coursedesc.invalid">
+              Course Description is required
+            </small>
+          </div>
+          <div class="form-group">
+            <label>Course Category <span class="required">*</span></label>
+            <select name="coursecategory" required [(ngModel)]="course.coursecategory" #coursecategory="ngModel">
+              <option value="">Select Category</option>
+              <option>Development</option>
+              <option>Data Science & AI</option>
+
+              <option>Cyber Security</option>
+              <option>Cloud Computing</option>
+              <option>Business & Management</option>
+
+
+              <option>Finance & Accounting</option>
+
+              <option>UI/UX Design</option>
+            </select>
+
+            <small class="error" *ngIf="courseForm.submitted && coursecategory.invalid">
+              Category is required
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Course Duration <span class="required">*</span></label>
+            <select name="courseduration" required [(ngModel)]="course.courseduration" #courseduration="ngModel">
+              <option value="">Select Duration</option>
+              <option>1 Month</option>
+              <option>3 Months</option>
+              <option>6 Months</option>
+              <option>12 Months</option>
+            </select>
+
+            <small class="error" *ngIf="courseForm.submitted && courseduration.invalid">
+              Duration is required
+            </small>
+          </div>
+          <div div class="form-group">
+            <label>Course Level <span class="required">*</span></label>
+
+            <select name="courselevel" required [(ngModel)]="course.courselevel" #courselevel="ngModel">
+              <option value="">Select Level</option>
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+
+            </select>
+            <small class="error" *ngIf="courseForm.submitted && courselevel.invalid">
+              Level is required
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Training Mode <span class="required">*</span></label>
+            <select name="trainingmode" required [(ngModel)]="course.trainingmode" #trainingmode="ngModel">
+              <option value="">Select Mode</option>
+              <option>Online</option>
+              <option>Offline</option>
+            </select>
+            <small class="error" *ngIf="courseForm.submitted && trainingmode.invalid">
+              Training Mode is required
+            </small>
+          </div>
+
+          <!-- <div class="form-group">
+      <label>Course Level <span class="required">*</span></label>
+      <select [(ngModel)]="course.courselevel">
+        <option>Beginner</option>
+        <option>Intermediate</option>
+        <option>Advanced</option>
+      </select>
+    </div>
+  -->
+          <div class="form-group">
+            <label>Language of Instruction <span class="required">*</span></label>
+            <select name="language" required [(ngModel)]="course.language" #language="ngModel">
+              <option value="">Select Language</option>
+              <option>English</option>
+              <option>Arabic</option>
+
+            </select>
+            <small class="error" *ngIf="courseForm.submitted && language.invalid">
+              Language is required
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Certification Availability <span class="required">*</span></label>
+            <select name="certificateavailability" required [(ngModel)]="course.certificateavalibility"
+              #certificateavailability="ngModel">
+              <option value="">Select Availability</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <small class="error" *ngIf="courseForm.submitted && certificateavailability.invalid">
+              Certification Availability is required
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>No of Modules <span class="required">*</span></label>
+            <select name="moduleCount" required [(ngModel)]="course.moduleCount" #moduleCount="ngModel"
+              class="forScroll">
+              <option value="">Select Number of Modules</option>
+              <option *ngFor="let n of moduleNumbers" [ngValue]="n">
+                {{ n }}
+              </option>
+            </select>
+            <small class="error" *ngIf="courseForm.submitted && moduleCount.invalid">
+              Number of Modules is required
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>
+              Recommended Course
+
+            </label>
+
+            <!-- Input Styled Box -->
+            <div class="rc-input-wrapper" (click)="toggleDropdown()">
+
+              <input type="text" class="form-control" [value]="getSelectedCourseNames()" readonly />
+
+              <span class="arrow">▼</span>
+            </div>
+
+            <!-- Dropdown -->
+            <div class="rc-dropdown" *ngIf="showDropdown">
+
+              <div class="rc-item" *ngFor="let c of courses">
+
+                <input type="checkbox" [checked]="isSelected(c)" (change)="onCourseCheckboxChange($event, c)" />
+
+                {{ c.coursename }}
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- input box -->
+          <div class="form-group">
+            <label>Price <span class="required">*</span></label>
+            <input type="number" name="price" required placeholder="Enter the price" [(ngModel)]="course.price"
+              #price="ngModel" />
+            <small class="error" *ngIf="courseForm.submitted && price.invalid">
+              Price is required
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label>Discount <span class="required">*</span></label>
+            <input type="number" name="discount" placeholder="Enter discount" [(ngModel)]="course.discount"
+              #discount="ngModel" />
+            <small class="error" *ngIf="courseForm.submitted && discount.invalid">
+              Discount is required
+            </small>
+          </div>
+
+        </div>
+        <!-- <div class="modal-backdrop" *ngIf="showSuccessModal">
+        <div class="success-modal">
+          <div class="success-icon">
+            <img src="success.gif" alt="tick" class="icon-gif" />
+          </div>
+
+          <p class="success-text">Course Created Successfully!</p>
+
+          <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+        </div>
+      </div> -->
+
+        <!-- FOOTER -->
+
+        <button (click)="openAddModules(courseForm)" class="module-button">Add Modules</button>
+      </form>
+      <!-- <div *ngIf="showModules">
+  <div *ngFor="let module of modulesArray; let i = index" class="module-box">
+    <h4>Module {{ i + 1 }}</h4>
+
+    <input
+      type="text"
+      [(ngModel)]="module.title"
+      placeholder="Module Title"
+    />
+
+    <textarea
+      [(ngModel)]="module.description"
+      placeholder="Module Description"
+    ></textarea>
+  </div>
+</div> -->
+
+      <app-add-modules *ngIf="showAddModules" [moduleCount]="course.moduleCount" [courseName]="course.coursename"
+        (modulesAdded)="onModulesAdded($event)">
+      </app-add-modules>
+    </div>
+  </ng-container>
+
+  <div class="modal-backdrop" *ngIf="showSuccessModal">
+    <div class="success-modal">
+      <div class="success-icon">
+        <img src="success.gif" alt="tick" class="icon-gif" />
+      </div>
+
+      <p class="success-text">Course Created Successfully!</p>
+
+      <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,420 @@
+<div class="form-page">
+
+  <!-- HEADER -->
+  <h2 class="breadcrumb">
+    <button class="bread" routerLink="/trainer-management">Trainer Overview &gt;</button>
+    <span>Add New Trainer</span>
+  </h2>
+
+  <form #trainerForm="ngForm" (ngSubmit)="submitTrainer(trainerForm)">
+
+    <!-- PERSONAL DETAILS -->
+    <h3 class="section-title">Personal Details</h3>
+
+    <!-- PHOTO UPLOAD -->
+    <div class="photo-upload">
+      <label>Trainer Photo <span class="required">*</span></label>
+
+      <div class="photo-box" (click)="photoInput.click()">
+        <ng-container *ngIf="!photoPreview">
+          <i class="fa-solid fa-camera"></i>
+        </ng-container>
+
+        <img *ngIf="photoPreview" [src]="photoPreview" class="photo-preview" />
+      </div>
+
+      <input type="file" accept="image/*" hidden #photoInput (change)="onPhotoSelected($event)" required />
+
+      <small class="error" *ngIf="trainerForm.submitted && !photoPreview">
+        Trainer photo is required
+      </small>
+    </div>
+
+
+    <div class="form-grid">
+
+      <!-- Trainer ID -->
+      <div>
+        <label>Trainer ID <span class="required">*</span></label>
+        <input type="text" [value]="trainer.trainerid" disabled name="trainerId" />
+      </div>
+
+      <!-- Trainer Name -->
+      <div>
+        <label>Trainer Name <span class="required">*</span></label>
+        <input type="text" name="name" required placeholder="Enter Trainer Name" [(ngModel)]="trainer.trainername"
+          #name="ngModel" [class.invalid]="trainerForm.submitted && name.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && name.invalid">
+          Trainer Name is required
+        </small>
+      </div>
+
+      <!-- Personal Email -->
+      <div>
+        <label>Personal Email ID <span class="required">*</span></label>
+        <input type="email" name="personalEmail" required placeholder="Enter Email ID"
+          [(ngModel)]="trainer.personalemailid" #personalEmail="ngModel"
+          [class.invalid]="trainerForm.submitted && personalEmail.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && personalEmail.invalid">
+          Valid Email is required
+        </small>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <label>Contact No <span class="required">*</span></label>
+        <input type="text" name="contactNo" required placeholder="Enter Contact No" [(ngModel)]="trainer.contactnumber"
+          #contactNo="ngModel" [class.invalid]="trainerForm.submitted && contactNo.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && contactNo.invalid">
+          Contact number is required
+        </small>
+      </div>
+
+      <!-- DOB -->
+      <div>
+        <label>Date Of Birth <span class="required">*</span></label>
+        <input type="date" name="dob" required [(ngModel)]="trainer.dateofbirth" #dob="ngModel"
+          [class.invalid]="trainerForm.submitted && dob.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && dob.invalid">
+          Date of Birth is required
+        </small>
+      </div>
+
+      <!-- Address -->
+      <div>
+        <label>Full Address <span class="required">*</span></label>
+        <input type="text" name="address" required placeholder="Enter Full Address" [(ngModel)]="trainer.address"
+          #address="ngModel" [class.invalid]="trainerForm.submitted && address.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && address.invalid">
+          Address is required
+        </small>
+      </div>
+
+      <!-- State -->
+      <div>
+        <label>State <span class="required">*</span></label>
+        <select name="state" required [(ngModel)]="trainer.state" #state="ngModel"
+          [class.invalid]="trainerForm.submitted && state.invalid">
+
+          <option value="">Select State</option>
+
+          <option>Abu Dhabi</option>
+          <option>Dubai</option>
+          <option>Sharjah</option>
+          <option>Ajman</option>
+          <option>Umm Al Quwain</option>
+          <option>Ras Al Khaimah</option>
+          <option>Fujairah</option>
+
+        </select>
+
+        <small class="error" *ngIf="trainerForm.submitted && state.invalid">
+          State is required
+        </small>
+      </div>
+
+      <!-- City -->
+      <div>
+        <label>City <span class="required">*</span></label>
+        <select name="city" required [(ngModel)]="trainer.city" #city="ngModel"
+          [class.invalid]="trainerForm.submitted && city.invalid">
+
+          <option value="">Select City</option>
+
+          <!-- Dubai Cities / Areas -->
+          <option>Deira</option>
+          <option>Bur Dubai</option>
+          <option>Karama</option>
+          <option>Al Qusais</option>
+          <option>Al Nahda</option>
+          <option>Al Barsha</option>
+          <option>Jumeirah</option>
+          <option>Dubai Marina</option>
+          <option>Downtown Dubai</option>
+          <option>Business Bay</option>
+          <option>Silicon Oasis</option>
+          <option>International City</option>
+          <option>Discovery Gardens</option>
+          <option>Palm Jumeirah</option>
+          <option>Jebel Ali</option>
+
+        </select>
+
+        <small class="error" *ngIf="trainerForm.submitted && city.invalid">
+          City is required
+        </small>
+      </div>
+
+      <!-- Login Email -->
+      <div>
+        <label>Login Email <span class="required">*</span></label>
+        <input type="email" name="loginEmail" required placeholder="Enter Login Email" [(ngModel)]="trainer.loginemail"
+          #loginemail="ngModel" [class.invalid]="trainerForm.submitted && loginemail.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && loginemail.invalid">
+          Login Email is required
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label>Temporary Password <span class="required">*</span></label>
+        <input type="password" name="password" required placeholder="Enter Temporary Password"
+          [(ngModel)]="trainer.temporaraypassword" #temporaraypassword="ngModel"
+          [class.invalid]="trainerForm.submitted && temporaraypassword.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && temporaraypassword.invalid">
+          Password is required
+        </small>
+      </div>
+
+    </div>
+
+    <!-- PROFESSIONAL DETAILS -->
+    <h3 class="section-title">Professional Details</h3>
+
+    <div class="form-grid">
+
+      <div>
+        <label>Qualifications <span class="required">*</span></label>
+        <input type="text" name="qualification" required placeholder="Enter Qualification"
+          [(ngModel)]="trainer.qualification" #qualification="ngModel"
+          [class.invalid]="trainerForm.submitted && qualification.invalid" />
+        <small class="error" *ngIf="trainerForm.submitted && qualification.invalid">
+          Qualification is required
+        </small>
+      </div>
+
+      <div>
+        <label>Area of Expertise <span class="required">*</span></label>
+        <select name="expertise" required [(ngModel)]="trainer.areoferperience" #areoferperience="ngModel"
+          [class.invalid]="trainerForm.submitted && areoferperience.invalid">
+
+          <option value="">Select Expertise</option>
+
+          <!-- Project & Management -->
+          <option>Project Management</option>
+          <option>Agile & Scrum</option>
+          <option>PMI / PMP</option>
+          <option>Business Analysis</option>
+          <option>Leadership & Strategy</option>
+
+          <!-- Development -->
+          <option>Full Stack Development</option>
+          <option>Frontend Development</option>
+          <option>Backend Development</option>
+          <option>Java Development</option>
+          <option>Python Development</option>
+          <option>Mobile App Development</option>
+
+          <!-- Data & AI -->
+          <option>Data Science</option>
+          <option>Machine Learning</option>
+          <option>Artificial Intelligence</option>
+          <option>Data Analytics</option>
+
+          <!-- Cloud & DevOps -->
+          <option>AWS Cloud</option>
+          <option>Azure Cloud</option>
+          <option>DevOps</option>
+          <option>Docker & Kubernetes</option>
+
+          <!-- Security -->
+          <option>Cyber Security</option>
+          <option>Ethical Hacking</option>
+          <option>Network Security</option>
+
+          <!-- Design -->
+          <option>UI/UX Design</option>
+          <option>Graphic Design</option>
+
+          <!-- Testing -->
+          <option>Manual Testing</option>
+          <option>Automation Testing</option>
+
+        </select>
+
+        <small class="error" *ngIf="trainerForm.submitted && areoferperience.invalid">
+          Expertise is required
+        </small>
+      </div>
+
+      <div>
+        <label>Years of Experience <span class="required">*</span></label>
+        <select name="experience" required [(ngModel)]="trainer.yearofexperience" #yearofexperience="ngModel"
+          [class.invalid]="trainerForm.submitted && yearofexperience.invalid">
+          <option value="">Select</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5+</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && yearofexperience.invalid">
+          Experience is required
+        </small>
+      </div>
+
+
+
+      <div class="multi-select">
+
+        <label>Language Known <span class="required">*</span></label>
+
+        <!-- Input box -->
+        <div class="select-box" (click)="toggleLanguageDropdown()"
+          [class.invalid]="trainerForm.submitted && trainer.languageknown.length === 0">
+
+          <span>
+            {{ trainer.languageknown.length
+            ? trainer.languageknown.join(', ')
+            : 'Select Language' }}
+          </span>
+
+          <span class="arrow">▼</span>
+        </div>
+
+        <!-- Dropdown -->
+        <div class="dropdown-panel" *ngIf="showLanguageDropdown">
+
+          <label class="dropdown-item" *ngFor="let lang of languages">
+
+            <input type="checkbox" [value]="lang" [checked]="trainer.languageknown.includes(lang)"
+              (change)="onLanguageChange($event)">
+
+            {{ lang }}
+
+          </label>
+
+        </div>
+
+        <!-- Validation -->
+        <small class="error" *ngIf="trainerForm.submitted && trainer.languageknown.length === 0">
+          Language is required
+        </small>
+
+      </div>
+      <!-- <div>
+        <label>Attach Resume <span class="required">*</span></label>
+
+        <div class="resume-box" (click)="resumeInput.click()">
+          <span>{{ resumeName || 'Click to upload resume' }}</span>
+          <i class="fa-solid fa-paperclip"></i>
+        </div>
+
+        <input
+          type="file"
+          accept=".pdf,.doc,.docx"
+          hidden
+          #resumeInput
+          (change)="onResumeSelected($event)"
+        />
+
+        <small class="error" *ngIf="trainerForm.submitted && !resumeFile">
+          Resume is required
+        </small>
+      </div> -->
+
+      <!-- <div>
+        <label>Qualifications *</label>
+        <input
+          type="text"
+          name="qualification"
+          required
+          [(ngModel)]="trainer.qualification"
+        />
+      </div> -->
+
+
+      <!-- <div>
+        <label>Assigned Course *</label>
+        <select
+          name="course"
+          required
+          [(ngModel)]="batch.course"
+          #assignedcourse="ngModel"
+          [class.invalid]="trainerForm.submitted && assignedcourse.invalid">
+         <option  [ngValue]="null" disabled selected>
+            select course
+          </option>
+          <option *ngFor="let c of course"  [ngValue]="c">{{ c.coursename }}</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && assignedcourse.invalid">
+          Course is required
+        </small>
+      </div>
+
+      <div>
+        <label>Course Level *</label>
+        <select
+          name="level"
+          required
+          [(ngModel)]="trainer.courselevel"
+          #courselevel="ngModel"
+          [class.invalid]="trainerForm.submitted && courselevel.invalid">
+          <option value="">Select Level</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Advanced</option>
+          <option>Expert</option>
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && courselevel.invalid">
+          Level is required
+        </small>
+      </div> -->
+
+      <div>
+        <label>Trainer Status <span class="required">*</span></label>
+        <select name="status" required [(ngModel)]="trainer.trainerstatus" #trainerstatus="ngModel"
+          [class.invalid]="trainerForm.submitted && trainerstatus.invalid">
+          <option value="">Select Status</option>
+          <option>Active</option>
+          <option>On Hold</option>
+          <!-- <option>Deactivate</option> -->
+        </select>
+        <small class="error" *ngIf="trainerForm.submitted && trainerstatus.invalid">
+          Status is required
+        </small>
+      </div>
+
+    </div>
+
+    <!-- ABOUT -->
+    <div class="full-width">
+      <label>About Trainer <span class="required">*</span></label>
+      <textarea rows="4" name="about" required placeholder="Enter About Trainer" [(ngModel)]="trainer.abouttrainer"
+        #abouttrainer="ngModel" [class.invalid]="trainerForm.submitted && abouttrainer.invalid">
+      </textarea>
+      <small class="error" *ngIf="trainerForm.submitted && abouttrainer.invalid">
+        About Trainer is required
+      </small>
+    </div>
+    <div class="modal-backdrop" *ngIf="showSuccessModal">
+      <div class="success-modal">
+        <div class="success-icon">
+          <img src="success.gif" alt="tick" class="icon-gif" />
+        </div>
+
+        <p class="success-text">Trainer Added Successfully!</p>
+
+        <button class="ok-btn" (click)="closeSuccessModal()">OK</button>
+      </div>
+    </div>
+    <!-- ACTIONS -->
+    <div class="form-actions">
+      <button type="button" routerLink="/trainer-management" class="btn-outline">
+        Back
+      </button>
+
+
+
+      <button type="submit" [disabled]="loading" class="btn-primary">
+        <span *ngIf="!loading">Add Trainer</span>
+        <span *ngIf="loading" class="loader-wrapper">
+          <span class="loader"></span>
+          Creating....
+        </span>
+      </button>
+    </div>
+
+  </form>
+
+</div>

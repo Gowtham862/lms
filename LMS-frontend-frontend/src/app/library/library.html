@@ -1,0 +1,283 @@
+<!-- ================= PAGE HEADER ================= -->
+<div class="courses-header">
+  <h2>Library</h2>
+
+  <div class="tabs">
+    <span (click)="setTab('active')" [class.active]="activeTab==='active'">
+     Courses Library
+    </span>
+
+    <!-- <span (click)="setTab('completed')" [class.active]="activeTab==='completed'">
+      Recording Sessions 
+    </span> -->
+
+    <!-- <span (click)="setTab('similar')" [class.active]="activeTab==='similar'">
+      Completed Courses Library 
+    </span> -->
+  </div>
+</div>
+
+<!-- ================= ACTIVE COURSES (TABLE VIEW) ================= -->
+<div *ngIf="activeTab === 'active'">
+
+<div class="btn-tabs">
+  <button
+    *ngFor="let course of enrolledCourses"
+    (click)="setCourse(course)"
+    [class.active]="selectedCourse === course">
+    {{ course }}
+  </button>
+</div>
+
+
+
+  <div class="file-table-container">
+
+    <!-- HEADER -->
+    <div class="table-header">
+      <div class="header-left">
+        <h3>All Files</h3>
+      </div>
+
+      <div class="header-right">
+       <div class="icons">
+
+  <!-- ALL -->
+  <span
+    class="filter"
+    [class.active]="selectedFileType==='all'"
+    (click)="setFileFilter('all')"
+  >
+    All
+  </span>
+
+  <!-- PDF -->
+  <img
+    src="/pdf.png"
+    [class.active-icon]="selectedFileType==='pdf'"
+    (click)="setFileFilter('pdf')"
+  >
+
+  <!-- XLS -->
+  <img
+    src="/xls.png"
+    [class.active-icon]="selectedFileType==='xls'"
+    (click)="setFileFilter('xls')"
+  >
+
+  <!-- DOC -->
+  <img
+    src="/doc.png"
+    [class.active-icon]="selectedFileType==='doc'"
+    (click)="setFileFilter('doc')"
+  >
+
+  <!-- PPT -->
+  <img
+    src="/ppt.png"
+    [class.active-icon]="selectedFileType==='ppt'"
+    (click)="setFileFilter('ppt')"
+  >
+
+</div>
+
+
+        <input class="search" type="text" placeholder="Search Document">
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <table class="file-table">
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Uploaded By</th>
+          <th>Date</th>
+          <th>Size</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <!-- FILTERED FILES -->
+        <tr *ngFor="let file of filteredFiles">
+          <td>
+            <div class="file-cell">
+              <img [src]="getFileIcon(file.name)">
+              <span>{{ file.name }}</span>
+            </div>
+          </td>
+
+          <td>{{ file.uploadedBy }}</td>
+          <td>{{ file.date }}</td>
+          <td>{{ file.size }}</td>
+
+          <td>
+            <button class="download-btn" (click)="downloadFile(file)">
+  Download
+</button>
+
+          </td>
+        </tr>
+
+        <!-- EMPTY -->
+        <tr *ngIf="filteredFiles.length === 0">
+          <td colspan="5" class="empty-state">No files found</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="table-footer">
+      <div>
+        Show
+        <select>
+          <option>10</option>
+          <option>20</option>
+        </select>
+        Row
+      </div>
+
+      <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <span>...</span>
+        <button>10</button>
+        <button>›</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= RECORDING SESSIONS ================= -->
+<div *ngIf="activeTab === 'completed'">
+
+  <div class="video-player" *ngIf="selectedVideo">
+    <button class="close-btn" (click)="closePlayer()">✕</button>
+    <video [src]="selectedVideo" controls autoplay></video>
+  </div>
+
+  <div class="card-container" *ngIf="!selectedVideo">
+    <div class="course-card" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+      <div class="card-video">
+        <video src="/trial.mp4" muted></video>
+      </div>
+
+      <div class="card-content">
+        <h3 class="title">Module 1: Covering the Enterprise End to End</h3>
+
+        <div class="meta">
+          <img src="arab-women.png" class="avatar">
+          <span class="author">Leasie Watson</span>
+          <span class="dot">•</span>
+          <span class="time">2 hours ago</span>
+        </div>
+      </div>
+
+      <button class="watch-btn" (click)="playVideo('/trial.mp4')">
+        WATCH NOW
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= COMPLETED COURSES (FILES) ================= -->
+<div *ngIf="activeTab === 'similar'">
+
+  <div class="file-table-container">
+
+    <div class="table-header">
+      <div class="header-left">
+        <h3>Completed Course Files</h3>
+      </div>
+
+      <div class="header-right">
+        <div class="icons">
+
+  <!-- ALL -->
+  <span
+    class="filter"
+    [class.active]="selectedFileType === 'all'"
+    (click)="setFileFilter('all')"
+  >
+    All
+  </span>
+
+  <!-- PDF -->
+  <img
+    src="/pdf.png"
+    [class.active-icon]="selectedFileType === 'pdf'"
+    (click)="setFileFilter('pdf')"
+  >
+
+  <!-- XLS -->
+  <img
+    src="/xls.png"
+    [class.active-icon]="selectedFileType === 'xls'"
+    (click)="setFileFilter('xls')"
+  >
+
+  <!-- DOC -->
+  <img
+    src="/doc.png"
+    [class.active-icon]="selectedFileType === 'doc'"
+    (click)="setFileFilter('doc')"
+  >
+
+  <!-- PPT -->
+  <img
+    src="/ppt.png"
+    [class.active-icon]="selectedFileType === 'ppt'"
+    (click)="setFileFilter('ppt')"
+  >
+
+</div>
+
+
+        <input class="search" type="text" placeholder="Search Document">
+      </div>
+    </div>
+
+    <table class="file-table">
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Uploaded By</th>
+          <th>Date</th>
+          <th>Size</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let file of filteredCompletedFiles">
+          <td>
+            <div class="file-cell">
+              <img [src]="getFileIcon(file.name)">
+              <span>{{ file.name }}</span>
+            </div>
+          </td>
+
+          <td>{{ file.uploadedBy }}</td>
+          <td>{{ file.date }}</td>
+          <td>{{ file.size }}</td>
+
+          <td>
+            <button class="download-btn">Download</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="filteredCompletedFiles.length === 0">
+          <td colspan="5" class="empty-state">No files found</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>

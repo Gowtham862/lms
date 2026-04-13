@@ -1,0 +1,480 @@
+.courses-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #e5ecf6;
+  padding: 20px 24px;
+}
+
+/* HEADER */
+.courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.courses-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tabs {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tabs span {
+  color: #666;
+}
+
+.tabs span.active {
+  color: #0b3a82;
+  font-weight: 600;
+}
+
+/* COURSE ROW */
+.course-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #eef2f7;
+  margin-bottom: 12px;
+}
+
+.course-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.course-info {
+  flex: 1;
+}
+
+.course-info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* PROGRESS */
+.progress-wrapper span {
+  font-size: 13px;
+  color: #0b3a82;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #e6e6e6;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  background: #0b3a82;
+}
+
+/* BUTTON */
+.action-btn {
+  background: #0b3a82;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.study-card{
+   background: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  border: 1px solid #e5ecf6;
+}
+.calendar-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  border: 1px solid #e5ecf6;
+}
+
+/* STUDY HEADER */
+.study-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabs {
+  background: #f1f3f5;
+  padding: 4px;
+  border-radius: 10px;
+  display: flex;
+}
+
+.tabs button {
+  border: none;
+  background: transparent;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: #fff;
+  color: #0b3a82;
+  font-weight: 600;
+}
+
+/* LEGEND */
+.legend, .calendar-legend {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #777;
+  margin: 14px 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.dot.light { background: #e5ecf6; }
+.dot.dark { background: #0b3a82; }
+.dot.live { background: #8fa3c7; }
+.dot.quiz { background: #cfd3d9; }
+.dot.assessment { background: #7fcf6a; }
+
+/* GRAPH */
+.graph {
+  display: flex;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #888;
+  margin-right: 12px;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex: 1;
+}
+
+.bar {
+  position: relative;
+  width: 36px;
+  height: 180px;
+}
+
+.bar-bg {
+  width: 100%;
+  height: 100%;
+  background: #e5ecf6;
+  border-radius: 10px;
+}
+
+.bar-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #0b3a82;
+  border-radius: 10px;
+}
+
+.label {
+  font-size: 11px;
+  color: #888;
+  text-align: center;
+  margin-top: 8px;
+}
+/* ================= DASHBOARD GRID ================= */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 2%;
+}
+
+/* RIGHT COLUMN */
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* ================= CALENDAR ================= */
+.calendar-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e5ecf6;
+  overflow: hidden;
+}
+.attendance-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 24px;
+  border: 1px solid #e5ecf6;
+  overflow: hidden;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calendar-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.month-btn {
+  background: #0b3a82;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.month-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+.calendar-legend {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: #555;
+  margin: 14px 0;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+.dot.live { background: #8fa3c7; }
+.dot.quiz { background: #cfd3d9; }
+.dot.assessment { background: #7fcf6a; }
+
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0;
+}
+
+.nav-btn {
+  background: #0b3a82;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  text-align: center;
+}
+
+.day {
+  font-size: 12px;
+  color: #777;
+}
+.day-name {
+  font-size: 12px;
+  color: #777;
+}
+.date {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  line-height: 36px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.date.live {
+  background: #8fa3c7;
+  color: #fff;
+}
+
+.date.quiz {
+  background: #cfd3d9;
+  color: #333;
+}
+
+.date.assessment {
+  background: #7fcf6a;
+  color: #fff;
+}
+
+/* ================= ATTENDANCE ================= */
+.gauge-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge {
+  width: 180px;
+  height: 120px;
+}
+
+.attendance-value {
+  margin-top: 10px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0b3a82;
+  text-align: center;
+}
+
+.attendance-value p {
+  font-size: 12px;
+  color: #9aa1ac;
+  margin-top: 6px;
+}
+
+@media (max-width: 1024px) {
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .right-section {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Cards */
+  .courses-card,
+  .study-card,
+  .calendar-card,
+  .attendance-card {
+    padding: 16px;
+  }
+
+  /* Course header */
+  .courses-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .courses-header .tabs,
+  .study-header .tabs {
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Course row stacks */
+  .course-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .course-info {
+    width: 100%;
+  }
+
+  /* Button full width */
+  .action-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .graph {
+    width: 100%;
+  }
+
+  .bars {
+    gap: 8px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .bar {
+    width: 22px;        
+    height: 140px;      
+  }
+
+  /* ===== CALENDAR ===== */
+  .calendar-header,
+  .attendance-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .calendar-grid {
+    gap: 4px;
+  }
+
+  .date {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 11px;
+  }
+
+  /* ===== ATTENDANCE ===== */
+  .gauge {
+    width: 140px;
+    height: 90px;
+  }
+
+  .attendance-value {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .courses-header h3,
+  .calendar-header h3 {
+    font-size: 16px;
+  }
+
+  /* Legends wrap */
+  .legend,
+  .calendar-legend {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .bar {
+    width: 18px;
+    height: 120px;
+  }
+
+  .attendance-value {
+    font-size: 20px;
+  }
+}

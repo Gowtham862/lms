@@ -1,0 +1,145 @@
+<!-- PAGE HEADER -->
+<div class="dashboard-header">
+  <h2 class="dashboard-title">Dashboard</h2>
+</div>
+
+<hr />
+
+<!-- TABS + MONTH -->
+<div class="dashboard-topbar">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <span class="tab active">Trainee</span>
+    <span class="tab" routerLink="/trainer-page">Trainer</span>
+    <span class="tab" routerLink="/admin-course">Courses</span>
+  </div>
+
+  <!-- MONTH DROPDOWN -->
+  <!-- <button class="month-btn">
+    January 2026
+    <i class="fa-solid fa-chevron-down"></i>
+  </button> -->
+
+</div>
+
+<div class="cards-container">
+  <div class="card" *ngFor="let card of cards">
+    <div class="card-header">
+      <div class="icon">
+        <img [src]="card.image" alt="icon" />
+      </div>
+      <div class="title">{{ card.title }}</div>
+    </div>
+
+    <div class="card-body">
+      <div class="value">{{ card.value }}</div>
+
+      <span
+        *ngIf="card.badgeText"
+        class="badge"
+        [ngClass]="card.badgeType"
+      >
+        {{ card.badgeText }}
+      </span>
+    </div>
+
+    <div class="card-footer">
+      Update: Last updated today
+    </div>
+  </div>
+</div>
+<!-- <div class="analytics-grid"> -->
+
+  <!-- Trainee Overview -->
+  <!-- <div class="analytics-card">
+    <h3 class="analytics-title">Trainee Overview</h3>
+    <canvas #traineeOverviewChart></canvas>
+  </div> -->
+
+  <!-- Attendance -->
+  <!-- <div class="analytics-card">
+    <h3 class="analytics-title">Overall Trainee Attendance</h3>
+    <canvas #attendanceChart></canvas>
+  </div> -->
+
+<!-- </div> -->
+<div class="table-card">
+
+  <h3 class="table-title">Trainee Overview</h3>
+
+  <table class="attendance-table">
+    <thead>
+      <tr>
+        <th>Trainee Name</th>
+        <th>Student ID</th>
+        <th>Course Name</th>
+        <th>Batch No</th>
+        <th>Sessions Attended</th>
+        <!-- <th>Last Present Date</th> -->
+        <th>Attendance %</th>
+        <th>Attendance Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of paginatedData">
+        <td class="link">{{ row.traineeName }}</td>
+        <td class="link">{{ row.studentId }}</td>
+        <td>{{ row.courseName }}</td>
+        <td>{{ row.batchNo }}</td>
+        <td>{{ row.sessionsAttended }}</td>
+        <!-- <td>{{ row.lastPresentDate }}</td> -->
+
+        <td
+          [ngClass]="{
+            low: row.attendancePercent < 50,
+            average: row.attendancePercent >= 50 && row.attendancePercent < 75,
+            good: row.attendancePercent >= 75
+          }">
+          {{ row.attendancePercent }}%
+        </td>
+
+        <td
+          [ngClass]="{
+            low: row.status === 'Risk',
+            average: row.status === 'Average',
+            good: row.status === 'Good'
+          }">
+          {{ row.status }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FOOTER -->
+  <div class="table-footer">
+    <div>
+      Show
+      <select (change)="changePageSize($event)">
+        <option>10</option>
+        <option>20</option>
+        <option>50</option>
+      </select>
+      Row
+    </div>
+
+   <div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">
+    &lsaquo;
+  </button>
+
+  <button
+    *ngFor="let p of [].constructor(totalPages); let i = index"
+    (click)="goToPage(i + 1)"
+    [class.active]="currentPage === i + 1">
+    {{ i + 1 }}
+  </button>
+
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+    &rsaquo;
+  </button>
+</div>
+  </div>
+
+</div>
