@@ -10,6 +10,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       id-token: write
@@ -19,8 +20,7 @@ jobs:
         working-directory: LMS-frontend-frontend
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v1
@@ -28,8 +28,13 @@ jobs:
           workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
           service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
-      - name: Setup GCP SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - uses: google-github-actions/setup-gcloud@v1
+
+      - name: Install GKE Auth Plugin
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+          echo "USE_GKE_GCLOUD_AUTH_PLUGIN=True" >> $GITHUB_ENV
 
       - name: Configure Docker
         run: gcloud auth configure-docker asia-south1-docker.pkg.dev
@@ -54,4 +59,5 @@ jobs:
         run: |
           kubectl set image deployment/lms-frontend \
             lms-frontend=asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }}
-          kubectl rollout status deployment/lms-frontend
+
+          kubectl rollout status deployment/lms-frontend --timeout=120s
