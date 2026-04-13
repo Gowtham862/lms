@@ -5,15 +5,18 @@ on:
     branches:
       - main
     paths:
-      - 'LMS-frontend-frontend/**'  # only runs when frontend code changes
+      - 'LMS-frontend-frontend/**'
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:          # ✅ ADD THIS
+      contents: read
+      id-token: write
 
     defaults:
       run:
-        working-directory: LMS-frontend-frontend  # run commands in frontend folder
+        working-directory: LMS-frontend-frontend
 
     steps:
       - name: Checkout code
@@ -22,7 +25,8 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}      # ✅ CHANGED
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}          # ✅ CHANGED
 
       - name: Setup GCP SDK
         uses: google-github-actions/setup-gcloud@v1
