@@ -32,7 +32,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
 
       - name: Install GKE Auth Plugin
-        run: gcloud components install gke-gcloud-auth-plugin
+        run: gcloud components install gke-gcloud-auth-plugin --quiet
 
       - name: Configure Docker
         run: gcloud auth configure-docker asia-south1-docker.pkg.dev
@@ -47,12 +47,16 @@ jobs:
           docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }}
 
       - name: Get GKE credentials
+        env:
+          USE_GKE_GCLOUD_AUTH_PLUGIN: True
         run: |
           gcloud container clusters get-credentials lms-cluster \
             --region asia-south1 \
             --project ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Deploy to GKE
+        env:
+          USE_GKE_GCLOUD_AUTH_PLUGIN: True
         run: |
           kubectl set image deployment/lms-frontend \
             lms-frontend=asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }}
