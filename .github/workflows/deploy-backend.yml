@@ -10,7 +10,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:          # ✅ ADD THIS
+    permissions:
       contents: read
       id-token: write
 
@@ -25,8 +25,8 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v1
         with:
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}      # ✅ CHANGED
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}          # ✅ CHANGED
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
       - name: Setup GCP SDK
         uses: google-github-actions/setup-gcloud@v1
