@@ -33,6 +33,9 @@ spec:
             requests:
               cpu: "250m"
               memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: root
@@ -40,7 +43,7 @@ spec:
               value: root
           volumeMounts:
             - name: mongo-storage
-              mountPath: /data/db 
+              mountPath: /data/db
       volumes:
         - name: mongo-storage
           persistentVolumeClaim:
@@ -82,6 +85,9 @@ spec:
             requests:
               cpu: "250m"
               memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
           env:
             - name: SPRING_DATA_MONGODB_URI
               value: mongodb://root:root@mongodb:27017/lmsjson?authSource=admin
@@ -122,6 +128,9 @@ spec:
             requests:
               cpu: "100m"
               memory: "256Mi"
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service
