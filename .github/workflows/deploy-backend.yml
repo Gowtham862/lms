@@ -46,7 +46,7 @@ jobs:
       - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v1
         with:
-          cluster_name: clusterlms 
+          cluster_name: lms-cluster
           location: asia-south1
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
