@@ -44,7 +44,7 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }} .
+          docker push asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }} 
 
       - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v1
