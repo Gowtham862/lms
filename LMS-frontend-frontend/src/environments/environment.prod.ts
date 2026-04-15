@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://lms-backend-service:8080'
+  apiBaseUrl: 'http://34.93.144.161:8080'
 };
