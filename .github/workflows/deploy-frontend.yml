@@ -56,6 +56,6 @@ jobs:
       - name: Deploy to GKE
         run: |
           kubectl set image deployment/deployment-1 \
-            lms-frontend=asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }}
+            lms-frontend-sha256-1=asia-south1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/lms-repo/lms-frontend:${{ github.sha }}
 
           kubectl rollout status deployment/deployment-1 --timeout=120s
