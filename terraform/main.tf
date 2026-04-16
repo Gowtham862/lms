@@ -1,3 +1,16 @@
+
+terraform {
+  backend "gcs" {
+    bucket  = "lms-terraform-state-862"
+    prefix  = "terraform/state"
+  }
+}
+
+
+
+
+
+
 provider "google" {
   project = var.project_id
   region  = var.region
