@@ -85,7 +85,7 @@ public class AddCourseService {
 	 PurchasedCourseRepository purchaserepo;
 
 	public ResponseEntity<ResponseStructure<?>> savecourse(AddCourse course, MultipartFile[] files) {
-
+          System.out.println("jlo");
 //        log.info("Entered savecourse()");
 		File folder = new File("uploads");
 //	String[] fil = folder.list();
