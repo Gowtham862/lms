@@ -21,6 +21,7 @@ public class AddCourseDao {
 	
 	public AddCourse addnewcourse(AddCourse courses) {
 			courses.setCourseid(System.currentTimeMillis());
+			System.out.println("success");
 		return courserepository.save(courses);
 
 	}
